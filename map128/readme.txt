@@ -1,0 +1,1 @@
+All of these chunks are in Uncompressed format, except for Green Hill Zone which is compressed in Kid Chameleon Compression.
