@@ -9,7 +9,8 @@ v_16x16:        rs.b  $1800   ; 16x16 tile mappings ($1800 bytes) $FFFF9000
 v_bgscroll_buffer:	rs.b  $200	; background scroll buffer ($200 bytes) $FFFFA800
 v_ngfx_buffer:	rs.b $200	; Nemesis graphics decompression buffer ($200 bytes) $FFFFAA00
 v_spritequeue:	rs.b $400	; sprite display queue, in order of priority ($400 bytes) $FFFFAC00
-v_objspace:	rs.b ObSize*$80      ; object variable space ($40 bytes per object) ($2000 bytes) $FFFFB000
+v_objspace:	rs.b ObSize*$7F      ; object variable space ($40 bytes per object) ($2000 bytes) $FFFFB000
+                rs.b $40
 v_col1st:       rs.b $600            ; $FFFFD000
 v_col2nd:       rs.b $600            ; $FFFFD600
 v_vdp_cmdbuf:   rs.b $FC             ; $FFFFDC00
@@ -17,9 +18,20 @@ v_vdp_cmdbufend:rs.l 1               ; $FFFFDCFC
 v_spritetablebuffer:    rs.b $280       ; sprite table ($280 bytes) $FFFFDD00
                 rs.b $80        ; unused, was overwritten in s1
 v_hscrolltablebuffer:   rs.b $400       ; $FFFFE000
-                rs.b $100 ; $FFFFE400
-                rs.b $100 ; $FFFFE500
-                rs.b $100 ; $FFFFE600       
+v_tracksonic:   rs.b $100 ; $FFFFE400
+v_tracktails:   rs.b $100 ; $FFFFE500
+v_recordsonic:  rs.b $100 ; $FFFFE600
+v_recordtails:  rs.b $100 ; $FFFFE700
+v_rpl_data:     rs.b $600 ; $FFFFE800
+v_screenposx:   rs.l 1    ; $FFFFEE00
+v_screenposy:   rs.l 1    ; $FFFFEE04
+v_bgscreenposx: rs.l 1    ; $FFFFEE08
+v_bgscreenposy: rs.l 1    ; $FFFFEE0C
+v_bg2screenposx:rs.l 1    ; $FFFFEE10
+v_bg2screenposy:rs.l 1    ; $FFFFEE14
+v_bg3screenposx:rs.l 1    ; $FFFFEE18
+v_bg3screenposy:rs.l 1    ; $FFFFEE1C
+
 v_snddriver_ram:	equ $FFFFF000 ; start of RAM for the sound driver data ($5C0 bytes)
 v_systemstack:	equ $FFFFFE00
 v_zone:		equ $FFFFFE10	; current zone number

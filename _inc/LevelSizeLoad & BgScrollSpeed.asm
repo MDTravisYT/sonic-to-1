@@ -50,7 +50,7 @@ LevelSizeArray:
 		dc.w $2080,$3FFF, $510,	$720,	 0,$3FFF,    0,	$720; 88
 		dc.w	 0, $500, $110,	$110,	 0, $DC0, $110,	$110; 96
 		dc.w	 0,$2FFF,    0,	$320,	 0,$2FFF,    0,	$320; 104
-		
+
 S1EndingStartLoc:dc.w	$50, $3B0, $EA0, $46C,$1750,  $BD, $A00, $62C; 0
 		dc.w  $BB0,  $4C,$1570,	$16C, $1B0, $72C,$1400,	$2AC; 8
 ; ---------------------------------------------------------------------------
@@ -96,7 +96,7 @@ loc_58E6:				; CODE XREF: LevelSizeLoad+1C2j
 		move.w	d2,d1
 
 loc_58F0:				; CODE XREF: LevelSizeLoad+1CCj
-		move.w	d1,($FFFFEE00).w
+		move.w	d1,(v_screenposx).w
 		move.w	d1,($FFFFEE20).w
 		subi.w	#$60,d0	; "`"
 		bcc.s	loc_5900
@@ -108,7 +108,7 @@ loc_5900:				; CODE XREF: LevelSizeLoad+1DCj
 		move.w	($FFFFEECE).w,d0
 
 loc_590A:				; CODE XREF: LevelSizeLoad+1E4j
-		move.w	d0,($FFFFEE04).w
+		move.w	d0,(v_screenposy).w
 		move.w	d0,($FFFFEE24).w
 		bsr.w	BgScrollSpeed
 		rts
@@ -129,11 +129,11 @@ StartLocArray:	dc.w   $50, $3B0,  $50,	 $FC,  $50, $3B0,  $80,	 $A8; 0
 BgScrollSpeed:				; CODE XREF: LevelSizeLoad+1F2p
 		tst.b	($FFFFFE30).w
 		bne.s	loc_59B6
-		move.w	d0,($FFFFEE0C).w
-		move.w	d0,($FFFFEE14).w
-		move.w	d1,($FFFFEE08).w
-		move.w	d1,($FFFFEE10).w
-		move.w	d1,($FFFFEE18).w
+		move.w	d0,(v_bgscreenposy).w
+		move.w	d0,(v_bg2screenposy).w
+		move.w	d1,(v_bgscreenposx).w
+		move.w	d1,(v_bg2screenposx).w
+		move.w	d1,(v_bg3screenposx).w
 		move.w	d0,($FFFFEE2C).w
 		move.w	d0,($FFFFEE34).w
 		move.w	d1,($FFFFEE28).w
@@ -160,11 +160,11 @@ BgScroll_Index:	dc.w BgScroll_GHZ-BgScroll_Index; 0 ; DATA XREF: ROM:BgScroll_In
 ; ---------------------------------------------------------------------------
 
 BgScroll_GHZ:				; DATA XREF: ROM:BgScroll_Indexo
-		clr.l	($FFFFEE08).w
-		clr.l	($FFFFEE0C).w
-		clr.l	($FFFFEE14).w
-		clr.l	($FFFFEE1C).w
-		lea	($FFFFA800).w,a2
+		clr.l	(v_bgscreenposx).w
+		clr.l	(v_bgscreenposy).w
+		clr.l	(v_bg2screenposy).w
+		clr.l	(v_bg3screenposy).w
+		lea	(v_bgscroll_buffer).w,a2
 		clr.l	(a2)+
 		clr.l	(a2)+
 		clr.l	(a2)+
@@ -177,25 +177,25 @@ BgScroll_GHZ:				; DATA XREF: ROM:BgScroll_Indexo
 
 BgScroll_LZ:				; DATA XREF: ROM:BgScroll_Indexo
 		asr.l	#1,d0
-		move.w	d0,($FFFFEE0C).w
+		move.w	d0,(v_bgscreenposy).w
 		rts
 ; ---------------------------------------------------------------------------
 
 BgScroll_CPZ:				; DATA XREF: ROM:BgScroll_Indexo
 		lsr.w	#2,d0
-		move.w	d0,($FFFFEE0C).w
+		move.w	d0,(v_bgscreenposy).w
 		move.w	d0,($FFFFEE2C).w
-		clr.l	($FFFFEE08).w
-		clr.l	($FFFFEE10).w
+		clr.l	(v_bgscreenposx).w
+		clr.l	(v_bg2screenposx).w
 		rts
 ; ---------------------------------------------------------------------------
 
 BgScroll_EHZ:				; DATA XREF: ROM:BgScroll_Indexo
-		clr.l	($FFFFEE08).w
-		clr.l	($FFFFEE0C).w
-		clr.l	($FFFFEE14).w
-		clr.l	($FFFFEE1C).w
-		lea	($FFFFA800).w,a2
+		clr.l	(v_bgscreenposx).w
+		clr.l	(v_bgscreenposy).w
+		clr.l	(v_bg2screenposy).w
+		clr.l	(v_bg3screenposy).w
+		lea	(v_bgscroll_buffer).w,a2
 		clr.l	(a2)+
 		clr.l	(a2)+
 		clr.l	(a2)+
@@ -208,8 +208,8 @@ BgScroll_EHZ:				; DATA XREF: ROM:BgScroll_Indexo
 
 BgScroll_HPZ:				; DATA XREF: ROM:BgScroll_Indexo
 		asr.w	#1,d0
-		move.w	d0,($FFFFEE0C).w
-		clr.l	($FFFFEE08).w
+		move.w	d0,(v_bgscreenposy).w
+		clr.l	(v_bgscreenposx).w
 		rts
 ; ---------------------------------------------------------------------------
 
@@ -220,25 +220,25 @@ BgScroll_S1SYZ:				; leftover from	Sonic 1
 		add.l	d2,d0
 		asr.l	#8,d0
 		addq.w	#1,d0
-		move.w	d0,($FFFFEE0C).w
-		clr.l	($FFFFEE08).w
+		move.w	d0,(v_bgscreenposy).w
+		clr.l	(v_bgscreenposx).w
 		rts
 ; ---------------------------------------------------------------------------
 
 BgScroll_S1Ending:			; DATA XREF: ROM:BgScroll_Indexo
-		move.w	($FFFFEE00).w,d0
+		move.w	(v_screenposx).w,d0
 		asr.w	#1,d0
-		move.w	d0,($FFFFEE08).w
-		move.w	d0,($FFFFEE10).w
+		move.w	d0,(v_bgscreenposx).w
+		move.w	d0,(v_bg2screenposx).w
 		asr.w	#2,d0
 		move.w	d0,d1
 		add.w	d0,d0
 		add.w	d1,d0
-		move.w	d0,($FFFFEE18).w
-		clr.l	($FFFFEE0C).w
-		clr.l	($FFFFEE14).w
-		clr.l	($FFFFEE1C).w
-		lea	($FFFFA800).w,a2
+		move.w	d0,(v_bg3screenposx).w
+		clr.l	(v_bgscreenposy).w
+		clr.l	(v_bg2screenposy).w
+		clr.l	(v_bg3screenposy).w
+		lea	(v_bgscroll_buffer).w,a2
 		clr.l	(a2)+
 		clr.l	(a2)+
 		clr.l	(a2)+

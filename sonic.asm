@@ -495,13 +495,13 @@ loc_B40:				; CODE XREF: ROM:00000B36j
 		move.b	($FFFFF62A).w,d0
 		move.b	#0,($FFFFF62A).w
 		move.w	#1,($FFFFF644).w
-		andi.w	#$3E,d0	
+		andi.w	#$3E,d0
 		move.w	off_B6C(pc,d0.w),d0
 		jsr	off_B6C(pc,d0.w)
 
 loc_B5C:				; CODE XREF: ROM:00000B9Cj
 					; ROM:00000C3Aj ...
-		jsr	UpdateMusic
+		jsr	(UpdateMusic).l
 
 loc_B62:				; CODE XREF: ROM:00000DE2j
 		addq.l	#1,($FFFFFE0C).w
@@ -549,7 +549,7 @@ loc_BBE:				; CODE XREF: ROM:00000BB4j
 		move.l	#$96FD9580,(a5)
 		move.w	#$977F,(a5)
 		move.w	#$C000,(a5)
-		move.w	#$80,($FFFFF640).w 
+		move.w	#$80,($FFFFF640).w
 		move.w	($FFFFF640).w,(a5)
 		bra.s	loc_C26
 ; ---------------------------------------------------------------------------
@@ -560,7 +560,7 @@ loc_C02:				; CODE XREF: ROM:00000BDAj
 		move.l	#$96FD9540,(a5)
 		move.w	#$977F,(a5)
 		move.w	#$C000,(a5)
-		move.w	#$80,($FFFFF640).w 
+		move.w	#$80,($FFFFF640).w
 		move.w	($FFFFF640).w,(a5)
 
 loc_C26:				; CODE XREF: ROM:00000C00j
@@ -599,7 +599,7 @@ loc_C8E:
 loc_C94:
 		move.w	#$977F,(a5)
 		move.w	#$7800,(a5)
-		move.w	#$83,($FFFFF640).w 
+		move.w	#$83,($FFFFF640).w
 		move.w	($FFFFF640).w,(a5)
 		bra.w	loc_B5C
 ; ---------------------------------------------------------------------------
@@ -651,7 +651,7 @@ loc_CFE:
 		move.l	#$96FD9580,(a5)
 		move.w	#$977F,(a5)
 		move.w	#$C000,(a5)
-		move.w	#$80,($FFFFF640).w 
+		move.w	#$80,($FFFFF640).w
 		move.w	($FFFFF640).w,(a5)
 		bra.s	loc_D48
 ; ---------------------------------------------------------------------------
@@ -664,7 +664,7 @@ loc_D30:
 		move.l	#$96FD9540,(a5)
 		move.w	#$977F,(a5)
 		move.w	#$C000,(a5)
-		move.w	#$80,($FFFFF640).w 
+		move.w	#$80,($FFFFF640).w
 		move.w	($FFFFF640).w,(a5)
 
 loc_D48:				; CODE XREF: ROM:00000D22j
@@ -677,18 +677,18 @@ loc_D60:
 		move.l	#$96F09500,(a5)
 		move.w	#$977F,(a5)
 		move.w	#$7C00,(a5)
-		move.w	#$83,($FFFFF640).w 
+		move.w	#$83,($FFFFF640).w
 		move.w	($FFFFF640).w,(a5)
 		lea	(vdp_control_port).l,a5
 		move.l	#$94019340,(a5)
 		move.l	#$96FC9500,(a5)
 		move.w	#$977F,(a5)
 		move.w	#$7800,(a5)
-		move.w	#$83,($FFFFF640).w 
+		move.w	#$83,($FFFFF640).w
 		move.w	($FFFFF640).w,(a5)
 		bsr.w	Process_DMA
 		startZ80
-		movem.l	($FFFFEE00).w,d0-d7
+		movem.l	(v_screenposx).w,d0-d7
 		movem.l	d0-d7,($FFFFEE60).w
 		movem.l	($FFFFEE20).w,d0-d7
 		movem.l	d0-d7,($FFFFEE80).w
@@ -709,7 +709,7 @@ DemoTime:				; CODE XREF: ROM:00000DD8j
 		bsr.w	LoadTilesAsYouMove
 
 loc_DEA:
-		jsr	HudUpdate
+		jsr	(HudUpdate).l
 		bsr.w	loc_174E
 		tst.w	($FFFFF614).w
 		beq.w	DemoTime_End
@@ -731,21 +731,21 @@ loc_E02:				; CODE XREF: ROM:00000CDEj
 		move.l	#$96FD9580,(a5)
 		move.w	#$977F,(a5)
 		move.w	#$C000,(a5)
-		move.w	#$80,($FFFFF640).w 
+		move.w	#$80,($FFFFF640).w
 		move.w	($FFFFF640).w,(a5)
 		lea	(vdp_control_port).l,a5
 		move.l	#$94019340,(a5)
 		move.l	#$96FC9500,(a5)
 		move.w	#$977F,(a5)
 		move.w	#$7800,(a5)
-		move.w	#$83,($FFFFF640).w 
+		move.w	#$83,($FFFFF640).w
 		move.w	($FFFFF640).w,(a5)
 		lea	(vdp_control_port).l,a5
 		move.l	#$940193C0,(a5)
 		move.l	#$96F09500,(a5)
 		move.w	#$977F,(a5)
 		move.w	#$7C00,(a5)
-		move.w	#$83,($FFFFF640).w 
+		move.w	#$83,($FFFFF640).w
 		move.w	($FFFFF640).w,(a5)
 		bsr.w	Process_DMA
 		startZ80
@@ -803,7 +803,7 @@ loc_F08:				; CODE XREF: ROM:00000EE2j
 		move.w	($FFFFF640).w,(a5)
 		bsr.w	Process_DMA
 		startZ80
-		movem.l	($FFFFEE00).w,d0-d7
+		movem.l	(v_screenposx).w,d0-d7
 		movem.l	d0-d7,($FFFFEE60).w
 		movem.l	($FFFFEE50).w,d0-d1
 		movem.l	d0-d1,($FFFFEEA0).w
@@ -2672,7 +2672,7 @@ loc_3240:				; CODE XREF: ROM:00003242j
 loc_3250:				; CODE XREF: ROM:00003252j
 		move.l	d0,(a1)+
 		dbf	d1,loc_3250
-		lea	($FFFFEE00).w,a1
+		lea	(v_screenposx).w,a1
 		moveq	#0,d0
 		move.w	#$3F,d1	
 
@@ -2767,7 +2767,7 @@ loc_339A:				; CODE XREF: ROM:0000339Cj
 		move.w	#0,($FFFFFFE6).w
 		move.w	#$300,(v_zone).w
 		move.w	#4,($FFFFEED2).w
-		move.w	#0,($FFFFE500).w
+		move.w	#0,(v_tracktails).w
 		move.w	($FFFFF60C).w,d0
 		ori.b	#$40,d0	
 		move.w	d0,(vdp_control_port).l
@@ -3560,7 +3560,7 @@ loc_3E00:				; CODE XREF: ROM:00003DF2j
 		move.b	#1,($FFFFFE1D).w
 		move.b	#1,($FFFFFE1E).w
 		move.w	#4,($FFFFEED2).w
-		move.w	#0,($FFFFE500).w
+		move.w	#0,(v_tracktails).w
 		move.w	#0,($FFFFF790).w
 		move.w	#0,($FFFFF740).w
 		lea	(Demo_Index).l,a1
@@ -3721,7 +3721,7 @@ loc_400E:				; CODE XREF: ROM:00004002j
 ChangeWaterSurfacePos:			; CODE XREF: ROM:loc_3F54p
 		tst.b	($FFFFF730).w
 		beq.s	locret_403E
-		move.w	($FFFFEE00).w,d1
+		move.w	(v_screenposx).w,d1
 		btst	#0,($FFFFFE05).w
 		beq.s	loc_402C
 		addi.w	#$20,d1	
@@ -3760,7 +3760,7 @@ loc_4058:				; CODE XREF: WaterEffects+Aj
 		add.w	($FFFFF648).w,d0
 		move.w	d0,($FFFFF646).w
 		move.w	($FFFFF646).w,d0
-		sub.w	($FFFFEE04).w,d0
+		sub.w	(v_screenposy).w,d0
 		bcc.s	loc_4086
 		tst.w	d0
 		bpl.s	loc_4086
@@ -3836,7 +3836,7 @@ locret_40F6:				; CODE XREF: ROM:000040E8j
 ; ---------------------------------------------------------------------------
 
 S1DynWater_LZ1:				; leftover from	Sonic 1
-		move.w	($FFFFEE00).w,d0
+		move.w	(v_screenposx).w,d0
 		move.b	($FFFFF64D).w,d2
 		bne.s	loc_4164
 		move.w	#$B8,d1	; "¸"
@@ -3895,7 +3895,7 @@ locret_4188:				; CODE XREF: ROM:00004166j
 ; ---------------------------------------------------------------------------
 
 DynWater_HPZ2:				; DATA XREF: ROM:DynWater_Indexo
-		move.w	($FFFFEE00).w,d0 ; leftover from Sonic 1"s LZ2
+		move.w	(v_screenposx).w,d0 ; leftover from Sonic 1"s LZ2
 		move.w	#$328,d1
 		cmpi.w	#$500,d0
 		bcs.s	loc_41A6
@@ -3911,7 +3911,7 @@ loc_41A6:				; CODE XREF: ROM:00004196j
 ; ---------------------------------------------------------------------------
 
 DynWater_HPZ3:				; DATA XREF: ROM:DynWater_Indexo
-		move.w	($FFFFEE00).w,d0 ; in fact, this is a leftover from Sonic 1"s LZ3
+		move.w	(v_screenposx).w,d0 ; in fact, this is a leftover from Sonic 1"s LZ3
 		move.b	($FFFFF64D).w,d2
 		bne.s	loc_41F2
 		move.w	#$900,d1
@@ -4019,7 +4019,7 @@ locret_42AE:				; CODE XREF: ROM:000042A6j
 
 DynWater_HPZ4:				; DATA XREF: ROM:DynWater_Indexo
 		move.w	#$228,d1	; in fact, this	is a leftover from Sonic 1"s SBZ3
-		cmpi.w	#$F00,($FFFFEE00).w
+		cmpi.w	#$F00,(v_screenposx).w
 		bcs.s	loc_42C0
 		move.w	#$4C8,d1
 
@@ -4524,7 +4524,7 @@ SignpostArtLoad:			; CODE XREF: ROM:00003F72p
 		bne.w	locret_47E2
 		cmpi.b	#1,($FFFFFE11).w
 		beq.s	locret_47E2
-		move.w	($FFFFEE00).w,d0
+		move.w	(v_screenposx).w,d0
 		move.w	($FFFFEECA).w,d1
 		subi.w	#$100,d1
 		cmp.w	d1,d0
@@ -4757,8 +4757,8 @@ loc_50CC:				; CODE XREF: ROM:000050CEj
 		moveq	#$A,d0
 		bsr.w	PalLoad1
 		jsr	S1SS_Load
-		move.l	#0,($FFFFEE00).w
-		move.l	#0,($FFFFEE04).w
+		move.l	#0,(v_screenposx).w
+		move.l	#0,(v_screenposy).w
 		move.b	#9,(v_objspace).w
 		bsr.w	PalCycle_S1SS
 		clr.w	($FFFFF780).w
@@ -5083,21 +5083,21 @@ S1SS_BgAnimate:				; CODE XREF: ROM:00005194p
 					; ROM:00005200p
 		move.w	($FFFFF7A0).w,d0
 		bne.s	loc_5634
-		move.w	#0,($FFFFEE0C).w
-		move.w	($FFFFEE0C).w,($FFFFF618).w
+		move.w	#0,(v_bgscreenposy).w
+		move.w	(v_bgscreenposy).w,($FFFFF618).w
 
 loc_5634:				; CODE XREF: S1SS_BgAnimate+4j
 		cmpi.w	#8,d0
 		bcc.s	loc_568C
 		cmpi.w	#6,d0
 		bne.s	loc_564E
-		addq.w	#1,($FFFFEE18).w
-		addq.w	#1,($FFFFEE0C).w
-		move.w	($FFFFEE0C).w,($FFFFF618).w
+		addq.w	#1,(v_bg3screenposx).w
+		addq.w	#1,(v_bgscreenposy).w
+		move.w	(v_bgscreenposy).w,($FFFFF618).w
 
 loc_564E:				; CODE XREF: S1SS_BgAnimate+1Cj
 		moveq	#0,d0
-		move.w	($FFFFEE08).w,d0
+		move.w	(v_bgscreenposx).w,d0
 		neg.w	d0
 		swap	d0
 		lea	(byte_5709).l,a1
@@ -5124,7 +5124,7 @@ loc_5664:				; CODE XREF: S1SS_BgAnimate+5Aj
 loc_568C:				; CODE XREF: S1SS_BgAnimate+16j
 		cmpi.w	#$C,d0
 		bne.s	loc_56B2
-		subq.w	#1,($FFFFEE18).w
+		subq.w	#1,(v_bg3screenposx).w
 		lea	($FFFFAB00).w,a3
 		move.l	#$18000,d2
 		moveq	#6,d1
@@ -5142,12 +5142,12 @@ loc_56B2:				; CODE XREF: S1SS_BgAnimate+6Ej
 
 loc_56BC:				; CODE XREF: S1SS_BgAnimate+68j
 		lea	(v_hscrolltablebuffer).w,a1
-		move.w	($FFFFEE18).w,d0
+		move.w	(v_bg3screenposx).w,d0
 		neg.w	d0
 		swap	d0
 		moveq	#0,d3
 		move.b	(a2)+,d3
-		move.w	($FFFFEE0C).w,d2
+		move.w	(v_bgscreenposy).w,d2
 		neg.w	d2
 		andi.w	#$FF,d2
 		lsl.w	#2,d2
@@ -5184,12 +5184,12 @@ byte_5709:	dc.b   8,  2,  4,$FF,  2,  3,  8,$FF,  4,  2,  2,  3,  8,$FD,  4,  2;
 		lea	(vdp_control_port).l,a5
 		lea	(vdp_data_port).l,a6
 		lea	($FFFFEE52).w,a2
-		lea	($FFFFEE08).w,a3
+		lea	(v_bgscreenposx).w,a3
 		lea	(v_lvllayout+$80).w,a4
 		move.w	#$6000,d2
 		bsr.w	sub_69B2
 		lea	($FFFFEE54).w,a2
-		lea	($FFFFEE10).w,a3
+		lea	(v_bg2screenposx).w,a3
 		bra.w	sub_6A82
 
 ; =============== S U B	R O U T	I N E =======================================
@@ -5487,7 +5487,7 @@ loc_6AF2:				; CODE XREF: sub_6A82+Cj
 
 loc_6B04:				; CODE XREF: sub_6A82+76j
 		lea	byte_6AD1(pc),a0
-		move.w	($FFFFEE0C).w,d0
+		move.w	(v_bgscreenposy).w,d0
 		add.w	d4,d0
 		andi.w	#$1F0,d0
 		lsr.w	#4,d0
@@ -5529,7 +5529,7 @@ loc_6B52:				; CODE XREF: sub_6A82+CCj
 
 loc_6B66:				; CODE XREF: sub_6A82+DAj
 		lea	byte_6AD0(pc),a0
-		move.w	($FFFFEE0C).w,d0
+		move.w	(v_bgscreenposy).w,d0
 		andi.w	#$1F0,d0
 		lsr.w	#4,d0
 		lea	(a0,d0.w),a0
@@ -5589,7 +5589,7 @@ loc_6C0C:				; CODE XREF: sub_6B7C+Cj
 
 loc_6C1E:				; CODE XREF: sub_6B7C+96j
 		lea	byte_6BCB(pc),a0
-		move.w	($FFFFEE0C).w,d0
+		move.w	(v_bgscreenposy).w,d0
 		add.w	d4,d0
 		andi.w	#$3F0,d0
 		lsr.w	#4,d0
@@ -5619,7 +5619,7 @@ loc_6C4E:				; CODE XREF: sub_6B7C+CEj
 
 loc_6C62:				; CODE XREF: sub_6B7C+DCj
 		lea	byte_6BCA(pc),a0
-		move.w	($FFFFEE0C).w,d0
+		move.w	(v_bgscreenposy).w,d0
 		andi.w	#$7F0,d0
 		lsr.w	#4,d0
 		lea	(a0,d0.w),a0
@@ -6256,11 +6256,11 @@ LoadTilesFromStart:			; CODE XREF: ROM:00003D48p
 		bsr.s	LoadTilesFromStart_2p
 
 loc_711E:				; CODE XREF: LoadTilesFromStart+10j
-		lea	($FFFFEE00).w,a3
+		lea	(v_screenposx).w,a3
 		lea	(v_lvllayout).w,a4
 		move.w	#$4000,d2
 		bsr.s	LoadTilesFromStart2
-		lea	($FFFFEE08).w,a3
+		lea	(v_bgscreenposx).w,a3
 		lea	(v_lvllayout+$80).w,a4
 		move.w	#$6000,d2
 		tst.b	(v_zone).w
@@ -6327,7 +6327,7 @@ loc_71A0:				; CODE XREF: LoadTilesFromStart+3Ej
 loc_71A4:				; CODE XREF: LoadTilesFromStart+C6j
 		movem.l	d4-d6,-(sp)
 		lea	(byte_71CA).l,a0
-		move.w	($FFFFEE0C).w,d0
+		move.w	(v_bgscreenposy).w,d0
 		add.w	d4,d0
 		andi.w	#$F0,d0	; "ð"
 		bsr.w	sub_7232
@@ -6346,7 +6346,7 @@ byte_71CA:	dc.b   0,  0,  0,  0,  6,  6,  6,  4,  4,  4,  0,  0,  0,  0,  0,  0;
 loc_71DE:				; CODE XREF: ROM:000071FCj
 		movem.l	d4-d6,-(sp)
 		lea	byte_6BCB(pc),a0
-		move.w	($FFFFEE0C).w,d0
+		move.w	(v_bgscreenposy).w,d0
 		add.w	d4,d0
 		andi.w	#$3F0,d0
 		bsr.w	sub_7232
@@ -6361,7 +6361,7 @@ loc_71DE:				; CODE XREF: ROM:000071FCj
 loc_7206:				; CODE XREF: ROM:00007224j
 		movem.l	d4-d6,-(sp)
 		lea	byte_6AD1(pc),a0
-		move.w	($FFFFEE0C).w,d0
+		move.w	(v_bgscreenposy).w,d0
 		add.w	d4,d0
 		andi.w	#$1F0,d0
 		bsr.w	sub_7232
@@ -6761,7 +6761,7 @@ DynScreenResizeLoad:			; CODE XREF: DeformBGLayer:loc_5B2Ap
 		beq.s	locret_756A
 		bcc.s	loc_756C
 		neg.w	d1
-		move.w	($FFFFEE04).w,d0
+		move.w	(v_screenposy).w,d0
 		cmp.w	($FFFFEEC6).w,d0
 		bls.s	loc_7560
 		move.w	d0,($FFFFEECE).w
@@ -6776,7 +6776,7 @@ locret_756A:				; CODE XREF: DynScreenResizeLoad+1Aj
 ; ---------------------------------------------------------------------------
 
 loc_756C:				; CODE XREF: DynScreenResizeLoad+1Cj
-		move.w	($FFFFEE04).w,d0
+		move.w	(v_screenposy).w,d0
 		addi.w	#8,d0
 		cmp.w	($FFFFEECE).w,d0
 		bcs.s	loc_7586
@@ -6819,7 +6819,7 @@ DynResize_GHZ_Index:dc.w DynResize_GHZ1-DynResize_GHZ_Index; 0
 
 DynResize_GHZ1:				; DATA XREF: ROM:DynResize_GHZ_Indexo
 		move.w	#$300,($FFFFEEC6).w
-		cmpi.w	#$1780,($FFFFEE00).w
+		cmpi.w	#$1780,(v_screenposx).w
 		bcs.s	locret_75CA
 		move.w	#$400,($FFFFEEC6).w
 
@@ -6829,13 +6829,13 @@ locret_75CA:				; CODE XREF: ROM:000075C2j
 
 DynResize_GHZ2:				; DATA XREF: ROM:DynResize_GHZ_Indexo
 		move.w	#$300,($FFFFEEC6).w
-		cmpi.w	#$ED0,($FFFFEE00).w
+		cmpi.w	#$ED0,(v_screenposx).w
 		bcs.s	locret_75FC
 		move.w	#$200,($FFFFEEC6).w
-		cmpi.w	#$1600,($FFFFEE00).w
+		cmpi.w	#$1600,(v_screenposx).w
 		bcs.s	locret_75FC
 		move.w	#$400,($FFFFEEC6).w
-		cmpi.w	#$1D60,($FFFFEE00).w
+		cmpi.w	#$1D60,(v_screenposx).w
 		bcs.s	locret_75FC
 		move.w	#$300,($FFFFEEC6).w
 
@@ -6859,21 +6859,21 @@ DynResize_GHZ3_Index:dc.w DynResize_GHZ3_Main-DynResize_GHZ3_Index; 0
 
 DynResize_GHZ3_Main:			; DATA XREF: ROM:DynResize_GHZ3_Indexo
 		move.w	#$300,($FFFFEEC6).w
-		cmpi.w	#$380,($FFFFEE00).w
+		cmpi.w	#$380,(v_screenposx).w
 		bcs.s	locret_7658
 		move.w	#$310,($FFFFEEC6).w
-		cmpi.w	#$960,($FFFFEE00).w
+		cmpi.w	#$960,(v_screenposx).w
 		bcs.s	locret_7658
-		cmpi.w	#$280,($FFFFEE04).w
+		cmpi.w	#$280,(v_screenposy).w
 		bcs.s	loc_765A
 		move.w	#$400,($FFFFEEC6).w
-		cmpi.w	#$1380,($FFFFEE00).w
+		cmpi.w	#$1380,(v_screenposx).w
 		bcc.s	loc_7650
 		move.w	#$4C0,($FFFFEEC6).w
 		move.w	#$4C0,($FFFFEECE).w
 
 loc_7650:				; CODE XREF: ROM:00007642j
-		cmpi.w	#$1700,($FFFFEE00).w
+		cmpi.w	#$1700,(v_screenposx).w
 		bcc.s	loc_765A
 
 locret_7658:				; CODE XREF: ROM:0000761Ej
@@ -6889,12 +6889,12 @@ loc_765A:				; CODE XREF: ROM:00007634j
 ; ---------------------------------------------------------------------------
 
 DynResize_GHZ3_Boss:			; DATA XREF: ROM:DynResize_GHZ3_Indexo
-		cmpi.w	#$960,($FFFFEE00).w
+		cmpi.w	#$960,(v_screenposx).w
 		bcc.s	loc_7672
 		subq.b	#2,($FFFFEEDF).w
 
 loc_7672:				; CODE XREF: ROM:0000766Cj
-		cmpi.w	#$2960,($FFFFEE00).w
+		cmpi.w	#$2960,(v_screenposx).w
 		bcs.s	locret_76AA
 		bsr.w	SingleObjectLoad
 		bne.s	loc_7692
@@ -6916,7 +6916,7 @@ locret_76AA:				; CODE XREF: ROM:00007678j
 ; ---------------------------------------------------------------------------
 
 DynResize_GHZ3_End:			; DATA XREF: ROM:DynResize_GHZ3_Indexo
-		move.w	($FFFFEE00).w,($FFFFEEC8).w
+		move.w	(v_screenposx).w,($FFFFEEC8).w
 		rts
 ; ---------------------------------------------------------------------------
 
@@ -6953,9 +6953,9 @@ loc_76EA:				; CODE XREF: ROM:000076D2j
 					; ROM:000076DCj
 		tst.b	($FFFFEEDF).w
 		bne.s	locret_7726
-		cmpi.w	#$1CA0,($FFFFEE00).w
+		cmpi.w	#$1CA0,(v_screenposx).w
 		bcs.s	locret_7724
-		cmpi.w	#$600,($FFFFEE04).w
+		cmpi.w	#$600,(v_screenposy).w
 		bcc.s	locret_7724
 		bsr.w	SingleObjectLoad
 		bne.s	loc_770C
@@ -6980,7 +6980,7 @@ locret_7726:				; CODE XREF: ROM:000076EEj
 ; ---------------------------------------------------------------------------
 
 DynResize_LZ4:				; DATA XREF: ROM:DynResize_LZ_Indexo
-		cmpi.w	#$D00,($FFFFEE00).w
+		cmpi.w	#$D00,(v_screenposx).w
 		bcs.s	locret_774E
 		cmpi.w	#$18,(v_objspace+$C).w
 		bcc.s	locret_774E
@@ -7027,13 +7027,13 @@ off_7776:	dc.w loc_777E-off_7776	; 0 ; DATA XREF: ROM:off_7776o
 
 loc_777E:				; DATA XREF: ROM:off_7776o
 		move.w	#$1D0,($FFFFEEC6).w
-		cmpi.w	#$700,($FFFFEE00).w
+		cmpi.w	#$700,(v_screenposx).w
 		bcs.s	locret_77AC
 		move.w	#$220,($FFFFEEC6).w
-		cmpi.w	#$D00,($FFFFEE00).w
+		cmpi.w	#$D00,(v_screenposx).w
 		bcs.s	locret_77AC
 		move.w	#$340,($FFFFEEC6).w
-		cmpi.w	#$340,($FFFFEE04).w
+		cmpi.w	#$340,(v_screenposy).w
 		bcs.s	locret_77AC
 		addq.b	#2,($FFFFEEDF).w
 
@@ -7043,7 +7043,7 @@ locret_77AC:				; CODE XREF: ROM:0000778Aj
 ; ---------------------------------------------------------------------------
 
 loc_77AE:				; DATA XREF: ROM:off_7776o
-		cmpi.w	#$340,($FFFFEE04).w
+		cmpi.w	#$340,(v_screenposy).w
 		bcc.s	loc_77BC
 		subq.b	#2,($FFFFEEDF).w
 		rts
@@ -7051,14 +7051,14 @@ loc_77AE:				; DATA XREF: ROM:off_7776o
 
 loc_77BC:				; CODE XREF: ROM:000077B4j
 		move.w	#0,($FFFFEECC).w
-		cmpi.w	#$E00,($FFFFEE00).w
+		cmpi.w	#$E00,(v_screenposx).w
 		bcc.s	locret_77F0
 		move.w	#$340,($FFFFEECC).w
 		move.w	#$340,($FFFFEEC6).w
-		cmpi.w	#$A90,($FFFFEE00).w
+		cmpi.w	#$A90,(v_screenposx).w
 		bcc.s	locret_77F0
 		move.w	#$500,($FFFFEEC6).w
-		cmpi.w	#$370,($FFFFEE04).w
+		cmpi.w	#$370,(v_screenposy).w
 		bcs.s	locret_77F0
 		addq.b	#2,($FFFFEEDF).w
 
@@ -7068,16 +7068,16 @@ locret_77F0:				; CODE XREF: ROM:000077C8j
 ; ---------------------------------------------------------------------------
 
 loc_77F2:				; DATA XREF: ROM:off_7776o
-		cmpi.w	#$370,($FFFFEE04).w
+		cmpi.w	#$370,(v_screenposy).w
 		bcc.s	loc_7800
 		subq.b	#2,($FFFFEEDF).w
 		rts
 ; ---------------------------------------------------------------------------
 
 loc_7800:				; CODE XREF: ROM:000077F8j
-		cmpi.w	#$500,($FFFFEE04).w
+		cmpi.w	#$500,(v_screenposy).w
 		bcs.s	locret_781A
-		cmpi.w	#$B80,($FFFFEE00).w
+		cmpi.w	#$B80,(v_screenposx).w
 		bcs.s	locret_781A
 		move.w	#$500,($FFFFEECC).w
 		addq.b	#2,($FFFFEEDF).w
@@ -7088,7 +7088,7 @@ locret_781A:				; CODE XREF: ROM:00007806j
 ; ---------------------------------------------------------------------------
 
 loc_781C:				; DATA XREF: ROM:off_7776o
-		cmpi.w	#$B80,($FFFFEE00).w
+		cmpi.w	#$B80,(v_screenposx).w
 		bcc.s	loc_7832
 		cmpi.w	#$340,($FFFFEECC).w
 		beq.s	locret_786A
@@ -7099,16 +7099,16 @@ loc_781C:				; DATA XREF: ROM:off_7776o
 loc_7832:				; CODE XREF: ROM:00007822j
 		cmpi.w	#$500,($FFFFEECC).w
 		beq.s	loc_7848
-		cmpi.w	#$500,($FFFFEE04).w
+		cmpi.w	#$500,(v_screenposy).w
 		bcs.s	locret_786A
 		move.w	#$500,($FFFFEECC).w
 
 loc_7848:				; CODE XREF: ROM:00007838j
-		cmpi.w	#$E70,($FFFFEE00).w
+		cmpi.w	#$E70,(v_screenposx).w
 		bcs.s	locret_786A
 		move.w	#0,($FFFFEECC).w
 		move.w	#$500,($FFFFEEC6).w
-		cmpi.w	#$1430,($FFFFEE00).w
+		cmpi.w	#$1430,(v_screenposx).w
 		bcs.s	locret_786A
 		move.w	#$210,($FFFFEEC6).w
 
@@ -7123,7 +7123,7 @@ DynResize_CPZ2:				; DATA XREF: ROM:DynResize_CPZ_Indexo
 
 S1DynResize_MZ2:			; leftover from	Sonic 1
 		move.w	#$520,($FFFFEEC6).w
-		cmpi.w	#$1700,($FFFFEE00).w
+		cmpi.w	#$1700,(v_screenposx).w
 		bcs.s	locret_7882
 		move.w	#$200,($FFFFEEC6).w
 
@@ -7143,12 +7143,12 @@ off_7892:	dc.w DynResize_CPZ3_BossCheck-off_7892;	0 ; DATA XREF: ROM:off_7892o
 ; ---------------------------------------------------------------------------
 
 DynResize_CPZ3_BossCheck:		; DATA XREF: ROM:off_7892o
-		cmpi.w	#$480,($FFFFEE00).w
+		cmpi.w	#$480,(v_screenposx).w
 		blt.s	DynResize_CPZ3_Null
-		cmpi.w	#$740,($FFFFEE00).w
+		cmpi.w	#$740,(v_screenposx).w
 		bgt.s	DynResize_CPZ3_Null
 		move.w	($FFFFEECE).w,d0
-		cmp.w	($FFFFEE04).w,d0
+		cmp.w	(v_screenposy).w,d0
 		bne.s	DynResize_CPZ3_Null
 		move.w	#$740,($FFFFEECA).w
 		move.w	#$480,($FFFFEEC8).w
@@ -7198,9 +7198,9 @@ DynResize_EHZ2_Index:dc.w DynResize_EHZ2_01-DynResize_EHZ2_Index
 ; ---------------------------------------------------------------------------
 
 DynResize_EHZ2_01:			; DATA XREF: ROM:DynResize_EHZ2_Indexo
-		cmpi.w	#$26E0,($FFFFEE00).w
+		cmpi.w	#$26E0,(v_screenposx).w
 		bcs.s	locret_795A
-		move.w	($FFFFEE00).w,($FFFFEEC8).w
+		move.w	(v_screenposx).w,($FFFFEEC8).w
 		move.w	#$390,($FFFFEEC6).w
 		move.w	#$390,($FFFFEECE).w
 		addq.b	#2,($FFFFEEDF).w
@@ -7224,7 +7224,7 @@ locret_795A:				; CODE XREF: ROM:00007912j
 ; ---------------------------------------------------------------------------
 
 DynResize_EHZ2_02:			; DATA XREF: ROM:00007908o
-		cmpi.w	#$2880,($FFFFEE00).w
+		cmpi.w	#$2880,(v_screenposx).w
 		bcs.s	locret_796E
 		move.w	#$2880,($FFFFEEC8).w
 		addq.b	#2,($FFFFEEDF).w
@@ -7261,7 +7261,7 @@ off_7990:	dc.w loc_7996-off_7990	; DATA XREF: ROM:off_7990o
 ; ---------------------------------------------------------------------------
 
 loc_7996:				; DATA XREF: ROM:off_7990o
-		cmpi.w	#$1E70,($FFFFEE00).w
+		cmpi.w	#$1E70,(v_screenposx).w
 		bcs.s	locret_79A8
 		move.w	#$210,($FFFFEEC6).w
 		addq.b	#2,($FFFFEEDF).w
@@ -7271,7 +7271,7 @@ locret_79A8:				; CODE XREF: ROM:0000799Cj
 ; ---------------------------------------------------------------------------
 
 loc_79AA:				; DATA XREF: ROM:00007992o
-		cmpi.w	#$2000,($FFFFEE00).w
+		cmpi.w	#$2000,(v_screenposx).w
 		bcs.s	locret_79D4
 		bsr.w	SingleObjectLoad
 		bne.s	loc_79BC
@@ -7291,7 +7291,7 @@ locret_79D4:				; CODE XREF: ROM:000079B0j
 ; ---------------------------------------------------------------------------
 
 loc_79D6:				; DATA XREF: ROM:00007994o
-		move.w	($FFFFEE00).w,($FFFFEEC8).w
+		move.w	(v_screenposx).w,($FFFFEEC8).w
 		rts
 ; ---------------------------------------------------------------------------
 		rts
@@ -7317,7 +7317,7 @@ DynResize_HPZ1:				; DATA XREF: ROM:DynResize_HPZ_Indexo
 
 DynResize_HPZ2:				; DATA XREF: ROM:000079F2o
 		move.w	#$520,($FFFFEEC6).w
-		cmpi.w	#$25A0,($FFFFEE00).w
+		cmpi.w	#$25A0,(v_screenposx).w
 		bcs.s	locret_7A1A
 		move.w	#$420,($FFFFEEC6).w
 		cmpi.w	#$4D0,(v_objspace+$C).w
@@ -7343,7 +7343,7 @@ DynResize_HPZ3_Index:dc.w loc_7A30-DynResize_HPZ3_Index
 ; ---------------------------------------------------------------------------
 
 loc_7A30:				; DATA XREF: ROM:DynResize_HPZ3_Indexo
-		cmpi.w	#$2AC0,($FFFFEE00).w
+		cmpi.w	#$2AC0,(v_screenposx).w
 		bcs.s	locret_7A46
 		bsr.w	SingleObjectLoad
 		bne.s	locret_7A46
@@ -7356,7 +7356,7 @@ locret_7A46:				; CODE XREF: ROM:00007A36j
 ; ---------------------------------------------------------------------------
 
 loc_7A48:				; DATA XREF: ROM:00007A2Co
-		cmpi.w	#$2C00,($FFFFEE00).w
+		cmpi.w	#$2C00,(v_screenposx).w
 		bcs.s	locret_7A78
 		move.w	#$4CC,($FFFFEEC6).w
 		bsr.w	SingleObjectLoad
@@ -7377,7 +7377,7 @@ locret_7A78:				; CODE XREF: ROM:00007A4Ej
 ; ---------------------------------------------------------------------------
 
 loc_7A7A:				; DATA XREF: ROM:00007A2Eo
-		move.w	($FFFFEE00).w,($FFFFEEC8).w
+		move.w	(v_screenposx).w,($FFFFEEC8).w
 		rts
 ; ---------------------------------------------------------------------------
 
@@ -7397,10 +7397,10 @@ DynResize_HTZ_Index:dc.w DynResize_HTZ1-DynResize_HTZ_Index
 
 DynResize_HTZ1:				; DATA XREF: ROM:DynResize_HTZ_Indexo
 		move.w	#$720,($FFFFEEC6).w
-		cmpi.w	#$1880,($FFFFEE00).w
+		cmpi.w	#$1880,(v_screenposx).w
 		bcs.s	locret_7ABA
 		move.w	#$620,($FFFFEEC6).w
-		cmpi.w	#$2000,($FFFFEE00).w
+		cmpi.w	#$2000,(v_screenposx).w
 		bcs.s	locret_7ABA
 		move.w	#$2A0,($FFFFEEC6).w
 
@@ -7425,10 +7425,10 @@ DynResize_HTZ2_Index:dc.w loc_7AD2-DynResize_HTZ2_Index
 
 loc_7AD2:				; DATA XREF: ROM:DynResize_HTZ2_Indexo
 		move.w	#$800,($FFFFEEC6).w
-		cmpi.w	#$1800,($FFFFEE00).w
+		cmpi.w	#$1800,(v_screenposx).w
 		bcs.s	locret_7AF2
 		move.w	#$510,($FFFFEEC6).w
-		cmpi.w	#$1E00,($FFFFEE00).w
+		cmpi.w	#$1E00,(v_screenposx).w
 		bcs.s	locret_7AF2
 		addq.b	#2,($FFFFEEDF).w
 
@@ -7438,7 +7438,7 @@ locret_7AF2:				; CODE XREF: ROM:00007ADEj
 ; ---------------------------------------------------------------------------
 
 loc_7AF4:				; DATA XREF: ROM:00007ACCo
-		cmpi.w	#$1EB0,($FFFFEE00).w
+		cmpi.w	#$1EB0,(v_screenposx).w
 		bcs.s	locret_7B10
 		bsr.w	SingleObjectLoad
 		bne.s	locret_7B10
@@ -7454,7 +7454,7 @@ locret_7B10:				; CODE XREF: ROM:00007AFAj
 ; ---------------------------------------------------------------------------
 
 loc_7B12:				; DATA XREF: ROM:00007ACEo
-		cmpi.w	#$1F60,($FFFFEE00).w
+		cmpi.w	#$1F60,(v_screenposx).w
 		bcs.s	loc_7B2E
 		bsr.w	SingleObjectLoad
 		bne.s	loc_7B28
@@ -7469,14 +7469,14 @@ loc_7B2E:				; CODE XREF: ROM:00007B18j
 ; ---------------------------------------------------------------------------
 
 loc_7B30:				; DATA XREF: ROM:00007AD0o
-		cmpi.w	#$2050,($FFFFEE00).w
+		cmpi.w	#$2050,(v_screenposx).w
 		bcs.s	loc_7B3A
 		rts
 ; ---------------------------------------------------------------------------
 
 loc_7B3A:				; CODE XREF: ROM:loc_7B2Ej
 					; ROM:00007B36j ...
-		move.w	($FFFFEE00).w,($FFFFEEC8).w
+		move.w	(v_screenposx).w,($FFFFEEC8).w
 		rts
 ; ---------------------------------------------------------------------------
 
@@ -7496,7 +7496,7 @@ DynResize_HTZ3_Index:dc.w loc_7B5A-DynResize_HTZ3_Index
 ; ---------------------------------------------------------------------------
 
 loc_7B5A:				; DATA XREF: ROM:DynResize_HTZ3_Indexo
-		cmpi.w	#$2148,($FFFFEE00).w
+		cmpi.w	#$2148,(v_screenposx).w
 		bcs.s	loc_7B6C
 		addq.b	#2,($FFFFEEDF).w
 		moveq	#$1F,d0
@@ -7507,7 +7507,7 @@ loc_7B6C:				; CODE XREF: ROM:00007B60j
 ; ---------------------------------------------------------------------------
 
 loc_7B6E:				; DATA XREF: ROM:00007B52o
-		cmpi.w	#$2300,($FFFFEE00).w
+		cmpi.w	#$2300,(v_screenposx).w
 		bcs.s	loc_7B8A
 		bsr.w	SingleObjectLoad
 		bne.s	loc_7B8A
@@ -7521,7 +7521,7 @@ loc_7B8A:				; CODE XREF: ROM:00007B74j
 ; ---------------------------------------------------------------------------
 
 loc_7B8C:				; DATA XREF: ROM:00007B54o
-		cmpi.w	#$2450,($FFFFEE00).w
+		cmpi.w	#$2450,(v_screenposx).w
 		bcs.s	loc_7B98
 		addq.b	#2,($FFFFEEDF).w
 
@@ -11840,7 +11840,7 @@ loc_B04E:				; DATA XREF: ROM:Obj2E_Indexo
 		move.b	$1C(a0),d0
 		addq.b	#1,d0
 		move.b	d0,$1A(a0)
-		movea.l	#$B298,a1
+		movea.l	#Map_Obj26,a1
 		add.b	d0,d0
 		adda.w	(a1,d0.w),a1
 		addq.w	#2,a1
@@ -11930,7 +11930,7 @@ Monitor_Shoes:				; DATA XREF: ROM:0000B0D0o
 		move.w	#$4B0,(v_objspace+$34).w
 		move.w	#$C00,($FFFFF760).w
 		move.w	#$18,($FFFFF762).w
-		move.w	#$80,($FFFFF764).w 
+		move.w	#$80,($FFFFF764).w
 		move.w	#$E2,d0	; "â"
 		jmp	(PlaySound).l
 ; ---------------------------------------------------------------------------
@@ -13866,24 +13866,14 @@ word_CAF0:	dc.w 8			; DATA XREF: ROM:0000CA6Ao
 ; =============== S U B	R O U T	I N E =======================================
 
 
-ObjectsLoad:				; CODE XREF: ROM:000033B2p
-					; ROM:000033FEp ...
-
-; FUNCTION CHUNK AT 0000CB5E SIZE 00000020 BYTES
-
+ObjectsLoad:
 		lea	(v_objspace).w,a0
 		moveq	#$7F,d7	
 		moveq	#0,d0
 		cmpi.b	#6,(v_objspace+$24).w
 		bcc.s	loc_CB5E
-; End of function ObjectsLoad
 
-
-; =============== S U B	R O U T	I N E =======================================
-
-
-sub_CB44:				; CODE XREF: sub_CB44+14j
-					; ObjectsLoad+2Cp
+sub_CB44:
 		move.b	(a0),d0
 		beq.s	loc_CB54
 		add.w	d0,d0
@@ -13892,7 +13882,7 @@ sub_CB44:				; CODE XREF: sub_CB44+14j
 		jsr	(a1)
 		moveq	#0,d0
 
-loc_CB54:				; CODE XREF: sub_CB44+2j
+loc_CB54:
 		lea	$40(a0),a0
 		dbf	d7,sub_CB44
 		rts
@@ -13929,7 +13919,7 @@ Obj_Index:	dc.l Obj01
                 dc.l Obj04
 		dc.l Obj05
                 dc.l Obj06
-                dc.l jmp_DeleteObject
+                dc.l NullObject
                 dc.l Obj08
 		dc.l Obj09
                 dc.l Obj0A
@@ -13949,12 +13939,12 @@ Obj_Index:	dc.l Obj01
                 dc.l Obj18
 		dc.l Obj19
                 dc.l Obj1A
-                dc.l jmp_DeleteObject
+                dc.l NullObject
                 dc.l Obj1C
-		dc.l jmp_DeleteObject
-                dc.l jmp_DeleteObject
+		dc.l NullObject
+                dc.l NullObject
                 dc.l Obj1F
-                dc.l jmp_DeleteObject
+                dc.l NullObject
 		dc.l Obj21
                 dc.l Obj22
                 dc.l Obj23
@@ -13967,15 +13957,15 @@ Obj_Index:	dc.l Obj01
                 dc.l Obj2A
                 dc.l Obj2B
                 dc.l Obj2C
-		dc.l jmp_DeleteObject
+		dc.l NullObject
                 dc.l Obj2E
-                dc.l jmp_DeleteObject
-                dc.l jmp_DeleteObject
-		dc.l jmp_DeleteObject
-                dc.l jmp_DeleteObject
-                dc.l jmp_DeleteObject
+                dc.l NullObject
+                dc.l NullObject
+		dc.l NullObject
+                dc.l NullObject
+                dc.l NullObject
                 dc.l Obj34
-		dc.l jmp_DeleteObject
+		dc.l NullObject
                 dc.l Obj36
                 dc.l Obj37
                 dc.l Obj38
@@ -13989,11 +13979,11 @@ Obj_Index:	dc.l Obj01
                 dc.l Obj40
 		dc.l Obj41
                 dc.l Obj42
-                dc.l jmp_DeleteObject
+                dc.l NullObject
                 dc.l Obj44
-		dc.l jmp_DeleteObject
-                dc.l jmp_DeleteObject
-                dc.l jmp_DeleteObject
+		dc.l NullObject
+                dc.l NullObject
+                dc.l NullObject
                 dc.l Obj48
 		dc.l Obj49
                 dc.l Obj4A
@@ -14011,61 +14001,61 @@ Obj_Index:	dc.l Obj01
                 dc.l Obj56
                 dc.l Obj57
                 dc.l Obj58
-		dc.l jmp_DeleteObject
-                dc.l jmp_DeleteObject
-                dc.l jmp_DeleteObject
-                dc.l jmp_DeleteObject
-		dc.l jmp_DeleteObject
-                dc.l jmp_DeleteObject
-                dc.l jmp_DeleteObject
-                dc.l jmp_DeleteObject
-		dc.l jmp_DeleteObject
-                dc.l jmp_DeleteObject
-                dc.l jmp_DeleteObject
-                dc.l jmp_DeleteObject
-		dc.l jmp_DeleteObject
-                dc.l jmp_DeleteObject
-                dc.l jmp_DeleteObject
-                dc.l jmp_DeleteObject
-		dc.l jmp_DeleteObject
-                dc.l jmp_DeleteObject
-                dc.l jmp_DeleteObject
-                dc.l jmp_DeleteObject
-		dc.l jmp_DeleteObject
-                dc.l jmp_DeleteObject
-                dc.l jmp_DeleteObject
-                dc.l jmp_DeleteObject
-		dc.l jmp_DeleteObject
-                dc.l jmp_DeleteObject
-                dc.l jmp_DeleteObject
-                dc.l jmp_DeleteObject
-		dc.l jmp_DeleteObject
-                dc.l jmp_DeleteObject
-                dc.l jmp_DeleteObject
-                dc.l jmp_DeleteObject
+		dc.l NullObject
+                dc.l NullObject
+                dc.l NullObject
+                dc.l NullObject
+		dc.l NullObject
+                dc.l NullObject
+                dc.l NullObject
+                dc.l NullObject
+		dc.l NullObject
+                dc.l NullObject
+                dc.l NullObject
+                dc.l NullObject
+		dc.l NullObject
+                dc.l NullObject
+                dc.l NullObject
+                dc.l NullObject
+		dc.l NullObject
+                dc.l NullObject
+                dc.l NullObject
+                dc.l NullObject
+		dc.l NullObject
+                dc.l NullObject
+                dc.l NullObject
+                dc.l NullObject
+		dc.l NullObject
+                dc.l NullObject
+                dc.l NullObject
+                dc.l NullObject
+		dc.l NullObject
+                dc.l NullObject
+                dc.l NullObject
+                dc.l NullObject
 		dc.l Obj79
-                dc.l jmp_DeleteObject
-                dc.l jmp_DeleteObject
-                dc.l jmp_DeleteObject
+                dc.l NullObject
+                dc.l NullObject
+                dc.l NullObject
 		dc.l Obj7D
-                dc.l jmp_DeleteObject
-                dc.l jmp_DeleteObject
-                dc.l jmp_DeleteObject
-		dc.l jmp_DeleteObject
-                dc.l jmp_DeleteObject
-                dc.l jmp_DeleteObject
-                dc.l jmp_DeleteObject
-		dc.l jmp_DeleteObject
-                dc.l jmp_DeleteObject
-                dc.l jmp_DeleteObject
-                dc.l jmp_DeleteObject
-		dc.l jmp_DeleteObject
+                dc.l NullObject
+                dc.l NullObject
+                dc.l NullObject
+		dc.l NullObject
+                dc.l NullObject
+                dc.l NullObject
+                dc.l NullObject
+		dc.l NullObject
+                dc.l NullObject
+                dc.l NullObject
+                dc.l NullObject
+		dc.l NullObject
                 dc.l Obj8A
-                dc.l jmp_DeleteObject
-                dc.l jmp_DeleteObject
+                dc.l NullObject
+                dc.l NullObject
 ; ---------------------------------------------------------------------------
 
-jmp_DeleteObject:			; DATA XREF: ROM:Obj_Indexo
+NullObject:			; DATA XREF: ROM:Obj_Indexo
 		bra.w	DeleteObject
 
 ; =============== S U B	R O U T	I N E =======================================
@@ -14274,20 +14264,14 @@ loc_CF36:				; CODE XREF: ROM:0000CF2Ej
 		bra.w	*+4
 ; START	OF FUNCTION CHUNK FOR sub_8CEC
 
-DeleteObject:				; CODE XREF: ROM:loc_7D56j
-					; ROM:loc_8526j ...
+DeleteObject:
 		movea.l	a0,a1
-; END OF FUNCTION CHUNK	FOR sub_8CEC
 
-; =============== S U B	R O U T	I N E =======================================
-
-
-sub_CF3C:				; CODE XREF: ROM:00007D42p
-					; ROM:00007D52p ...
+sub_CF3C:
 		moveq	#0,d1
 		moveq	#$F,d0
 
-loc_CF40:				; CODE XREF: sub_CF3C+6j
+loc_CF40:
 		move.l	d1,(a1)+
 		dbf	d0,loc_CF40
 		rts
@@ -14388,9 +14372,9 @@ locret_CFFA:				; CODE XREF: AnimateSprite+AAj
 
 ; ---------------------------------------------------------------------------
 BldSpr_ScrPos:	dc.l 0
-		dc.l $FFFFEE00
-		dc.l $FFFFEE08
-		dc.l $FFFFEE18
+		dc.l v_screenposx
+		dc.l v_bgscreenposx
+		dc.l v_bg3screenposx
 
 ; =============== S U B	R O U T	I N E =======================================
 
@@ -14425,7 +14409,7 @@ loc_D034:				; CODE XREF: BuildSprites+F2j
 		beq.w	loc_D124
 		tst.l	4(a0)
 		beq.w	loc_D124
-		andi.b	#$7F,1(a0) 
+		andi.b	#$7F,1(a0)
 		move.b	1(a0),d0
 		move.b	d0,d4
 		btst	#6,d0
@@ -14444,7 +14428,7 @@ loc_D034:				; CODE XREF: BuildSprites+F2j
 		sub.w	d0,d1
 		cmpi.w	#$140,d1
 		bge.w	loc_D0FA
-		addi.w	#$80,d3	
+		addi.w	#$80,d3
 		btst	#4,d4
 		beq.s	loc_D0BC
 		moveq	#0,d0
@@ -14458,7 +14442,7 @@ loc_D034:				; CODE XREF: BuildSprites+F2j
 		sub.w	d0,d1
 		cmpi.w	#$E0,d1	; "à"
 		bge.s	loc_D0FA
-		addi.w	#$80,d2	
+		addi.w	#$80,d2
 		bra.s	loc_D0D4
 ; ---------------------------------------------------------------------------
 
@@ -14471,8 +14455,8 @@ loc_D0B2:				; CODE XREF: BuildSprites+52j
 loc_D0BC:				; CODE XREF: BuildSprites+80j
 		move.w	$C(a0),d2
 		sub.w	4(a1),d2
-		addi.w	#$80,d2	
-		cmpi.w	#$60,d2	
+		addi.w	#$80,d2
+		cmpi.w	#$60,d2
 		bcs.s	loc_D0FA
 		cmpi.w	#$180,d2
 		bcc.s	loc_D0FA
@@ -14524,7 +14508,7 @@ loc_D124:				; CODE XREF: BuildSprites+2Ej
 
 loc_D126:				; CODE XREF: BuildSprites+4Aj
 		move.l	a4,-(sp)
-		lea	($FFFFEE00).w,a4
+		lea	(v_screenposx).w,a4
 		movea.w	2(a0),a3
 		movea.l	4(a0),a5
 		moveq	#0,d0
@@ -14744,9 +14728,9 @@ byte_D2E2:	dc.b   8,  8,  8,  8	; 0
 		dc.b $18,$18,$18,$18	; 8
 		dc.b $20,$20,$20,$20	; 12
 BldSpr_ScrPos_2p:dc.l 0
-		dc.l $FFFFEE00
-		dc.l $FFFFEE08
-		dc.l $FFFFEE18
+		dc.l v_screenposx
+		dc.l v_bgscreenposx
+		dc.l v_bg3screenposx
 ; ---------------------------------------------------------------------------
 ; START	OF FUNCTION CHUNK FOR BuildSprites
 
@@ -14998,7 +14982,7 @@ loc_D542:				; CODE XREF: BuildSprites+52Cj
 
 loc_D54A:				; CODE XREF: BuildSprites+350j
 		move.l	a4,-(sp)
-		lea	($FFFFEE00).w,a4
+		lea	(v_screenposx).w,a4
 		movea.w	2(a0),a3
 		movea.l	4(a0),a5
 		moveq	#0,d0
@@ -15333,12 +15317,12 @@ byte_D7FA:	dc.b   8,  8,  8,  8	; 0
 		dc.b $20,$20,$20,$20	; 12
 		dc.b $30,$28,  0,  8	; 16
 ; ---------------------------------------------------------------------------
-		sub.w	($FFFFEE00).w,d0
+		sub.w	(v_screenposx).w,d0
 		bmi.s	loc_D82E
 		cmpi.w	#$140,d0
 		bge.s	loc_D82E
 		move.w	$C(a0),d1
-		sub.w	($FFFFEE04).w,d1
+		sub.w	(v_screenposy).w,d1
 		bmi.s	loc_D82E
 		cmpi.w	#$E0,d1	; "à"
 		bge.s	loc_D82E
@@ -15354,7 +15338,7 @@ loc_D82E:				; CODE XREF: ROM:0000D812j
 		moveq	#0,d1
 		move.b	$19(a0),d1
 		move.w	8(a0),d0
-		sub.w	($FFFFEE00).w,d0
+		sub.w	(v_screenposx).w,d0
 		add.w	d1,d0
 		bmi.s	loc_D862
 		add.w	d1,d1
@@ -15362,7 +15346,7 @@ loc_D82E:				; CODE XREF: ROM:0000D812j
 		cmpi.w	#$140,d0
 		bge.s	loc_D862
 		move.w	$C(a0),d1
-		sub.w	($FFFFEE04).w,d1
+		sub.w	(v_screenposy).w,d1
 		bmi.s	loc_D862
 		cmpi.w	#$E0,d1	; "à"
 		bge.s	loc_D862
@@ -15397,8 +15381,8 @@ RPL_Index:	dc.w RPL_Main-RPL_Index	; DATA XREF: ROM:RPL_Indexo
 RPL_Main:				; DATA XREF: ROM:RPL_Indexo
 		addq.b	#2,($FFFFF710).w
 		bsr.w	RingPosLoad2
-		lea	($FFFFE800).w,a1
-		move.w	($FFFFEE00).w,d4
+		lea	(v_rpl_data).w,a1
+		move.w	(v_screenposx).w,d4
 		subq.w	#8,d4
 		bhi.s	loc_D896
 		moveq	#1,d4
@@ -15431,7 +15415,7 @@ loc_D8AE:				; CODE XREF: ROM:0000D8A8j
 ; ---------------------------------------------------------------------------
 
 RPL_Next:				; DATA XREF: ROM:0000D878o
-		lea	($FFFFE800).w,a1
+		lea	(v_rpl_data).w,a1
 		move.w	#$FF,d1
 
 loc_D8CC:				; CODE XREF: ROM:0000D8EEj
@@ -15451,7 +15435,7 @@ loc_D8EA:				; CODE XREF: ROM:0000D8CEj
 		lea	6(a1),a1
 		dbf	d1,loc_D8CC
 		movea.w	($FFFFF712).w,a1
-		move.w	($FFFFEE00).w,d4
+		move.w	(v_screenposx).w,d4
 		subq.w	#8,d4
 		bhi.s	loc_D906
 		moveq	#1,d4
@@ -15642,14 +15626,14 @@ BuildSprites2:				; CODE XREF: BuildSprites+16p
 ; ---------------------------------------------------------------------------
 
 loc_DA46:				; CODE XREF: BuildSprites2+Aj
-		lea	($FFFFEE00).w,a3
+		lea	(v_screenposx).w,a3
 
 loc_DA4A:				; CODE XREF: BuildSprites2+76j
 		tst.w	(a0)
 		bmi.w	loc_DAA8
 		move.w	2(a0),d3
 		sub.w	(a3),d3
-		addi.w	#$80,d3	
+		addi.w	#$80,d3
 		move.w	4(a0),d2
 		sub.w	4(a3),d2
 		addi.w	#8,d2
@@ -15694,7 +15678,7 @@ loc_DAA8:				; CODE XREF: BuildSprites2+14j
 
 
 BuildSprites2_2p:			; CODE XREF: BuildSprites+322p
-		lea	($FFFFEE00).w,a3
+		lea	(v_screenposx).w,a3
 		move.w	#$78,d6	; "x"
 		movea.w	($FFFFF712).w,a0
 		movea.w	($FFFFF714).w,a4
@@ -15723,7 +15707,7 @@ loc_DAE0:				; CODE XREF: BuildSprites2_2p+12j
 		bmi.w	loc_DB40
 		move.w	2(a0),d3
 		sub.w	(a3),d3
-		addi.w	#$80,d3	
+		addi.w	#$80,d3
 		move.w	4(a0),d2
 		sub.w	4(a3),d2
 		addi.w	#$88,d2	; "ˆ"
@@ -15773,7 +15757,7 @@ byte_DB4C:	dc.b   0,  0,  1,  1	; 0
 
 
 RingPosLoad2:				; CODE XREF: ROM:0000D87Ep
-		lea	($FFFFE800).w,a1
+		lea	(v_rpl_data).w,a1
 		moveq	#0,d0
 		move.w	#$17F,d1
 
@@ -15787,7 +15771,7 @@ loc_DB66:				; CODE XREF: RingPosLoad2+Cj
 		lea	(RingPos_Index).l,a1
 		move.w	(a1,d0.w),d0
 		lea	(a1,d0.w),a1
-		lea	($FFFFE806).w,a2
+		lea	(v_rpl_data+6).w,a2
 
 loc_DB88:				; CODE XREF: RingPosLoad2+50j
 					; RingPosLoad2+6Ej
@@ -15827,7 +15811,7 @@ loc_DBBA:				; CODE XREF: RingPosLoad2+6Aj
 loc_DBCC:				; CODE XREF: RingPosLoad2+2Ej
 		moveq	#$FFFFFFFF,d0
 		move.l	d0,(a2)+
-		lea	($FFFFE802).w,a1
+		lea	(v_rpl_data+2).w,a1
 		move.w	#$FE,d3	; "þ"
 
 loc_DBD8:				; CODE XREF: RingPosLoad2+A2j
@@ -15912,7 +15896,7 @@ loc_DC9C:				; CODE XREF: ROM:0000DC9Ej
 		dbf	d0,loc_DC9C
 		lea	($FFFFFC00).w,a2
 		moveq	#0,d2
-		move.w	($FFFFEE00).w,d6
+		move.w	(v_screenposx).w,d6
 		subi.w	#$80,d6	
 		bcc.s	loc_DCB4
 		moveq	#0,d6
@@ -15967,13 +15951,13 @@ loc_DCF2:				; CODE XREF: ROM:0000DCDEj
 
 loc_DD14:				; CODE XREF: ROM:0000DD0Aj
 					; DATA XREF: ROM:0000DC64o
-		move.w	($FFFFEE00).w,d1
+		move.w	(v_screenposx).w,d1
 		subi.w	#$80,d1	
 		andi.w	#$FF80,d1
 		move.w	d1,($FFFFF7DA).w
 		lea	($FFFFFC00).w,a2
 		moveq	#0,d2
-		move.w	($FFFFEE00).w,d6
+		move.w	(v_screenposx).w,d6
 		andi.w	#$FF80,d6
 		cmp.w	($FFFFF76E).w,d6
 		beq.w	locret_DDDE
@@ -16112,13 +16096,13 @@ loc_DDE0:				; CODE XREF: ROM:0000DD10j
 		bsr.w	sub_DF80
 
 loc_DE5C:				; DATA XREF: ROM:0000DC66o
-		move.w	($FFFFEE00).w,d1
+		move.w	(v_screenposx).w,d1
 		andi.w	#$FF00,d1
 		move.w	d1,($FFFFF7DA).w
 		move.w	($FFFFEE20).w,d1
 		andi.w	#$FF00,d1
 		move.w	d1,($FFFFF7DC).w
-		move.b	($FFFFEE00).w,d6
+		move.b	(v_screenposx).w,d6
 		andi.w	#$FF,d6
 		move.w	($FFFFF76E).w,d0
 		cmp.w	($FFFFF76E).w,d6
@@ -18995,25 +18979,25 @@ locret_FBAE:				; CODE XREF: Sonic_Display+5Ej
 CopySonicMovesForTails:			; CODE XREF: ROM:loc_FA88p
 					; ROM:0000FAD8p ...
 		move.w	($FFFFEED2).w,d0
-		lea	($FFFFE500).w,a1
+		lea	(v_tracktails).w,a1
 		lea	(a1,d0.w),a1
 		move.w	8(a0),(a1)+
 		move.w	$C(a0),(a1)+
 		addq.b	#4,($FFFFEED3).w
-		lea	($FFFFE400).w,a1
+		lea	(v_tracksonic).w,a1
 		move.w	($FFFFF604).w,(a1,d0.w)
 		rts
 ; End of function CopySonicMovesForTails
 
 ; ---------------------------------------------------------------------------
 ;----------------------------------------------------
-; unused subroutine for	recording Sonic"s position
+; unused subroutine for	recording Sonic's position
 ;----------------------------------------------------
 
 Unused_PosRecord:
 		move.w	($FFFFEEE0).w,d0
 		subq.b	#4,d0
-		lea	($FFFFE600).w,a1
+		lea	(v_recordsonic).w,a1
 		lea	(a1,d0.w),a2
 		move.w	8(a0),d1
 		swap	d1
@@ -20967,7 +20951,7 @@ TailsC_04:				; DATA XREF: ROM:00010DD2o
 
 loc_10E0C:				; CODE XREF: ROM:00010E04j
 		move.w	d1,($FFFFF706).w
-		lea	($FFFFE600).w,a1
+		lea	(v_recordsonic).w,a1
 		lsl.b	#2,d1
 		addq.b	#4,d1
 		move.w	($FFFFEEE0).w,d0
@@ -20989,13 +20973,13 @@ loc_10E38:				; CODE XREF: ROM:00010E34j
 		nop
 
 loc_10E40:				; CODE XREF: ROM:00010E3Cj
-		lea	($FFFFE500).w,a1
+		lea	(v_tracktails).w,a1
 		move.w	#$10,d1
 		lsl.b	#2,d1
 		addq.b	#4,d1
 		move.w	($FFFFEED2).w,d0
 		sub.b	d1,d0
-		lea	($FFFFE400).w,a1
+		lea	(v_tracksonic).w,a1
 		move.w	(a1,d0.w),($FFFFF606).w
 		rts
 
@@ -21004,7 +20988,7 @@ loc_10E40:				; CODE XREF: ROM:00010E3Cj
 
 RecordTailsMoves:			; CODE XREF: ROM:00010CDCp
 		move.w	($FFFFEED6).w,d0
-		lea	($FFFFE700).w,a1
+		lea	(v_recordtails).w,a1
 		lea	(a1,d0.w),a1
 		move.w	8(a0),(a1)+
 		move.w	$C(a0),(a1)+
@@ -21021,7 +21005,7 @@ Obj02_MdNormal:				; DATA XREF: ROM:Obj02_Modeso
 		bsr.w	Tails_Move
 		bsr.w	Tails_Roll
 		bsr.w	Tails_LevelBoundaries
-		jsr	SpeedToPos
+		jsr	(SpeedToPos).l
 		bsr.w	Sonic_AnglePos
 		bsr.w	Tails_SlopeRepel
 		rts
@@ -21031,7 +21015,7 @@ Obj02_MdJump:				; DATA XREF: ROM:00010D04o
 		bsr.w	Tails_JumpHeight
 		bsr.w	Tails_ChgJumpDir
 		bsr.w	Tails_LevelBoundaries
-		jsr	ObjectFall
+		jsr	(ObjectFall).l
 		btst	#6,$22(a0)
 		beq.s	loc_10EC0
 		subi.w	#$28,$12(a0) ; "("
@@ -21047,7 +21031,7 @@ Obj02_MdRoll:				; DATA XREF: ROM:00010D06o
 		bsr.w	Tails_RollRepel
 		bsr.w	Tails_RollSpeed
 		bsr.w	Tails_LevelBoundaries
-		jsr	SpeedToPos
+		jsr	(SpeedToPos).l
 		bsr.w	Sonic_AnglePos
 		bsr.w	Tails_SlopeRepel
 		rts
@@ -21057,7 +21041,7 @@ Obj02_MdJump2:				; DATA XREF: ROM:00010D08o
 		bsr.w	Tails_JumpHeight
 		bsr.w	Tails_ChgJumpDir
 		bsr.w	Tails_LevelBoundaries
-		jsr	ObjectFall
+		jsr	(ObjectFall).l
 		btst	#6,$22(a0)
 		beq.s	loc_10F0A
 		subi.w	#$28,$12(a0) ; "("
@@ -21089,7 +21073,7 @@ loc_10F3C:				; CODE XREF: Tails_Move+22j
 
 loc_10F48:				; CODE XREF: Tails_Move+2Ej
 		move.b	$26(a0),d0
-		addi.b	#$20,d0	
+		addi.b	#$20,d0
 		andi.b	#$C0,d0
 		bne.w	loc_10FFA
 		tst.w	$14(a0)
@@ -22897,11 +22881,11 @@ Obj0A_ShowNumber:			; CODE XREF: ROM:00011F34p
 		clr.w	$12(a0)
 		move.b	#$80,1(a0)
 		move.w	8(a0),d0
-		sub.w	($FFFFEE00).w,d0
+		sub.w	(v_screenposx).w,d0
 		addi.w	#$80,d0	
 		move.w	d0,8(a0)
 		move.w	$C(a0),d0
-		sub.w	($FFFFEE04).w,d0
+		sub.w	(v_screenposy).w,d0
 		addi.w	#$80,d0	
 		move.w	d0,$A(a0)
 		move.b	#$C,$24(a0)
@@ -23226,7 +23210,7 @@ Obj38_Stars:				; DATA XREF: ROM:000123CCo
 		lsl.b	#2,d1
 		addi.b	#4,d1
 		sub.b	d1,d0
-		lea	($FFFFE600).w,a1
+		lea	(v_recordsonic).w,a1
 		lea	(a1,d0.w),a1
 		move.w	(a1)+,d0
 		andi.w	#$3FFF,d0
@@ -24867,14 +24851,14 @@ Lamppost_StoreInfo:			; CODE XREF: ROM:000135B6p
 		move.l	($FFFFFE22).w,($FFFFFE38).w
 		move.b	($FFFFEEDF).w,($FFFFFE3C).w
 		move.w	($FFFFEECE).w,($FFFFFE3E).w
-		move.w	($FFFFEE00).w,($FFFFFE40).w
-		move.w	($FFFFEE04).w,($FFFFFE42).w
-		move.w	($FFFFEE08).w,($FFFFFE44).w
-		move.w	($FFFFEE0C).w,($FFFFFE46).w
-		move.w	($FFFFEE10).w,($FFFFFE48).w
-		move.w	($FFFFEE14).w,($FFFFFE4A).w
-		move.w	($FFFFEE18).w,($FFFFFE4C).w
-		move.w	($FFFFEE1C).w,($FFFFFE4E).w
+		move.w	(v_screenposx).w,($FFFFFE40).w
+		move.w	(v_screenposy).w,($FFFFFE42).w
+		move.w	(v_bgscreenposx).w,($FFFFFE44).w
+		move.w	(v_bgscreenposy).w,($FFFFFE46).w
+		move.w	(v_bg2screenposx).w,($FFFFFE48).w
+		move.w	(v_bg2screenposy).w,($FFFFFE4A).w
+		move.w	(v_bg3screenposx).w,($FFFFFE4C).w
+		move.w	(v_bg3screenposy).w,($FFFFFE4E).w
 		move.w	($FFFFF648).w,($FFFFFE50).w
 		move.b	($FFFFF64D).w,($FFFFFE52).w
 		move.b	($FFFFF64E).w,($FFFFFE53).w
@@ -24900,14 +24884,14 @@ Lamppost_LoadInfo:			; CODE XREF: LevelSizeLoad+180p
 		move.b	($FFFFFE52).w,($FFFFF64D).w
 		move.w	($FFFFFE3E).w,($FFFFEECE).w
 		move.w	($FFFFFE3E).w,($FFFFEEC6).w
-		move.w	($FFFFFE40).w,($FFFFEE00).w
-		move.w	($FFFFFE42).w,($FFFFEE04).w
-		move.w	($FFFFFE44).w,($FFFFEE08).w
-		move.w	($FFFFFE46).w,($FFFFEE0C).w
-		move.w	($FFFFFE48).w,($FFFFEE10).w
-		move.w	($FFFFFE4A).w,($FFFFEE14).w
-		move.w	($FFFFFE4C).w,($FFFFEE18).w
-		move.w	($FFFFFE4E).w,($FFFFEE1C).w
+		move.w	($FFFFFE40).w,(v_screenposx).w
+		move.w	($FFFFFE42).w,(v_screenposy).w
+		move.w	($FFFFFE44).w,(v_bgscreenposx).w
+		move.w	($FFFFFE46).w,(v_bgscreenposy).w
+		move.w	($FFFFFE48).w,(v_bg2screenposx).w
+		move.w	($FFFFFE4A).w,(v_bg2screenposy).w
+		move.w	($FFFFFE4C).w,(v_bg3screenposx).w
+		move.w	($FFFFFE4E).w,(v_bg3screenposy).w
 		cmpi.b	#1,(v_zone).w
 		bne.s	loc_136F0
 		move.w	($FFFFFE50).w,($FFFFF648).w
@@ -33029,13 +33013,13 @@ S1SS_ShowLayout:			; CODE XREF: ROM:0000518Ep
 		muls.w	#$18,d4
 		muls.w	#$18,d5
 		moveq	#0,d2
-		move.w	($FFFFEE00).w,d2
+		move.w	(v_screenposx).w,d2
 		divu.w	#$18,d2
 		swap	d2
 		neg.w	d2
 		addi.w	#$FF4C,d2
 		moveq	#0,d3
-		move.w	($FFFFEE04).w,d3
+		move.w	(v_screenposy).w,d3
 		divu.w	#$18,d3
 		swap	d3
 		neg.w	d3
@@ -33073,12 +33057,12 @@ loc_19BF2:				; CODE XREF: S1SS_ShowLayout+82j
 		move.w	(sp)+,d5
 		lea	($FFFF0000).l,a0
 		moveq	#0,d0
-		move.w	($FFFFEE04).w,d0
+		move.w	(v_screenposy).w,d0
 		divu.w	#$18,d0
 		mulu.w	#$80,d0	
 		adda.l	d0,a0
 		moveq	#0,d0
-		move.w	($FFFFEE00).w,d0
+		move.w	(v_screenposx).w,d0
 		divu.w	#$18,d0
 		adda.w	d0,a0
 		lea	($FFFF8000).w,a4
@@ -34019,18 +34003,18 @@ S1SS_FixCamera:				; CODE XREF: ROM:0001A3BEp
 					; ROM:0001A480p ...
 		move.w	$C(a0),d2
 		move.w	8(a0),d3
-		move.w	($FFFFEE00).w,d0
+		move.w	(v_screenposx).w,d0
 		subi.w	#$A0,d3	; " "
 		bcs.s	loc_1A606
 		sub.w	d3,d0
-		sub.w	d0,($FFFFEE00).w
+		sub.w	d0,(v_screenposx).w
 
 loc_1A606:				; CODE XREF: S1SS_FixCamera+10j
-		move.w	($FFFFEE04).w,d0
+		move.w	(v_screenposy).w,d0
 		subi.w	#$70,d2	; "p"
 		bcs.s	locret_1A616
 		sub.w	d2,d0
-		sub.w	d0,($FFFFEE04).w
+		sub.w	d0,(v_screenposy).w
 
 locret_1A616:				; CODE XREF: S1SS_FixCamera+20j
 		rts
@@ -34736,7 +34720,7 @@ locret_1AC26:				; CODE XREF: ROM:0001AC30j
 ; ---------------------------------------------------------------------------
 
 loc_1AC28:				; CODE XREF: ROM:0001AC24j
-		move.w	($FFFFEE00).w,d0
+		move.w	(v_screenposx).w,d0
 		cmpi.w	#$1940,d0
 		bcs.s	locret_1AC26
 		cmpi.w	#$1F80,d0
@@ -35217,11 +35201,11 @@ HUD_TilesZero:	dc.b $FF,$FF,  0,  0	; 0 ; DATA XREF: HUD_LoadZero+At
 
 HUDDebug_XY:				; CODE XREF: HudUpdate:loc_1B330p
 		move.l	#$5C400003,(vdp_control_port).l
-		move.w	($FFFFEE00).w,d1
+		move.w	(v_screenposx).w,d1
 		swap	d1
 		move.w	(v_objspace+8).w,d1
 		bsr.s	HUDDebug_XY2
-		move.w	($FFFFEE04).w,d1
+		move.w	(v_screenposy).w,d1
 		swap	d1
 		move.w	(v_objspace+$C).w,d1
 ; End of function HUDDebug_XY
@@ -35574,43 +35558,10 @@ loc_1B656:				; CODE XREF: HUD_Lives+64j
 ; End of function HUD_Lives
 
 ; ---------------------------------------------------------------------------
-Art_HUD:	dc.b   0,  0,  0,  0,  0,$66,$66,$10,  6,$66,$66,$61,  6,$61,$16,$61,  6,$61,  6,$61,$76,$61,$76,$61,$66,$10,$66,$10,$66,$10,$66,$10; 0
-					; DATA XREF: HUD_Base:loc_1B3CCt
-					; HUD_Score+At	...
-		dc.b $66,$10,$66,$10,$66,$66,$66,$10,  6,$66,$61,  0,  1,$11,$10,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0; 32
-		dc.b   0,  0,  0,  0,  0,  6,$61,  0,  0,$66,$61,  0,  0,  6,$61,  0,  0,  6,$61,  0,  0,$76,$61,  0,  0,$66,$10,  0,  0,$66,$10,  0; 64
-		dc.b   0,$66,$10,  0,  0,$66,$10,  0,  0,$66,$10,  0,  0,$11,$10,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0; 96
-		dc.b   0,  0,  0,  0,  0,$66,$66,$10,  6,$66,$66,$61,  6,$61,$16,$61,  1,$11,$66,$61,  0,  6,$66,$10,  7,$66,$10,  0,$76,$61,  0,  0; 128
-		dc.b $66,$61,  0,  0,$66,$66,$66,$10,$66,$66,$66,$10,$11,$11,$11,$10,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0; 160
-		dc.b   0,  0,  0,  0,  0,$66,$66,$10,  6,$66,$66,$61,  6,$61,$16,$61,  1,$11,  6,$61,  0,  6,$66,$10,  0,$66,$61,  0,  0,$11,$66,$10; 192
-		dc.b $66,$10,$66,$10,$66,$66,$66,$10,  6,$66,$61,  0,  1,$11,$10,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0; 224
-		dc.b   0,  0,  0,  0,  0,  0,$66,$10,  0,  6,$66,$10,  0,$76,$66,$10,  0,$66,$66,$10,  6,$61,$66,$10,$76,$16,$61,  0,$66,$66,$66,$10; 256
-		dc.b $66,$66,$66,$10,$11,$16,$61,$10,  0,  6,$61,  0,  0,  1,$11,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0; 288
-		dc.b   0,  0,  0,  0,  6,$66,$66,$61,  6,$66,$66,$61,  6,$61,$11,$11,  6,$61,  0,  0,$76,$66,$67,$10,$66,$66,$66,$10,$11,$11,$66,$10; 320
-		dc.b $66,$10,$66,$10,$66,$66,$66,$10,$16,$66,$61,  0,  1,$11,$10,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0; 352
-		dc.b   0,  0,  0,  0,  0,$66,$66,$10,  6,$66,$66,$61,  6,$61,$16,$61,  6,$61,  1,$11,$76,$66,$78,$10,$66,$66,$67,$10,$66,$11,$66,$10; 384
-		dc.b $66,$10,$66,$10,$66,$66,$66,$10,  6,$66,$61,  0,  1,$11,$10,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0; 416
-		dc.b   0,  0,  0,  0,  6,$66,$66,$61,  6,$66,$66,$61,  1,$11,$16,$61,  0,  0,$76,$10,  0,  7,$66,$10,  0,  6,$61,  0,  0,$66,$10,  0; 448
-		dc.b   0,$66,$10,  0,  6,$67,$10,  0,  6,$67,$10,  0,  0,$11,$10,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0; 480
-		dc.b   0,  0,  0,  0,  0,$66,$66,$10,  6,$66,$66,$61,  6,$61,$16,$61,  6,$61,  6,$61,  0,$66,$66,$10,  6,$66,$61,  0,$66,$11,$66,$10; 512
-		dc.b $66,$10,$66,$10,$66,$66,$66,$10,  6,$66,$61,  0,  1,$11,$10,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0; 544
-		dc.b   0,  0,  0,  0,  0,$66,$66,$10,  6,$66,$66,$61,  6,$61,$16,$61,  6,$61,  6,$61,  6,$66,$66,$61,  8,$66,$66,$71,  1,$11,$66,$10; 576
-		dc.b $66,$10,$66,$10,$66,$66,$66,$10,  6,$66,$61,  0,  1,$11,$10,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0; 608
-		dc.b   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  6,$61,  0,  0,  6,$61,  0,  0,  1,$11,  0,  0,  0,  0,  0,  0,  6,$61,  0; 640
-		dc.b   0,  6,$61,  0,  0,  1,$11,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0; 672
-		dc.b   0,  0,  0,  0, $C,$CC,$CC,$C1, $C,$CC,$CC,$C1, $C,$C1,$11,$11, $C,$C1,  0,  0, $C,$CC,$CC,$10,$CC,$CC,$C1,  0,$CC,$11,$11,  0; 704
-		dc.b $CC,$10,  0,  0,$CC,$CC,$CC,$10,$CC,$CC,$CC,$10,$11,$11,$11,$10,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0; 736
-Art_LivesNums:	dc.b   0,  0,  0,  0,  0,$66,$66,$10,  6,$61,$16,$61,  6,$61,  6,$61,  6,$61,  6,$61,  6,$61,  6,$61,  0,$66,$66,$10,  0,$11,$11,  0; 0
-					; DATA XREF: HUD_Lives+14t
-		dc.b   0,  0,  0,  0,  0,  6,$61,  0,  0,$66,$61,  0,  0,$16,$61,  0,  0,  6,$61,  0,  0,  6,$61,  0,  0,  6,$61,  0,  0,  1,$11,  0; 32
-		dc.b   0,  0,  0,  0,  0,$66,$66,$10,  0,$11,$16,$61,  0,  0,$66,$11,  0,  6,$61,$10,  0,$66,$11,$10,  6,$66,$66,$61,  1,$11,$11,$11; 64
-		dc.b   0,  0,  0,  0,  0,$66,$66,$10,  0,$11,$16,$61,  0,  6,$66,$10,  0,  1,$16,$61,  6,$61,  6,$61,  0,$66,$66,$10,  0,$11,$11,  0; 96
-		dc.b   0,  0,  0,  0,  0,  0,$66,$10,  0,  6,$66,$10,  0,$61,$66,$10,  6,$61,$66,$10,  6,$66,$66,$61,  1,$11,$66,$11,  0,  0,$11,$10; 128
-		dc.b   0,  0,  0,  0,  6,$66,$66,$61,  6,$61,$11,$11,  6,$66,$66,$10,  1,$11,$16,$61,  6,$61,  6,$61,  0,$66,$66,$10,  0,$11,$11,  0; 160
-		dc.b   0,  0,  0,  0,  0,$66,$66,$10,  6,$61,$11,$10,  6,$66,$66,$10,  6,$61,$16,$61,  6,$61,  6,$61,  0,$66,$66,$10,  0,$11,$11,  0; 192
-		dc.b   0,  0,  0,  0,  6,$66,$66,$61,  1,$11,$16,$61,  0,  0,$66,$10,  0,  6,$61,  0,  0,$66,$10,  0,  0,$66,$10,  0,  0,$11,$10,  0; 224
-		dc.b   0,  0,  0,  0,  0,$66,$66,$10,  6,$61,$16,$61,  0,$66,$66,$10,  6,$61,$16,$61,  6,$61,  6,$61,  0,$66,$66,$10,  0,$11,$11,  0; 256
-		dc.b   0,  0,  0,  0,  0,$66,$66,$10,  6,$61,$16,$61,  6,$61,  6,$61,  0,$66,$66,$61,  0,$11,$16,$61,  0,$66,$66,$10,  0,$11,$11,  0; 288
+Art_HUD:	incbin "artunc\HUD Numbers.bin"
+                even
+Art_LivesNums:	incbin "artunc\Lives Counter Numbers.bin"
+                even
 ; ---------------------------------------------------------------------------
 		nop
 
@@ -35638,8 +35589,8 @@ Debug_Init:				; DATA XREF: ROM:DebugIndexo
 		move.w	#0,($FFFFEECC).w
 		move.w	#$720,($FFFFEEC6).w
 		andi.w	#$7FF,(v_objspace+$C).w
-		andi.w	#$7FF,($FFFFEE04).w
-		andi.w	#$3FF,($FFFFEE0C).w
+		andi.w	#$7FF,(v_screenposy).w
+		andi.w	#$3FF,(v_bgscreenposy).w
 		move.b	#0,$1A(a0)
 		move.b	#0,$1C(a0)
 		cmpi.b	#$10,($FFFFF600).w
@@ -35853,496 +35804,8 @@ j_ModifySpriteAttr_2P_1:		; CODE XREF: Debug_ShowItem+1Ap
 ; Unknown leftover art from an unknown prototype game
 ;  leftover due	to usage of a large FF padding
 ;----------------------------------------------------
-LeftoverArt_Unknown:dc.b   0,  1,  0, $D,  0,  2,  0,  2,  0,  4,  0,  0,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  4
-					; DATA XREF: ROM:ArtLoadCueso
-					; ROM:ArtLoadCueso ...
-		dc.b   4,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  4,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  2,  2,  2
-		dc.b   4,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  4,  4,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  4,  2,  2,  4,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  4,  4,  2,  4,  2,  4,  4,  4,  2,  2,  2,  2
-		dc.b   2,  4,  2,  2,  4,  2,  2,  4,  2,  2,  4,  2,  2,  2,  4,  4,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  4,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  4,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  4,  4,  2,  4,  2,  4
-		dc.b   2,  2,  4,  2,  4,  2,  2,  2,  4,  2,  4,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  4,  2,  2, $A,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  4,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  4,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  2,  2,  2,  2,  2
-		dc.b   2,  4,  2,  2,  2,  4,  2,  2,  2,  4,  2,  2,  2,  2,  4,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   4,  2,  2,  2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  4,  4,  2,  2,  2,  2,  4,  2,  4,  4,  4,  2,  2,  2
-		dc.b   2,  4,  2,  2,  4,  2,  2,  4,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2, $A,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  2,  4,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  4,  2,  2,  2,  2,  4,  2,  2,  2,  2
-		dc.b   2,  2,  4,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  4,  2,  2,  4,  4,  4,  2,  2,  2,  2
-		dc.b   2,  4,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  4,  4,  2,  2,  2,  4,  2,  2,  2
-		dc.b   2,  2,  2,  4,  4,  2,  4,  2,  2, $A,  4,  2,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  4,  2,  2,  2,  2,  2, $A,  2
-		dc.b   2,  2,  2,  4,  2,  2,  4,  2,  2,  2,  2,  4,  2,  2,  2,  2, $A,  2,  2,  2,  2,  4,  2,  4,  2,  2,  2,  2,  4,  2,  2,  2
-		dc.b   2,  4,  4,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  4,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  4,  2,  4,  4,  2,  4,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  4,  2,  2,  2,  4,  2,  4,  2,  2
-		dc.b   4,  4,  2,  4,  2,  4,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4, $A,  2,  2,  2,  4,  2,  2,  2,  4,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  4,  2,  4,  2
-		dc.b   2,  2,  2,  2,  4,  2,  2,  2,  4,  2,  2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  4,  4,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  4,  2,  4,  2,  4,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  6,  2,  2,  2,  2,  2,  2,  2,  2,  4
-		dc.b   2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  4,  2,  2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  2
-		dc.b   4, $A,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  4,  2,  2,  4,  2,  2,  2,  4,  2,  2,  2,  4,  2,  2,  4
-		dc.b   2,  2,  2,  2,  4,  2,  4,  2,  2,  2,  4,  2,  2,  4,  2,  2,  4,  2,  2,  2,  4,  2,  2,  2,  4,  2,  2,  4,  2,  2,  2,  2
-		dc.b   2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  2,  4,  2,  2,  2,  2,  2,  4,  2,  4
-		dc.b   4,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  4,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2
-		dc.b   2,  2,  4,  2,  2,  4,  2,  2,  2,  4,  2,  2,  2,  4,  4,  4,  4,  4,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  4,  2,  2,  4,  4,  2,  2,  2,  2,  2,  4,  2,  2,  4,  2,  2,  2,  2,  2,  4,  2,  2,  4,  2,  2,  2,  4,  2,  2
-		dc.b   4,  2,  2,  2,  2,  2,  2,  4,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  4,  4,  2,  2,  2,  4,  2,  2,  2,  4,  2,  4
-		dc.b   2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  4,  2,  2
-		dc.b   2,  2,  2,  2,  2,  4,  4,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2
-		dc.b   4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2, $A,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  4
-		dc.b   2,  2,  2,  2,  4,  4,  4,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  4
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  4,  4,  4,  2,  2,  4,  4,  4,  4,  2,  4,  2,  2
-		dc.b   4,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  4,  2,  2,  4,  2,  2,  2,  2,  4,  4
-		dc.b   2,  4,  2,  2,  4,  2,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  2,  2,  2,  4,  2,  4,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  4,  2,  2,  2,  2,  2,  4,  2,  2,  2,  4,  2,  4,  2,  2,  2,  2,  2,  2,  2,  4,  2,  4,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  2,  2,  4,  4,  2,  2,  2,  4,  2,  4,  2,  2,  2,  2,  4,  2,  2,  4,  2,  2,  4,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   4,  2,  2,  2,  2,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  2,  2,  4,  2,  2,  4,  2,  2,  2,  2,  4,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  4,  4,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2
-		dc.b   2,  2,  2,  2,  4,  2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2
-		dc.b   2,  2,  4,  2,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   4,  2,  2,  2,  2,  2,  4,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2, $A,  2,  4,  2,  2,  4,  2,  4,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  4,  2,  4,  2,  2,  4,  2,  2,  2,  2,  4,  2,  2,  2,  4,  2,  4,  2,  2,  4,  4,  4
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  4,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  4
-		dc.b   2,  2,  2,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  4,  4,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4
-		dc.b   2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  4,  2,  2,  4,  2,  2,  2,  4,  2,  2,  2,  4,  4
-		dc.b   2,  2,  2,  2,  2,  2,  2,  4,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  4,  2,  4,  2,  4,  2,  2,  2
-		dc.b   4,  2,  2,  2,  2,  2,  2,  4,  2,  4,  2,  2,  2,  2,  2,  4,  4,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2
-		dc.b   4,  2,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  4,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  4,  4,  2,  4,  2,  2,  2,  2,  4,  2,  2,  4,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  4,  4,  4,  4,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   4,  4,  2,  2,  2,  2,  2,  2,  2,  4,  2,  4,  2,  2,  2,  4,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  4,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4
-		dc.b   4,  2,  2,  4,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  4,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2
-		dc.b   4,  4,  4,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  4,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2
-		dc.b   2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  4,  2,  2,  4,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b  $A,  2,  2,  2,  2,  2,  2,  2,  6,  6,  6,  2,  2,  6,  6, $A,  2,  2,  4,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  4, $A,  4,  2,  2,  4,  2, $A,  4,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  4,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  4,  2,  4,  4,  2,  2,  2,  2,  2,  2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2
-		dc.b   6,  6,  2,  2,  6,  6,  6,  6,  6,  6,  6,  6,  6,  6,  6,  6,  6,  6,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2
-		dc.b   2,  2,  2,  2,  4,  2,  2,  2,  6,  6,  4,  2,  6,  2,  6,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  4,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  4,  2,  4,  2,  2,  2,  2,  4,  4,  2,  2,  2,  6
-		dc.b   8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  4,  4,  4,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  6,  4
-		dc.b   6,  6,  6,  6,  6,  8,  6,  4,  8,  8,  8,  8,  8,  8,  6,  6,  8,  6,  6,  6,  6,  2,  2,  2,  2,  2,  2,  2,  2,  4,  4,  6
-		dc.b   6,  6,  6,  6,  6,  6,  6,  6,  6,  6,  6,  6,  6,  6,  6,  2,  6,  4,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  6,  8
-		dc.b   8,  8,  8,  8,  8,  8,  8,  8,  6,  4,  2,  2,  2,  4,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  4,  4,  2,  2,  6,  2,  6
-		dc.b   6,  4,  6,  8,  8,  6,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  6,  6,  6,  2,  4,  2,  6,  6,  6,  6,  6
-		dc.b   8,  6,  8,  6,  6,  6,  6,  8,  8,  8,  6,  8,  6,  6,  6,  6,  6,  6,  4,  2,  2,  2,  4,  4,  4,  2,  2,  2,  2,  2,  4,  4
-		dc.b   4,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  2,  6,  8,  8
-		dc.b   8,  8,  8,  8,  8,  8,  8,  6,  2,  2,  2,  4,  4,  4,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  6,  6,  2,  6,  6,  6,  8
-		dc.b   8,  6,  8,  8,  8,  8,  8,  8,  0,  0, $E,  0,  0,  0,  0,  8,  8,  8,  6,  6,  8,  8,  6,  6,  6,  6,  6,  6,  6,  8,  6,  6
-		dc.b   6,  6,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  6,  6,  2,  4,  2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  4,  2,  2,  4,  4,  2,  2,  2,  4,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  6,  8,  8,  8
-		dc.b   8,  8,  8,  8,  8,  8,  6,  2,  4,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  4,  6,  6,  6,  6,  4,  8,  8,  8
-		dc.b   8,  8,  8,  8,  0,  0, $E,  0,  0,  0,  0,  0,  0,  0, $E,  0,  0,  0,  8,  8,  8,  6,  6,  6,  6,  8,  8,  8,  8,  8,  6,  8
-		dc.b   8,  0,  0,  0, $E,  0,  0,  0,  0,  0, $E,  0,  8,  8,  8,  8,  6,  8,  6,  6,  6,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2
-		dc.b   2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  4,  4,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  6,  8,  8,  8,  8
-		dc.b   8,  8,  8,  8,  8,  6,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  4, $A,  6,  6,  6,  8,  8,  8,  8, $E
-		dc.b   0,  0,  0, $E,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, $E,  8,  8,  8,  8,  8,  8,  8,  6,  8,  8,  8,  0
-		dc.b   0, $E,  0,  0,  0,  0,  0, $E,  0,  0,  0,  0,  0, $E,  0,  0,  8,  8,  6,  8,  6,  6,  6,  2,  2,  2,  2,  2,  2, $A,  4,  4
-		dc.b   2,  2,  2,  2,  2,  4,  4,  2,  2,  4,  4,  2,  4,  4,  2,  4,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  6,  8,  8,  8,  8,  8
-		dc.b   8,  8,  8,  8,  6,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  4,  4,  4,  4,  2,  2,  4,  6,  6,  8,  8,  8,  8,  0,  0,  0
-		dc.b   0, $E,  0,  0,  0, $E,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, $E,  0,  0,  0, $E,  0,  0,  0, $E,  0, $E,  0
-		dc.b   0,  0,  0,  0,  0,  0,  0,  0,  0,  0, $E,  0,  0,  0,  0,  0, $E,  0,  8,  8,  8,  6,  6,  6,  2,  2,  2,  2,  2,  4,  2,  2
-		dc.b   2,  2,  4,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  4,  2,  2,  2,  2,  4,  6,  8,  8,  8,  8,  8,  8
-		dc.b   8,  8,  8,  6,  4,  2,  2,  2,  4,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  8,  8,  4,  2,  8,  6,  8,  8,  0,  0,  0,  0
-		dc.b   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0
-		dc.b   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  8,  8,  8,  6,  6,  6,  2,  2,  4,  4,  2,  2
-		dc.b   4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  4,  2,  2,  2,  2,  2,  4,  2,  2,  4,  6,  8,  8,  8,  8,  8,  8,  8
-		dc.b   8,  8,  6,  6,  2,  4,  2,  2,  2,  2,  2,  2, $A,  2,  2,  2,  4,  2,  2,  2,  2,  6,  6,  6,  8,  8,  0,  0,  0,  0,  0,  0
-		dc.b   0,  0,  0,  0,  0,  0,  0,  0, $E,  0,  0,  0,  0, $E,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0
-		dc.b   0,  0, $E,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, $E,  0,  0,  8,  6,  8,  8,  6,  6,  6,  6,  2,  2,  2
-		dc.b   4,  2,  2,  2,  2,  2,  2, $A,  2,  6,  6,  6,  6,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8
-		dc.b   8,  6,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  4,  4,  2,  2,  2,  6,  8,  6,  6,  8,  0,  0,  0, $E,  0,  0,  0
-		dc.b   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, $E,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, $E,  0
-		dc.b   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, $E,  0,  0,  8,  8,  8,  6,  6,  6,  6,  2,  6
-		dc.b   8,  8,  2,  8,  2,  2,  6,  6,  6,  6,  6,  6,  6,  6,  6,  6,  2,  2,  6,  2,  2,  4,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8
-		dc.b   6,  4,  2,  2,  2,  2,  2,  4,  4,  2,  2,  2,  4,  2,  4,  2,  2,  4,  4,  6,  2,  2,  6,  8,  0, $E,  0,  0,  0,  0,  0,  0
-		dc.b   0,  0,  0,  0,  0, $E,  0, $E,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0
-		dc.b   0,  0,  0,  0,  0,  0,  0,  0, $E,  0,  0,  0,  0,  0,  0, $E,  0,  0,  0,  0,  0,  0,  0,  0,  8,  6,  8,  8,  6,  6,  6,  8
-		dc.b   8,  8,  8,  8,  6,  6,  6,  6,  6,  8,  6,  6,  6,  6,  2,  6,  6,  6,  6,  6,  6,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6
-		dc.b   2,  2,  2,  2,  4,  2,  2,  2,  2,  4,  2, $A,  2,  2,  2,  4,  2,  2,  8,  6,  2,  6,  8,  8,  0,  0,  0,  0,  0,  0,  0, $E
-		dc.b   0,  0, $E,  0,  0,  0,  0,  0,  2,  2,  2,  0, $E,  0,  0,  0,  0,  0,  0,  0,  0, $E,  0,  0,  0,  0,  0, $E,  0,  0,  0,  0
-		dc.b   0,  0,  0,  0,  0,  0, $E,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, $E,  0,  0,  8,  8,  8,  6,  6,  8
-		dc.b   6,  8,  6,  6,  8,  8,  8,  8,  6,  6,  6,  8,  8,  8,  6,  6,  6,  8,  6,  6,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2
-		dc.b   4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  8,  2,  8,  8,  8,  0,  0,  0,  0,  0,  0,  0,  0,  0
-		dc.b   0,  0,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  0, $E,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0
-		dc.b   0,  0,  0, $E,  0,  0,  0,  0,  0,  0,  0, $E,  0,  0,  0, $E,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  8,  8,  8,  8
-		dc.b   8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  8,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  2
-		dc.b   4,  2,  2,  2,  4,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  8,  8,  8,  8,  8,  0, $E,  0,  0,  0,  0,  0, $E,  0,  0
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  4,  2,  2,  8,  8,  8, $E,  0,  0,  0,  0,  0,  0, $E,  0,  0,  0,  0,  0, $E
-		dc.b   0,  2,  2,  2,  2,  8,  6,  6,  8,  8,  6,  8,  0,  0, $E,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, $E,  0, $E,  0,  8
-		dc.b   8,  8,  8, $E,  0,  0, $E,  0, $E,  0,  0,  0,  0, $E,  0,  0,  8,  8,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6, $A, $A,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  4,  4,  2,  4,  2,  2,  2,  2,  2,  8,  6,  8,  8, $E,  0,  0,  0,  0,  0,  0,  0,  0,  0,  4
-		dc.b   2,  2,  2,  2,  4,  4,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  8,  8,  8,  8,  8,  8,  8,  8,  8,  2,  4,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  6,  8,  8,  8,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0
-		dc.b   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, $E,  0,  0,  0, $E,  0,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6, $A, $A,  6,  6
-		dc.b   2,  2,  2,  2,  4,  2,  2,  2,  4,  2,  2,  4,  4,  2,  2,  2,  8,  8,  6,  8,  8,  0,  0,  0,  0,  0,  0,  0,  0,  2,  2,  4
-		dc.b   2,  2,  2,  2,  2,  2,  4,  2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  4,  4,  2,  2,  2,  6,  6,  6,  8,  0, $E,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0
-		dc.b  $E,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  6,  6,  8,  6,  6
-		dc.b   6,  6,  6,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  8,  8,  8,  8,  6,  0,  0,  0,  0,  0,  0,  0, $E,  2,  2,  4,  4
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  4,  4,  2,  2,  2,  4,  2,  2,  2,  2,  2,  4,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  6,  6,  6,  8,  8,  0, $E,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0
-		dc.b   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6, $A, $A,  0,  8,  8,  6
-		dc.b   8,  8,  6,  6,  8,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  8,  8,  8, $E,  0,  0,  0, $E,  0,  0,  0,  2,  2,  2,  2
-		dc.b   4,  2,  2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  6,  8,  8,  0,  0,  0,  0, $E,  0,  0,  0,  0,  0,  0
-		dc.b   0,  0,  0,  0,  0, $E,  0,  0,  0,  0, $E,  0,  0,  0,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6, $A, $A,  0,  0,  0, $E,  0
-		dc.b   8,  8,  8,  8,  6,  6,  6,  2,  2,  2,  2,  4,  2,  2,  2,  2,  6,  6,  8,  0,  0,  0,  0,  0,  0,  0,  0,  2,  2,  2,  2,  2
-		dc.b   2,  4,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  4,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  8,  0, $E,  0,  0,  0,  0,  0,  0,  0,  0
-		dc.b   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6, $A, $A,  0, $E,  0,  0,  0,  0
-		dc.b   0,  0,  8,  8,  8,  8,  6,  6,  6,  6,  2,  2,  2,  2,  2,  8,  6,  8,  8, $E,  0,  0,  0,  0,  0,  0,  0,  2,  4,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  4,  4,  2,  2,  2,  4,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  4,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  8,  8,  0,  0,  0,  0,  0,  0,  0,  0,  0
-		dc.b  $E,  0,  0,  0,  0,  0,  0,  0,  0, $E,  0,  0,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6, $A, $A,  0,  0,  0,  0,  0,  0,  0
-		dc.b   0, $E,  0,  0,  8,  8,  8,  8,  8,  8,  6,  6,  2,  2,  4,  8,  6,  8,  8,  0,  0,  0,  0,  0,  0,  0,  2,  2,  4,  2,  2,  4
-		dc.b   4,  4,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  4,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  4
-		dc.b   2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  8,  0,  0, $E,  0, $E,  0,  0,  0
-		dc.b   0,  0,  0,  0,  0, $E,  0,  0,  0,  0,  0,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6, $A, $A,  0,  0,  0,  0,  0,  0,  0,  0
-		dc.b   0,  0,  0, $E,  0,  0,  8,  6,  6,  8,  6,  6,  8,  6,  6,  8,  8,  8,  0,  0,  0, $E,  0,  0,  0,  0,  2,  2,  2,  2,  2,  2
-		dc.b   2,  4,  4,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  4,  2,  2,  4,  2, $A,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  4,  4,  2,  2,  4,  2,  2,  2,  2,  2,  4,  2,  2,  2,  4,  4,  2,  2,  2,  4,  2,  2,  2,  2,  8,  8,  8,  0,  0, $E,  0
-		dc.b   0,  0, $E,  0,  0,  0,  2,  4,  2,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6, $A, $A,  0,  0, $E,  0,  0,  0,  0,  0,  0
-		dc.b   0,  0, $E,  0,  0,  0, $E,  0,  8,  6,  8,  6,  6,  8,  8,  8,  6,  8,  0,  0,  0,  0,  0,  0,  0, $E,  2,  2,  2,  2,  4,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  4,  2,  4,  4,  4,  4,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  4,  2,  2,  2,  2,  2,  4,  2,  4,  2,  2,  4,  2,  2,  4,  4,  2,  4,  2,  2,  8,  8
-		dc.b   8,  8,  4,  2,  2,  2,  4,  2,  4,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  6,  6,  0, $E,  0,  0,  0, $E,  0,  0,  0,  0
-		dc.b   0,  0,  0,  0,  0,  0,  0,  0,  0,  8,  8,  6,  6,  8,  8,  6,  6,  0,  0,  0,  0,  0,  0,  0,  0,  2,  2,  2,  2,  4,  2,  4
-		dc.b   2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  4,  2,  2,  4,  4,  4,  2,  4,  2,  2
-		dc.b   2,  2,  2,  4,  4,  2,  4,  2,  4,  2,  4,  2,  2,  2, $A,  2,  2,  2,  2,  4,  2,  2,  2,  4,  2,  2,  4,  2,  2,  2,  2,  2
-		dc.b   4,  4,  2,  2,  4,  4,  2,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  4,  2,  2,  2,  2,  0, $E,  0,  0,  0,  0,  0, $E
-		dc.b   0,  0,  0,  0,  0,  0,  0,  0, $E,  0,  8,  8,  8,  8,  8,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  4,  4,  2,  2,  2,  2,  2
-		dc.b   4,  2,  2,  4,  2,  2,  2,  4,  2,  2,  2,  4,  4,  2,  2,  4,  2,  2,  4,  2,  2,  4,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2
-		dc.b   4,  2,  4,  4,  4,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  4,  2,  2
-		dc.b   2,  2,  4,  2,  2,  2,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  4,  2,  4,  2,  2,  2,  4,  2,  0,  0,  0,  0,  0
-		dc.b   0,  0,  0,  0,  0, $E,  0,  0,  0,  0, $E,  0,  0, $E,  0,  0,  0, $E,  0,  0,  0,  0,  0, $E,  0,  2,  4,  4,  2,  2,  2,  2
-		dc.b   2,  4,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  4,  2,  4,  2,  2,  2,  2
-		dc.b   2,  4,  4,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  4,  2,  2,  2,  2,  4,  2,  2,  4,  2,  2,  4,  4,  2,  2
-		dc.b   2,  2,  2,  2,  4,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  2,  4,  2,  2,  2,  2,  4,  2,  4,  4,  2, $E,  0,  0
-		dc.b  $E,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  2,  2,  2,  2,  2,  4, $A,  2
-		dc.b   4,  2,  4,  2,  2,  4,  2,  4,  2,  4,  2,  4,  2,  4,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  4,  2,  4,  4,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  4,  4,  2,  2,  4,  4,  2,  2,  2,  2,  2,  4,  2,  4,  4,  2,  4,  4,  4,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  4,  2,  2,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, $E,  0,  0,  2,  2,  4,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  4,  2,  4,  2,  2,  2,  2,  2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  2,  2,  4
-		dc.b   2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  2,  2,  2,  2,  2,  2,  4,  4,  4,  2,  2,  2,  4,  2,  2,  2
-		dc.b   2,  2, $E,  0, $E,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  2,  2,  4,  4,  2,  4,  2,  4,  2
-		dc.b   4,  2,  2,  2,  4,  4,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  4,  2,  4,  2,  2,  4,  2,  4,  2,  2,  2,  4,  2,  2
-		dc.b   2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  4,  2,  4,  2,  2,  2,  2
-		dc.b   2,  2,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  4,  4
-		dc.b   2,  4,  2,  2,  0,  0, $E,  0,  0,  0,  0,  0,  0,  0, $E,  0,  0,  0,  0,  0, $E,  0,  6,  2,  2,  4,  4,  2,  2,  2,  2,  2
-		dc.b   2,  4,  2,  2,  4,  2,  2,  4,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  4,  2,  2,  4,  2,  2,  4,  4,  2,  2,  2,  2,  2,  4
-		dc.b   2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  4,  2,  4,  2,  4,  2,  2,  2,  2,  2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  4,  2,  2
-		dc.b   2,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  4,  2,  2,  2,  2,  2
-		dc.b   4,  2, $A,  2,  2,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  6,  6,  4,  2,  2,  2,  2,  2,  2,  4,  2
-		dc.b   2,  4,  2,  2,  2,  2,  2,  4,  4,  2,  2,  2,  4,  2,  2,  2,  2,  2, $A,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  4,  2,  2
-		dc.b   4,  4,  2,  2,  4,  2,  2,  4,  4,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  4,  4,  2,  4,  2,  2,  4,  2,  2,  2,  4,  2,  4
-		dc.b   2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  4,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  6,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, $E,  0,  6,  6,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  4
-		dc.b   2,  4,  2,  4,  4,  2,  2,  2,  2,  4,  2,  4,  2,  2,  2,  2,  4,  2,  2,  2,  2,  4,  2,  4,  4,  2,  2,  2,  2,  2,  2,  2
-		dc.b   6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2
-		dc.b   4,  2,  2,  2,  2,  2,  6,  6, $E,  0,  0,  0, $E,  0,  0,  0,  0,  0,  8,  8,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  4,  4,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2
-		dc.b   2,  4,  4,  2,  2,  4,  2,  4,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  6
-		dc.b   8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  6,  6,  6,  0,  0,  0,  0,  0, $E,  0,  8,  6,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  4,  2,  2
-		dc.b   2,  4,  2,  2,  4,  2,  2,  2,  2,  2,  4,  2,  2,  4,  2,  4,  2,  2,  2,  4,  2,  2,  2, $A,  2, $A,  2,  2,  4,  4,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  6,  8
-		dc.b   8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  4,  2,  2,  2,  2,  2,  2,  4,  2,  4,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  4,  6,  4,  8,  8,  6,  6,  6,  8,  6,  6,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  4,  2,  4,  2
-		dc.b   2,  2,  4,  4,  2,  2,  2,  2,  4,  4,  2,  2,  4,  4,  2,  4,  4,  4,  4,  2,  2,  4,  2,  2,  2, $A,  4,  2,  2,  6,  8,  8
-		dc.b   8,  8,  8,  8,  8,  8,  8,  6,  4,  2,  2,  4,  2,  2,  2,  4,  2,  2,  4,  2,  2,  2,  2,  4,  2,  4,  2,  2,  2,  2,  4,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  6,  6,  2,  2,  2,  2,  4,  2,  2,  2,  4,  2,  4,  4,  2,  4
-		dc.b   2,  4,  2,  2,  2,  2,  2,  4,  2,  2,  4,  2,  2,  2, $A,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2
-		dc.b   4,  2,  2,  2,  2,  4,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  6,  8,  8,  8
-		dc.b   8,  8,  8,  8,  8,  8,  6,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  4,  2,  2,  2,  4,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2, $A,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  4,  4,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  4,  2,  6,  8,  8,  8,  8
-		dc.b   8,  8,  8,  8,  8,  6,  2,  4,  4, $A,  2,  2,  2,  2, $A,  2,  2,  2,  2,  2,  2,  4,  4,  2,  4,  2,  2,  2,  2,  2,  4,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  4,  2,  2,  4,  2,  2,  2,  4,  2,  2,  4,  2
-		dc.b   4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2
-		dc.b   4,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  4,  2,  2,  2,  2,  6,  8,  8,  8,  8,  8
-		dc.b   8,  8,  8,  8,  6,  2,  2,  4,  2,  4,  2,  4,  4,  2,  2,  2,  2,  2,  4,  2,  2,  2,  4,  2,  2,  2,  4,  2,  2,  2,  4,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2, $A,  2,  2,  2,  4,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  4,  2,  4,  2,  2,  2,  2,  4,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  4,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  4,  2,  4,  2,  2,  6,  8,  8,  8,  8,  8,  8
-		dc.b   8,  8,  8,  6,  2,  4,  2,  2,  2,  2,  4,  2,  2,  4,  2,  2,  4,  2,  2,  2,  2,  4,  2,  2,  4,  2,  2,  4,  2,  4,  4,  4
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  4,  2,  2,  2,  2,  2, $A,  4,  2, $A,  4,  4,  2,  2, $A,  2,  4,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  6,  8,  8,  8,  8,  8,  8,  8
-		dc.b   8,  8,  6,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  4,  2,  2,  2,  4,  2,  2
-		dc.b   4,  2,  2,  2,  2,  2,  4,  4,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  4,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   4,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  4,  6,  8,  8,  8,  8,  8,  8,  8,  8
-		dc.b   8,  6,  4,  2,  2, $A,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  4,  4,  2,  2,  2,  2
-		dc.b   2,  4,  2,  2,  2,  2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  4,  2,  2,  4,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  4,  2
-		dc.b   4,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  4,  2,  2,  2,  2,  2,  4,  2,  2,  2,  4,  4,  2,  2,  2,  2,  2,  4,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8
-		dc.b   6,  2,  2,  2,  4,  2,  2,  2,  2,  2,  4,  4,  2,  4,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   4,  2,  2,  2,  2,  2,  4,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  4,  2,  2,  2,  2,  2,  4,  2,  4,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  4,  2,  2,  2,  4,  2,  4,  2,  2,  2,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  4
-		dc.b   2,  2,  4,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  4,  4,  4,  4,  2,  2,  4,  2,  4,  2,  2,  2
-		dc.b   4,  2,  2,  2, $A,  4,  2,  2,  2,  2,  2,  2,  4,  4,  4,  2,  4,  2,  2,  4,  2,  4,  2,  2,  2,  4,  2,  2,  2,  2,  2,  4
-		dc.b   2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  4,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2
-		dc.b   2,  2,  2,  2,  2,  4,  2,  2,  4,  2,  4,  2,  2,  2,  2,  2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  4,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  4,  2,  4,  2,  2,  2,  2,  2,  2,  2,  4,  4,  4,  4,  2,  4,  2
-		dc.b   2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  4,  2,  4,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  4,  2
-		dc.b   2,  2,  4,  2,  2,  4,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  2
-		dc.b   2,  2,  4,  2,  2,  4, $A,  2,  2,  2,  2,  2,  4,  2,  4,  4,  2,  2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  4,  2,  4,  2,  2
-		dc.b   2,  4,  4,  2,  2,  2,  4,  2,  2,  4,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  4,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  4,  4
-		dc.b   2,  2,  2,  4,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  4,  2,  2,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2, $A,  2,  4,  4,  2,  2,  2
-		dc.b   4,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  4,  2,  2,  2,  4,  2,  2,  2,  2,  4,  4,  2,  4,  2,  2,  2,  2,  2
-		dc.b   2, $A,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  4,  2,  4,  4,  2,  2,  2
-		dc.b   2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  2,  2,  4
-		dc.b   2,  2,  4,  4,  2,  2,  4,  2,  2,  2,  2,  2,  2,  4,  4,  2,  4,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  4,  2,  2,  2
-		dc.b   4,  4,  2,  2,  4,  2,  2,  2,  2,  2,  2,  4,  2,  4,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  4,  4,  2,  4,  2,  2,  4,  2
-		dc.b   2,  4,  2,  2,  4,  4,  4,  4, $A,  2,  4,  4,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  4,  4
-		dc.b   2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  4,  2,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  4,  2,  2,  2
-		dc.b   2,  2,  2,  4,  4,  4,  2,  4,  2,  2,  2,  4,  2,  2,  2,  2,  2,  4,  2,  2,  4,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  4,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  4,  2,  4,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  4,  2
-		dc.b   2,  4,  2,  4,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2, $A,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  4,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  2,  2,  2,  2,  2
-		dc.b   2,  4,  2,  4,  4,  2,  2,  2,  4,  4,  2,  2,  4,  2,  4,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2, $A,  2,  2,  4,  2,  4,  2
-		dc.b   4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  4,  2,  2,  2,  2,  4,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  4,  4,  4,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   4,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  2,  4,  2,  4,  4,  2
-		dc.b   2,  2,  4,  2,  2, $E,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  4,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  4,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  4,  2,  2,  4,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  2,  2,  2,  2,  2,  2,  4
-		dc.b   2,  2,  2,  2, $E, $C, $E,  2,  2,  4,  2,  4,  2,  4,  4,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  4,  2,  4,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  4,  2,  2,  2,  2,  4,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2
-		dc.b   2,  4,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  4,  4,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  4
-		dc.b   2,  2,  2,  4,  2,  4,  2,  2,  2,  2,  2,  4,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  2,  2,  4,  2,  2,  2,  4,  2
-		dc.b   2,  4,  4, $E, $C, $C, $C, $E,  2,  2,  2,  4,  2,  2,  2,  4,  2,  2,  4,  2,  4,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  4,  2,  4,  4,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  4,  2,  2,  4,  2,  2,  2,  2,  4,  2
-		dc.b   2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  4
-		dc.b   2,  4,  4,  2,  2,  2,  4,  2,  2,  2,  4,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2
-		dc.b   4,  2, $E, $C, $C, $C, $C, $C, $E,  2,  2,  2,  4,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  4,  2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  4,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  4,  4,  2,  2,  2,  2,  4,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  4,  2,  2,  4,  4,  2,  2,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  4,  2,  4,  4,  2,  2,  2,  2,  2,  2
-		dc.b   2, $E, $C, $C, $C, $C, $C, $C, $C, $E,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  4,  2,  4,  4,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  4,  2,  2,  2,  4,  2,  2,  2,  2,  2,  4,  2,  2,  4,  2,  2,  4,  2
-		dc.b   4,  4,  2,  2,  2,  2,  2,  2,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2
-		dc.b  $E, $C, $C, $C, $C, $C, $C, $C, $C, $C, $E,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  4,  4,  2,  2,  2,  4,  2,  4,  4,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  4,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  4
-		dc.b   4,  4,  4,  2,  2,  2,  2,  4,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  4,  2, $E
-		dc.b  $C, $C, $C, $C, $C, $C, $C, $C, $C, $C, $A,  2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2, $A,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  4,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  4,  2,  2,  2
-		dc.b   2,  2,  2,  4,  4,  4,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  4,  2,  2,  2,  2,  4,  2,  4,  2,  4,  2,  2,  2, $A
-		dc.b  $C, $C, $C, $C, $C, $C, $C, $C, $C, $A, $A,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  4,  4,  4,  2,  4,  2,  2,  4,  4,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  4,  2,  2,  2,  2,  2,  2,  4,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4
-		dc.b   2,  2,  2,  2,  2,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  4,  2,  2,  4,  2,  4,  2,  2,  2,  2,  4,  4,  2,  2, $A
-		dc.b  $A, $C, $C, $C, $C, $C, $C, $C, $A, $A, $A,  2,  2,  2,  2,  2,  4,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4
-		dc.b   4,  2,  2,  4,  2,  2,  2,  4,  2,  4,  4,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  4,  4,  2,  2,  2,  2,  4,  4,  2
-		dc.b   4,  4,  4,  2,  2,  2, $A,  2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2, $A,  2,  2,  2,  4,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  2,  2, $A,  2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  4, $A
-		dc.b  $A, $A, $C, $C, $C, $C, $C, $A, $A, $A, $A,  2,  2,  2,  2,  2, $A,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2
-		dc.b   2,  2,  2,  4,  4,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   4,  2,  2,  4,  2,  2,  2,  2,  2,  4,  2,  2,  4,  4,  2,  2,  2,  4,  4,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2
-		dc.b   2,  2,  2,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  2,  2,  2,  2,  2,  4,  2,  4,  2,  2,  2,  4,  2,  2,  2, $A
-		dc.b  $A, $A, $A, $C, $C, $C, $A, $A, $A, $A,  2,  4,  4,  4,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4
-		dc.b   2,  2,  2,  2,  4,  2,  4,  2,  2,  4,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  4
-		dc.b   2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  4,  2,  4,  2,  2,  2,  4,  4,  2,  2,  4,  2,  2,  2,  2,  2,  4,  2
-		dc.b  $A, $A, $A, $A, $C, $A, $A, $A, $A,  2,  2,  2,  2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  4,  4,  4,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  4,  2,  4,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2
-		dc.b   4,  2,  2,  2,  2,  4,  4,  2,  2,  2,  4,  2,  2,  2,  2,  4,  4,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2
-		dc.b   2,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  2,  2,  2,  2,  4,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2, $A, $A, $A, $A, $A, $A, $A,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  4,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  4,  4,  2,  2,  2,  4,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2
-		dc.b   2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  4
-		dc.b   2,  2, $A, $A, $A, $A, $A,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  4,  2,  2,  4
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  4,  2,  2
-		dc.b   2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  2,  4,  2,  2,  4,  2,  2,  2,  2,  2,  2,  4, $C,  2,  2,  4,  2,  2,  2,  2
-		dc.b   2,  2,  2, $A, $A, $A,  2,  2,  2,  2,  2,  4,  2,  2,  4,  2,  4,  4,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  4
-		dc.b   2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2
-		dc.b   4,  2, $A,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  6
-		dc.b   8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  4, $C, $C, $C,  4,  2,  2,  2,  2,  2
-		dc.b   2,  4,  2,  2, $C,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  4,  4
-		dc.b   2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  4,  4,  2,  2,  4,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  6,  8
-		dc.b   8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  2,  2,  2,  4,  2,  4,  4,  4,  2,  2,  2,  2, $C, $C, $A, $C, $C,  4,  2,  2,  4,  2
-		dc.b   4,  4,  2,  2,  2,  2,  2,  4,  4,  4,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4
-		dc.b   4,  2,  2,  2,  4,  2,  2,  4,  2,  2,  4,  2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  4,  2,  2,  2,  2,  4
-		dc.b   2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  6,  8,  8
-		dc.b   8,  8,  8,  8,  8,  8,  8,  6,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2, $C, $C, $A, $E, $E, $C, $C,  2,  2,  2,  2
-		dc.b   2,  2,  4,  4,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2
-		dc.b   2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  4,  2,  2,  2,  4,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  6,  8,  8,  8
-		dc.b   8,  8,  8,  8,  8,  8,  6,  2,  2,  2,  2,  2,  2,  4,  2,  2,  4,  2,  2,  4, $C, $C, $A, $E, $E, $E, $E, $C, $C,  4,  4,  2
-		dc.b   4,  4,  2,  4,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  4,  2,  4,  4,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  4,  4,  4,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2
-		dc.b   2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2, $A,  4,  6,  8,  8,  8,  8
-		dc.b   8,  8,  8,  8,  8,  6, $A,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2, $C, $C, $A, $E, $E, $E, $E, $E, $E, $C, $C,  2,  2
-		dc.b   2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  4,  2,  4,  4,  2,  2,  4,  4,  4,  2,  2,  2,  2,  2,  2
-		dc.b   2,  4,  2,  2,  2,  4,  2,  4,  2,  2,  2,  4,  2,  2,  2,  2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  4,  2,  2,  2,  6,  8,  8,  8,  8,  8
-		dc.b   8,  8,  8,  8,  6,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2, $C, $C, $A, $E, $E, $E, $E, $E, $E, $E, $E, $C, $C,  2
-		dc.b   2,  4,  2,  2,  2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  4,  2,  2
-		dc.b   4,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  6,  8,  8,  8,  8,  8,  8
-		dc.b   8,  8,  8,  6,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2, $C, $C, $A, $E, $E, $E, $E, $C, $E, $E, $E, $E, $E, $C, $C
-		dc.b   2,  2,  2,  2,  4,  2,  4,  4,  2,  2,  4,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  4,  4,  2
-		dc.b   2,  2,  4,  2,  2,  2,  2,  2,  2,  4,  2,  2,  4,  2,  2,  2,  2,  4,  2,  2,  2,  4,  4,  2,  6,  8,  8,  8,  8,  8,  8,  8
-		dc.b   8,  8,  6,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2, $C, $C, $A, $E, $E, $E, $E, $C, $C, $C, $E, $E, $E, $E, $E, $C
-		dc.b  $C,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  4,  4,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  4, $A,  4,  4,  2,  4
-		dc.b   4,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  4,  2,  2,  4,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   4,  2,  2,  2,  2,  2,  2,  4,  4,  2,  2,  2,  4,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8
-		dc.b   8,  6,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2, $C, $C, $A, $E, $E, $E, $E, $C, $C, $E, $C, $C, $E, $E, $E, $E, $E
-		dc.b  $C, $C,  4,  4,  4,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  4,  2,  2
-		dc.b   2,  4,  2,  2,  2,  2,  2,  2,  4,  2,  4,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4, $A
-		dc.b   2,  2,  2,  4,  2,  4,  2,  2,  4,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8
-		dc.b   6,  2,  2,  2,  4,  4,  4,  2,  2,  2,  2,  2,  2,  2, $C, $C, $A, $E, $E, $E, $E, $C, $C, $E, $E, $E, $C, $C, $E, $E, $E, $E
-		dc.b  $E, $C, $C,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  4,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  4,  2,  2,  4,  2,  4,  2,  2,  2,  2,  2
-		dc.b   2,  4,  2, $A,  2,  4,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  4,  4,  2,  4,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6
-		dc.b   2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2, $C, $C, $A, $E, $E, $E, $E, $C, $C, $E, $E, $E, $E, $E, $C, $C, $E, $E, $E
-		dc.b  $E, $E, $C, $C,  2,  4,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2
-		dc.b   2,  4,  2,  2,  4,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4
-		dc.b   4,  2,  2,  2,  4,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2
-		dc.b   2,  2,  4,  4,  2,  2,  2,  2,  2,  4,  2,  2, $C, $C, $A, $E, $E, $E, $E, $C, $C, $E, $E, $E, $E, $E, $E, $E, $C, $C, $E, $E
-		dc.b  $E, $E, $E, $C, $C,  2,  4,  2,  4,  2,  4,  2,  4,  4,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  4
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  4,  2,  2,  2,  4,  2,  2,  2,  2
-		dc.b   2,  2,  4,  2,  2,  4,  2,  4,  2,  4,  2,  2,  2,  2,  2,  2,  4,  2,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2, $C, $C, $A, $E, $E, $E, $E, $C, $C, $E, $E, $E, $E, $E, $E, $E, $E, $E, $C, $C, $E
-		dc.b  $E, $E, $E, $E, $C, $C,  2,  2,  2,  2,  4,  2,  2,  2,  2,  4,  2,  4,  2,  2,  2,  4,  2,  2,  4,  2,  4,  2,  2,  4,  2,  2
-		dc.b   2,  2,  2,  2,  4,  2,  4,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2
-		dc.b   2,  4,  4,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  4,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  4, $C, $C, $A, $E, $E, $E, $E, $C, $C, $E, $E, $E, $E, $E, $E, $E, $E, $E, $E, $E, $C, $C
-		dc.b  $E, $E, $E, $E, $E, $C, $C,  4,  2,  2,  2,  2,  4,  4,  2,  4,  2,  4,  2,  2,  2,  2,  2,  4,  2,  2,  2, $A,  2,  2,  2,  2
-		dc.b   2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  4,  4,  2,  2,  2,  4,  2,  2,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  2,  2,  2
-		dc.b   2,  4,  2,  2,  2,  2,  2,  2,  2, $C, $C, $A, $E, $E, $E, $E, $C, $C, $E, $E, $E, $E, $E, $E, $E, $E, $E, $E, $E, $E, $E, $C
-		dc.b  $C, $E, $E, $E, $E, $E, $C, $C,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  4,  2,  2,  2,  4,  2,  2,  2
-		dc.b   2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  4,  4,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  4,  2,  2,  4,  4,  2,  2,  2,  2,  4,  2,  4,  2,  2,  6,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  4,  4,  2,  2,  2
-		dc.b   2,  2,  4,  4,  2,  4,  2,  4, $C, $C, $A, $E, $E, $E, $E, $C, $C, $E, $E, $E, $E, $E, $E, $E, $E, $E, $E, $E, $E, $E, $E, $E
-		dc.b  $C, $C, $E, $E, $E, $E, $E, $C, $C,  2,  4,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  4,  4,  2,  2,  4,  4,  4,  4,  2,  2,  4
-		dc.b   2,  4,  2,  2,  2,  2,  2,  4,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  4
-		dc.b   2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  4,  2,  2,  6,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  2,  2,  2,  2,  2
-		dc.b   4,  2,  4,  2,  2,  4,  4,  2,  2, $C, $C, $E, $E, $E, $E, $E, $C, $C, $E, $E, $E, $E, $E, $E, $E, $E, $E, $E, $E, $E, $E, $C
-		dc.b  $C, $A, $E, $E, $E, $E, $C, $C,  4,  2,  2,  2,  2,  2,  4,  4,  2,  2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  2, $A,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  6,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  4,  2,  2,  2,  2,  2, $C, $C, $E, $E, $E, $E, $E, $C, $C, $E, $E, $E, $E, $E, $E, $E, $E, $E, $E, $E, $C, $C
-		dc.b  $A, $E, $E, $E, $E, $C, $C,  2,  4,  2,  2,  4,  2,  2,  2,  2,  4,  2,  2,  2,  2,  4,  4,  4,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  6,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  2,  2,  2,  2,  4,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2, $C, $C, $E, $E, $E, $E, $E, $C, $C, $E, $E, $E, $E, $E, $E, $E, $E, $E, $C, $C, $A
-		dc.b  $E, $E, $E, $E, $C, $C,  2,  4,  4,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  4,  4,  4,  2,  2,  2,  4,  4,  2,  4,  2,  2,  4,  2, $A,  2,  2,  4,  2,  2,  4,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  6,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   4,  4,  2,  2,  2,  2,  4,  2,  4,  2,  2,  2, $C, $C, $E, $E, $E, $E, $E, $C, $C, $E, $E, $E, $E, $E, $E, $E, $C, $C, $A, $E
-		dc.b  $E, $E, $E, $C, $C,  2,  2,  4,  2,  2,  2,  2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2
-		dc.b   2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  4,  2, $A,  2,  4,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  2,  4,  2,  2,  2,  2,  4,  2,  2
-		dc.b   4,  2,  2,  4,  2,  2,  2,  2,  4,  2, $A,  2,  2, $C, $C, $E, $E, $E, $E, $E, $C, $C, $E, $E, $E, $E, $E, $C, $C, $A, $E, $E
-		dc.b  $E, $E, $C, $C,  2,  2,  2,  4,  2,  2,  4,  2,  4,  2,  4,  4,  2,  4,  4,  2,  2,  4,  2,  4,  2,  2,  2,  4,  2,  2,  2,  2
-		dc.b   4,  2,  2,  2,  2,  4,  2,  2,  2,  2,  4,  2,  2,  2,  2,  4,  2,  2,  2,  4,  2,  2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2
-		dc.b   2,  4,  2,  2,  2,  4,  2,  2,  2,  4,  2,  2,  2,  2, $C, $C, $E, $E, $E, $E, $E, $C, $C, $E, $E, $E, $C, $C, $A, $E, $E, $E
-		dc.b  $E, $C, $C,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  4,  2,  2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  4,  2,  2,  2,  2,  4,  2,  2,  2
-		dc.b   4,  2,  2,  2,  2,  2,  4,  2,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  4,  2,  2,  2,  2,  4,  2,  4,  2,  2,  2,  2,  2, $C, $C, $E, $E, $E, $E, $E, $C, $C, $E, $C, $C, $A, $E, $E, $E, $E
-		dc.b  $C, $C,  2,  2,  4,  2,  2,  2,  2,  2,  2, $A,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2
-		dc.b   2,  4,  2,  2,  2,  2,  2,  2,  2,  4,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4
-		dc.b   2,  4,  4,  2,  2,  2,  2,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  4,  2,  4,  4,  2,  2,  2,  2,  4,  2,  4,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2, $A,  2,  2,  2,  2,  2,  2,  2,  2,  4, $C, $C, $E, $E, $E, $E, $E, $C, $C, $C, $A, $E, $E, $E, $E, $C
-		dc.b  $C,  2,  4,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  4,  2,  4,  2,  2,  4,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  4,  2
-		dc.b   2,  4,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  4,  2,  2,  2,  4,  2
-		dc.b   4,  2,  2,  2,  2,  2,  2,  2,  8,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  4, $A,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2, $C, $C, $E, $E, $E, $E, $E, $C, $A, $E, $E, $E, $E, $C, $C
-		dc.b   2,  2,  2,  2,  2,  4,  2,  4,  2,  2,  2,  2,  4,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  4,  2,  2
-		dc.b   4,  4,  2,  2,  2,  4,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  4,  2,  2,  2
-		dc.b   4,  2,  2,  2,  4,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2, $C, $C, $E, $E, $E, $E, $E, $E, $E, $E, $E, $C, $C,  2
-		dc.b   2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  4, $A,  4,  2,  2,  2,  2,  2,  4,  2,  2, $A,  2,  4,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  4,  4,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  4,  4
-		dc.b   2,  2,  2,  2,  4,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  4,  2,  2,  4,  2,  2,  2,  2, $C, $C, $E, $E, $E, $E, $E, $E, $E, $C, $C,  2,  2
-		dc.b   4,  4,  2,  2,  4,  2,  4,  4,  4,  2,  2,  2,  4,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  4,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  4,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  4
-		dc.b   2,  2,  2,  2,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  4,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4, $C, $C, $E, $E, $E, $E, $E, $C, $C,  4,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  4,  2,  2,  4,  2,  2,  2,  2,  2,  2
-		dc.b   4,  2, $A,  4,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2
-		dc.b   2,  2,  4,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  2,  2,  2,  2,  4,  4,  2,  2,  4,  2,  2,  2,  2,  2,  2,  4,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2, $C, $C, $E, $E, $E, $C, $C,  2,  4,  2,  2
-		dc.b   2,  2,  2,  4,  4,  2,  2,  4,  2,  2,  4,  2,  4,  2,  2,  2,  2,  2,  4,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  4,  2,  2,  2,  4,  2,  2,  2,  2,  2, $A,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2
-		dc.b   2,  2,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  2,  2,  4,  4,  2,  4,  4,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  4,  2,  2,  2,  4,  2,  4,  2,  2,  4,  2,  2, $C, $C, $E, $C, $C,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4
-		dc.b   2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  4,  4,  2,  2,  4,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  4,  2,  4,  2
-		dc.b   2,  2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  6,  6,  4,  2,  2,  4,  2,  2,  2,  2,  2,  4,  4,  2,  4,  2,  4,  2,  4,  2,  2
-		dc.b   4,  2,  2,  2,  2,  2,  4,  2,  2,  4,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  4, $C, $C, $C,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  4,  4,  2,  4,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  4
-		dc.b   2,  2,  2,  2,  2,  2,  4,  2,  2,  4,  2,  4,  2,  2,  4,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2
-		dc.b   2,  6,  8,  8,  8,  8,  8,  8,  8,  8,  6,  4,  4,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  4,  2,  4,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2, $C,  4,  2,  2,  2,  2,  2,  4
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  4,  2,  2,  2,  4,  2,  4,  2,  2,  2,  2,  2,  2,  2
-		dc.b   6,  8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  2,  2,  2,  2,  4,  2,  2,  2,  4,  2,  2,  2,  2,  4,  2,  2,  2,  4,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  4,  2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2
-		dc.b   2,  2,  2,  4,  2,  2,  2,  4,  2,  2,  2,  2,  4,  4,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  4,  4,  4,  4,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2, $A,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  6
-		dc.b   8,  8,  8,  8,  8,  8,  8,  8,  6,  2,  2,  2,  4,  2,  2,  2,  4,  2,  2,  2,  4,  2,  4,  2,  2,  2,  2,  2,  4,  2,  2,  2
-		dc.b   4,  4,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   4,  2, $A,  2,  2,  2,  2,  4,  2,  2,  2,  2,  4,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2
-		dc.b   2,  2,  2,  2,  2,  4,  4,  4,  2,  4,  2,  4,  2,  4,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  4,  4,  2,  2,  6,  8
-		dc.b   8,  8,  8,  8,  8,  8,  8,  8,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  4,  2,  2,  2,  4,  2,  4,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  4,  2,  2,  2,  4
-		dc.b   2,  2,  2,  2,  2,  4,  2,  2,  4,  2,  2,  2,  2,  2,  4,  4,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  6,  8,  8
-		dc.b   8,  8,  8,  8,  8,  8,  8,  6,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  4,  2,  2,  4,  2,  2,  2,  2,  2,  4,  2,  2
-		dc.b   2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  4,  2,  2,  4,  2,  4,  2,  2,  4,  2,  4,  2
-		dc.b   2,  2,  2,  2,  2,  4,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  4,  4,  2,  2,  2,  2,  4,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  6,  8,  8,  8
-		dc.b   8,  8,  8,  8,  8,  8,  6,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2
-		dc.b   2,  2,  4,  2,  2,  4,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  4,  2,  2,  2,  2,  4
-		dc.b   2,  2,  4,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2, $A,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  6,  8,  8,  8,  8
-		dc.b   8,  8,  8,  8,  8,  6,  2,  4,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  4,  2,  4,  2,  2,  2,  4,  4,  2,  2,  2,  2,  2,  4,  4,  2,  2,  2,  4,  2,  4,  2,  4,  2,  2,  2,  2,  2,  4
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2, $A,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  4,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  4,  2,  2,  4,  2,  4,  2,  2,  2,  2,  6,  8,  8,  8,  8,  8
-		dc.b   8,  8,  8,  8,  6,  2,  2,  2,  2,  2,  4,  4,  2,  2,  2,  4,  2,  4,  2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  4,  4,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  4,  4,  2,  4,  2,  2,  2,  2
-		dc.b   2,  4,  2,  4,  2,  2,  2,  2,  4,  2,  4,  4,  2,  2,  4,  2,  4,  2,  2,  2,  2,  4,  2,  2,  2,  6,  8,  8,  8,  8,  8,  8
-		dc.b   8,  8,  8,  6,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  4,  4,  2,  2,  2,  4,  4,  2,  2,  2,  2,  2,  4,  2,  2,  2,  4
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2, $A,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  4,  2,  2,  2
-		dc.b   2,  2,  4,  2,  4,  2,  2,  2,  2,  4,  2, $A,  4,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  2,  2,  2,  2,  2,  2
-		dc.b   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  2,  2,  6,  8,  8,  8,  8,  8,  8,  8
-		dc.b   8,  8,  6,  2,  2,  2,  4,  2
+LeftoverArt_Unknown:incbin "leftovers\0x1C318.bin"
+                even
 AngleMap_GHZ:	incbin "collide\S1 Angle Map.bin"
                 even
 AngleMap:	incbin "collide\Angle Map.bin"
@@ -36410,8 +35873,8 @@ Art_EHZFlower5:	dc.l $11333111,$11333111,$33111333,$33111333,$33111434,$11334311
 		dc.l $1134511E,$11344111,$11334311,$33111445,$33111344,$33111333,$11333111,$11333111; 40
 		dc.l $11333111,$11333111,$33111333,$33111344,$33111456,$11334533,$11345331,$1134631F; 48
 		dc.l $1134631F,$11345331,$11334533,$33111456,$33111344,$33111333,$11333111,$11333111; 56
-Art_HPZUnusedBg:incbin "artunc\HPZ - Background.bin"
-                even       
+Art_HPZUnusedBg:incbin "artunc\Unused - HPZ Background.bin"
+                even
 Art_HPZGlowingBall:incbin "artunc\HPZ - Orb.bin"
                 even
 Art_UnkZone_1:	dc.l $12332411,$12334199,$12331999,$12331999,$12331999,$12343199,$12313311,$12222222; 0
@@ -36570,7 +36033,7 @@ Level_CPZBg:	incbin "levels\cpzbg.bin"
                 even
 LeveL_HPZBg:	incbin "levels\hpzbg.bin"
                 even
-Level_Null:	dc.b   0,  0,  0,  0
+Level_Null:	dc.l 0
 Art_BigRing:	incbin "artunc\Giant Ring.bin"
                 even
 ;
@@ -36600,7 +36063,7 @@ Leftover_Art_Alphabet:incbin "leftovers\0x30000.bin"
 ;
 Leftover_31000:	incbin "leftovers\0x31000.bin"
                 even
-ObjPos_Index:	
+ObjPos_Index:
                 ; GHZ
                 dc.w ObjPos_GHZ1-ObjPos_Index,ObjPos_Null-ObjPos_Index
 		dc.w ObjPos_GHZ2-ObjPos_Index,ObjPos_Null-ObjPos_Index
@@ -36715,354 +36178,24 @@ ObjPos_S1LZ3pf2:dc.w	 8,$1252, $20A	; 0 ; DATA XREF: ROM:ObjPos_Indexo
 		dc.w   $53,$1252, $28A	; 24
 		dc.w   $50,$FFFF,    0	; 27
 		dc.w	 0		; 30
-ObjPos_CPZ1:	dc.w  $120, $1D0,$1901	; 0 ; DATA XREF: ROM:ObjPos_Indexo
-		dc.w  $2F0, $1D0,$1901	; 3
-		dc.w  $348, $210,$1908	; 6
-		dc.w  $378, $220, $319	; 9
-		dc.w  $3F8, $1C0, $311	; 12
-		dc.w  $418, $250, $339	; 15
-		dc.w  $500, $1C0, $359	; 18
-		dc.w  $500, $240, $321	; 21
-		dc.w  $600, $1C0, $341	; 24
-		dc.w  $600, $240, $339	; 27
-		dc.w  $700, $1C0, $359	; 30
-		dc.w  $700, $240, $321	; 33
-		dc.w  $878, $3C0, $321	; 36
-		dc.w  $8F0, $1F0,$2604	; 39
-		dc.w  $970, $1D0,$2604	; 42
-		dc.w  $9F0, $340, $341	; 45
-		dc.w  $A70, $1D0,$1901	; 48
-		dc.w  $B08, $340, $321	; 51
-		dc.w  $BB0, $378, $342	; 54
-		dc.w  $C80, $460, $321	; 57
-		dc.w  $D78, $3C0, $341	; 60
-		dc.w  $E10, $100, $329	; 63
-		dc.w  $F40, $1C8, $325	; 66
-		dc.w  $F80,  $E0, $329	; 69
-		dc.w  $FF8, $240, $341	; 72
-		dc.w $1030, $498, $C70	; 75
-		dc.w $1050, $498, $C71	; 78
-		dc.w $1070, $498, $C72	; 81
-		dc.w $1090, $498, $C73	; 84
-		dc.w $10B0, $498, $C74	; 87
-		dc.w $10D0, $498, $C75	; 90
-		dc.w $1100, $2E0, $321	; 93
-		dc.w $1588,$42E8, $380	; 96
-		dc.w $15E8,$4300, $300	; 99
-		dc.w $1880,$4068, $380	; 102
-		dc.w $1898,$4140, $300	; 105
-		dc.w $1988,$40E8, $380	; 108
-		dc.w $19E8,$4100, $300	; 111
-		dc.w $2688,$40E8, $380	; 114
-		dc.w $26E8,$4100, $300	; 117
-		dc.w $FFFF,    0,    0	; 120
+ObjPos_CPZ1:	incbin "objpos\cpz.bin"
+                even
 ObjPos_CPZ2:	dc.w $FFFF,    0,    0	; 0 ; DATA XREF: ROM:ObjPos_Indexo
 ObjPos_CPZ3:	dc.w $FFFF,    0,    0	; 0 ; DATA XREF: ROM:ObjPos_Indexo
-ObjPos_EHZ1:	dc.w  $320, $247,$1801	; 0 ; DATA XREF: ROM:ObjPos_Indexo
-		dc.w  $388,$22AE,$D400	; 3
-		dc.w  $410,$21F8,$CB00	; 6
-		dc.w  $538, $27C,$1C02	; 9
-		dc.w  $578, $2D0,$D300	; 12
-		dc.w  $5A8, $288,$110C	; 15
-		dc.w  $5C8, $2D0,$D300	; 18
-		dc.w  $608, $27C,$1C02	; 21
-		dc.w  $6A8, $2C8, $311	; 24
-		dc.w  $784, $370,$4110	; 27
-		dc.w  $7C0, $2A0,$1802	; 30
-		dc.w  $8B0,$2230,$CB00	; 33
-		dc.w  $900, $278,$1802	; 36
-		dc.w  $910, $3F0,$3600	; 39
-		dc.w  $940, $3C8,$181A	; 42
-		dc.w  $970, $3F0,$3600	; 45
-		dc.w  $A40,$8340,$3600	; 48
-		dc.w  $A48, $3B0,$4110	; 51
-		dc.w  $AA0,$8370,$3600	; 54
-		dc.w  $B60, $2B0,$D300	; 57
-		dc.w  $B60, $300,$4900	; 60
-		dc.w  $B60, $3C0,$4904	; 63
-		dc.w  $BE0, $300,$4900	; 66
-		dc.w  $BE0, $3C0,$4904	; 69
-		dc.w  $BE8, $2B0,$D300	; 72
-		dc.w  $C60, $2B0,$D300	; 75
-		dc.w  $C60, $300,$4900	; 78
-		dc.w  $C60, $3C0,$4904	; 81
-		dc.w  $CE0, $250,$D300	; 84
-		dc.w  $CE0, $2A0,$4900	; 87
-		dc.w  $CE0, $360,$4904	; 90
-		dc.w  $CE0, $3E0,$4904	; 93
-		dc.w  $D50,$8370,$3600	; 96
-		dc.w  $D70,$23B0,$D400	; 99
-		dc.w  $D78, $1B0,$3600	; 102
-		dc.w  $E38,$4392,$4110	; 105
-		dc.w  $E88, $1F0,$4110	; 108
-		dc.w  $ED0,$2168,$CB00	; 111
-		dc.w  $FA8, $194,$1802	; 114
-		dc.w $1080, $1D0, $391	; 117
-		dc.w $10C0, $175,$A607	; 120
-		dc.w $1110, $240, $311	; 123
-		dc.w $11E8,$2370,$D400	; 126
-		dc.w $1238, $37C,$1C02	; 129
-		dc.w $1278, $3D0,$D300	; 132
-		dc.w $12A8, $388,$110C	; 135
-		dc.w $12C0, $280, $600	; 138
-		dc.w $12C8, $3D0,$D300	; 141
-		dc.w $1308, $37C,$1C02	; 144
-		dc.w $1358,$4380,$4132	; 147
-		dc.w $14E0, $2D0,$D300	; 150
-		dc.w $14E0, $320,$4900	; 153
-		dc.w $14E0, $3E0,$4904	; 156
-		dc.w $1560, $2B0,$D300	; 159
-		dc.w $1560, $300,$4900	; 162
-		dc.w $1560, $3C0,$4904	; 165
-		dc.w $15C0, $23D,$4102	; 168
-		dc.w $16C8, $3B0,$4112	; 171
-		dc.w $1710,$22B0,$D400	; 174
-		dc.w $1738, $2BC,$1C02	; 177
-		dc.w $1798, $2C8,$110A	; 180
-		dc.w $17E8, $2BC,$1C02	; 183
-		dc.w $1880,$2208,$CB00	; 186
-		dc.w $18F4,$21F0,$CB00	; 189
-		dc.w $1990, $248,$1801	; 192
-		dc.w $1A80, $250, $391	; 195
-		dc.w $1AE0,$21F8,$D400	; 198
-		dc.w $1B08, $2C0, $311	; 201
-		dc.w $1C00, $2D0, $391	; 204
-		dc.w $1C78, $210, $30A	; 207
-		dc.w $1C88, $340, $311	; 210
-		dc.w $1C90, $2A0,$413A	; 213
-		dc.w $1D48, $1A0, $311	; 216
-		dc.w $1D90,$4380,$4132	; 219
-		dc.w $1E08,$4340, $300	; 222
-		dc.w $1EF0, $1B0,$1801	; 225
-		dc.w $1F78, $23C,$1C02	; 228
-		dc.w $1FB8, $3BC,$1C02	; 231
-		dc.w $1FE8, $248,$110C	; 234
-		dc.w $1FF8, $410,$D300	; 237
-		dc.w $1FF0, $1A0,$1805	; 240
-		dc.w $2048, $23C,$1C02	; 243
-		dc.w $2048, $3C8,$1110	; 246
-		dc.w $2078, $23C,$1C02	; 249
-		dc.w $2088, $410,$D300	; 252
-		dc.w $20C8, $248,$1108	; 255
-		dc.w $20C8, $3BC,$1C02	; 258
-		dc.w $20F0, $2D1,$A601	; 261
-		dc.w $2100, $190,$1801	; 264
-		dc.w $2108, $23C,$1C02	; 267
-		dc.w $2140,$21E0,$CB00	; 270
-		dc.w $2150, $3B0,$3600	; 273
-		dc.w $21C0, $3B0,$3600	; 276
-		dc.w $21F0,$2200,$CB00	; 279
-		dc.w $2280, $1D0, $391	; 282
-		dc.w $2308, $240, $311	; 285
-		dc.w $2360,$2370,$D400	; 288
-		dc.w $24C0, $280, $600	; 291
-		dc.w $24F8, $338,$1C02	; 294
-		dc.w $2538, $390,$D300	; 297
-		dc.w $2568, $348,$110C	; 300
-		dc.w $2588, $390,$D300	; 303
-		dc.w $25C8, $33C,$1C02	; 306
-		dc.w $2640, $280, $600	; 309
-		dc.w $26C8, $34E,$4112	; 312
-		dc.w $27B0,$42A0,$4132	; 315
-		dc.w $2A40, $2E0, $D00	; 318
-		dc.w $FFFF,    0,    0	; 321
-ObjPos_EHZ2:	dc.w  $2C0,$42A0,$4132	; 0 ; DATA XREF: ROM:ObjPos_Indexo
-		dc.w  $338, $300,$1C02	; 3
-		dc.w  $378, $350,$D300	; 6
-		dc.w  $3A8, $308,$110C	; 9
-		dc.w  $3C8, $350,$D300	; 12
-		dc.w  $408, $300,$1C02	; 15
-		dc.w  $4B8,$22F0,$D400	; 18
-		dc.w  $5C0, $2B6,$A605	; 21
-		dc.w  $678, $2BC,$1C02	; 24
-		dc.w  $6B8, $33C,$1C02	; 27
-		dc.w  $6C8,$2270,$CB00	; 30
-		dc.w  $6E8, $2C8,$110C	; 33
-		dc.w  $6F8, $390,$D300	; 36
-		dc.w  $728, $348,$110C	; 39
-		dc.w  $748,$2250,$CB00	; 42
-		dc.w  $748, $2BC,$1C02	; 45
-		dc.w  $748, $390,$D300	; 48
-		dc.w  $788, $33C,$1C02	; 51
-		dc.w  $83C,$42A0,$4132	; 54
-		dc.w  $8E0, $2B8,$1801	; 57
-		dc.w  $B20, $308,$1801	; 60
-		dc.w  $BC0, $2F6,$3600	; 63
-		dc.w  $C68, $300,$4102	; 66
-		dc.w  $CD8, $3B2,$3600	; 69
-		dc.w  $D30,$2330,$CB00	; 72
-		dc.w  $D78, $23C,$1C02	; 75
-		dc.w  $DB8, $3BC,$1C02	; 78
-		dc.w  $DE8, $24C,$110C	; 81
-		dc.w  $DF8, $410,$D300	; 84
-		dc.w  $E28, $3C8,$110C	; 87
-		dc.w  $E30, $2D1,$A604	; 90
-		dc.w  $E48, $240,$1C02	; 93
-		dc.w  $E48,$42C0,$4110	; 96
-		dc.w  $E48, $410,$D300	; 99
-		dc.w  $E88, $3BC,$1C02	; 102
-		dc.w $1058,$2290,$D400	; 105
-		dc.w $1100, $350, $391	; 108
-		dc.w $1188, $3C8, $311	; 111
-		dc.w $11C0, $348,$1802	; 114
-		dc.w $1280, $3D0, $391	; 117
-		dc.w $1308, $448, $311	; 120
-		dc.w $1310, $3A0,$4132	; 123
-		dc.w $13F0, $2C8, $309	; 126
-		dc.w $148B, $210,$4132	; 129
-		dc.w $1548,$2230,$CB00	; 132
-		dc.w $1560, $290, $314	; 135
-		dc.w $1560, $320,$4900	; 138
-		dc.w $1560, $3E0,$4904	; 141
-		dc.w $1560, $460,$4904	; 144
-		dc.w $1570, $351,$A601	; 147
-		dc.w $15F0,$4231,$4132	; 150
-		dc.w $1620,$24B0,$D400	; 153
-		dc.w $1630, $198,$3600	; 156
-		dc.w $166C, $4B8,$410A	; 159
-		dc.w $16C8, $380, $311	; 162
-		dc.w $16F8, $1BC,$1C02	; 165
-		dc.w $1738, $3BC,$1C02	; 168
-		dc.w $1768, $1C8,$110C	; 171
-		dc.w $17A8, $3C8,$110C	; 174
-		dc.w $17C8, $1BC,$1C02	; 177
-		dc.w $17F8, $180, $311	; 180
-		dc.w $1808, $3BC,$1C02	; 183
-		dc.w $1880, $150, $391	; 186
-		dc.w $1908, $1C0, $311	; 189
-		dc.w $1948,$4380,$4132	; 192
-		dc.w $1960, $445,$A604	; 195
-		dc.w $1978,$4440,$4110	; 198
-		dc.w $1990, $3B0,$41B2	; 201
-		dc.w $19E8, $3F4,$3600	; 204
-		dc.w $1A00, $1D0, $391	; 207
-		dc.w $1A50, $2E8,$41A2	; 210
-		dc.w $1A50, $430,$41B2	; 213
-		dc.w $1A70, $2E8,$41A2	; 216
-		dc.w $1A70, $440,$4102	; 219
-		dc.w $1A80, $240, $311	; 222
-		dc.w $1AD8, $474,$3600	; 225
-		dc.w $1C10,$2440,$CB00	; 228
-		dc.w $1C40, $280, $600	; 231
-		dc.w $1C70,$2470,$CB00	; 234
-		dc.w $1C98,$8470,$3600	; 237
-		dc.w $1CC0,$8480,$3600	; 240
-		dc.w $1CE8, $3CF,$A604	; 243
-		dc.w $1D60, $480,$4900	; 246
-		dc.w $1DC0, $280, $600	; 249
-		dc.w $1DE0, $480,$4900	; 252
-		dc.w $1E40,$2340,$CB00	; 255
-		dc.w $1E60, $480,$4900	; 258
-		dc.w $1EE0, $400,$D300	; 261
-		dc.w $1EE0, $420,$4900	; 264
-		dc.w $1EE0, $4E0,$4904	; 267
-		dc.w $1F40, $280, $600	; 270
-		dc.w $1FA8,$24B0,$D400	; 273
-		dc.w $1FB0,$22F8,$CB00	; 276
-		dc.w $1FC0, $4BC,$410A	; 279
-		dc.w $1FF0, $320, $309	; 282
-		dc.w $1FF0, $4B2,$A604	; 285
-		dc.w $2040, $360,$1803	; 288
-		dc.w $206C, $3FC,$4102	; 291
-		dc.w $2088, $320, $311	; 294
-		dc.w $2140, $2A0,$1802	; 297
-		dc.w $2200, $2D0, $391	; 300
-		dc.w $2238, $480,$1C02	; 303
-		dc.w $2278, $4D0,$D300	; 306
-		dc.w $2288, $340, $311	; 309
-		dc.w $2290, $2A0,$4132	; 312
-		dc.w $22A8, $488,$110C	; 315
-		dc.w $22C8, $4D0,$D300	; 318
-		dc.w $2308, $480,$1C02	; 321
-		dc.w $2370, $476,$A604	; 324
-		dc.w $2440, $380, $600	; 327
-		dc.w $25B0,$2450,$D400	; 330
-		dc.w $26C0,$2390,$D400	; 333
-		dc.w $26D0,$243C,$D400	; 336
-		dc.w $26F0,$2348,$CB00	; 339
-		dc.w $FFFF,    0,    0	; 342
+ObjPos_EHZ1:	incbin "objpos\ehz1.bin"
+                even
+ObjPos_EHZ2:	incbin "objpos\ehz2.bin"
+                even
 ObjPos_EHZ3:	dc.w $FFFF,    0,    0	; 0 ; DATA XREF: ROM:ObjPos_Indexo
-ObjPos_HPZ1:	dc.w  $348, $180,$1C21	; 0 ; DATA XREF: ROM:ObjPos_Indexo
-		dc.w  $460, $190,$1C21	; 3
-		dc.w  $560, $190,$4F00	; 6
-		dc.w  $5D8, $140,$1C21	; 9
-		dc.w  $660, $590,$1C21	; 12
-		dc.w  $6F0, $170,$A606	; 15
-		dc.w  $728, $320,$1C21	; 18
-		dc.w  $728, $3E0,$1C21	; 21
-		dc.w  $748, $530,$1C21	; 24
-		dc.w  $748, $580,$1C21	; 27
-		dc.w  $810, $4D0,$1316	; 30
-		dc.w  $850, $4F0,$1314	; 33
-		dc.w  $858, $340,$1C21	; 36
-		dc.w  $8C0, $2B0,$1314	; 39
-		dc.w  $900, $3D0,$4C00	; 42
-		dc.w  $940, $670,$130C	; 45
-		dc.w  $960, $590,$4F00	; 48
-		dc.w  $97C, $374,$1C10	; 51
-		dc.w  $980, $650,$130E	; 54
-		dc.w  $9C8, $680,$1C21	; 57
-		dc.w  $A08, $388,$1110	; 60
-		dc.w  $A10, $490,$1A00	; 63
-		dc.w  $A84, $374,$1C10	; 66
-		dc.w  $A90, $4B0,$1A00	; 69
-		dc.w  $AD8, $560,$1C21	; 72
-		dc.w  $BD8, $360,$1C21	; 75
-		dc.w  $B70, $4B0,$A602	; 78
-		dc.w  $C7C, $2F4,$1C10	; 81
-		dc.w  $D08, $308,$1110	; 84
-		dc.w  $D84, $2F4,$1C10	; 87
-		dc.w  $F20, $308,$4C00	; 90
-		dc.w  $F38, $540,$1C21	; 93
-		dc.w  $F40, $430,$130C	; 96
-		dc.w $1010, $510,$130A	; 99
-		dc.w $1030, $530,$4F00	; 102
-		dc.w $1050, $4F0,$130A	; 105
-		dc.w $1060, $510,$4F00	; 108
-		dc.w $1158, $4C0,$1C21	; 111
-		dc.w $11D8, $4E0,$1C21	; 114
-		dc.w $15C0, $4F0,$1200	; 117
-		dc.w $1610, $390,$4C00	; 120
-		dc.w $1650, $4B0,$4F00	; 123
-		dc.w $16C0, $430,$4F00	; 126
-		dc.w $FFFF,    0,    0	; 129
+ObjPos_HPZ1:	incbin "objpos\hpz.bin"
+                even
 ObjPos_HPZ2:	dc.w $FFFF,    0,    0	; 0 ; DATA XREF: ROM:ObjPos_Indexo
 ObjPos_HPZ3:	dc.w $FFFF,    0,    0	; 0 ; DATA XREF: ROM:ObjPos_Indexo
-ObjPos_HTZ1:	dc.w  $178, $3A0,$1C04	; 0 ; DATA XREF: ROM:ObjPos_Indexo
-		dc.w  $1A0, $3BE,$1600	; 3
-		dc.w  $308, $460,$1C05	; 6
-		dc.w  $548, $428,$181A	; 9
-		dc.w  $5B8,$4428,$181B	; 12
-		dc.w  $700, $468,$1400	; 15
-		dc.w  $780, $3E8,$1400	; 18
-		dc.w  $8C0, $390,$181A	; 21
-		dc.w  $C28, $334,$2601	; 24
-		dc.w  $DC0, $448,$1400	; 27
-		dc.w  $EA0, $150,$1801	; 30
-		dc.w  $F00, $390,$181A	; 33
-		dc.w  $F60,  $F0,$1805	; 36
-		dc.w $10C8, $308,$1400	; 39
-		dc.w $10F8, $520,$1C04	; 42
-		dc.w $1148, $208,$1400	; 45
-		dc.w $1238,  $F6,$2604	; 48
-		dc.w $1278,  $E0,$1C04	; 51
-		dc.w $1278, $560,$1C04	; 54
-		dc.w $12A0, $100,$1600	; 57
-		dc.w $12A0, $57E,$1600	; 60
-		dc.w $12C0, $1E8,$1400	; 63
-		dc.w $12E4, $43C,$1600	; 66
-		dc.w $1308, $420,$1C05	; 69
-		dc.w $1380, $210,$181A	; 72
-		dc.w $1408, $1A0,$1C05	; 75
-		dc.w $1488, $660,$1C05	; 78
-		dc.w $1650, $6A8,$1400	; 81
-		dc.w $1680, $130, $3B1	; 84
-		dc.w $20C0, $768,$1400	; 87
-		dc.w $FFFF,    0,    0	; 90
+ObjPos_HTZ1:	incbin "objpos\htz1.bin"
+                even
 ObjPos_HTZ2:	dc.w $FFFF,    0,    0	; 0 ; DATA XREF: ROM:ObjPos_Indexo
-ObjPos_HTZ3:	dc.w $24D0, $510,$7131	; 0 ; DATA XREF: ROM:ObjPos_Indexo
-		dc.w $2550, $510,$7131	; 3
-		dc.w $FFFF,    0,    0	; 6
+ObjPos_HTZ3:	incbin "objpos\htz3.bin"
+                even
 ObjPos_S1SBZ1pf1:dc.w 7			; DATA XREF: ROM:ObjPos_Indexo
 		dc.w  $E14, $370,    0	; 0
 		dc.w  $E5A, $34D,    1	; 3
@@ -37182,7 +36315,7 @@ ObjPos_Null:	dc.w $FFFF,    0,    0	; 0 ; DATA XREF: ROM:ObjPos_Indexo
 ;
 Leftover_418A8:	incbin "leftovers\0x418A8.bin"
                 even
-RingPos_Index:	
+RingPos_Index:
                 ; GHZ
                 dc.w RingPos_GHZ1-RingPos_Index
 		dc.w RingPos_GHZ2-RingPos_Index
@@ -37216,81 +36349,8 @@ RingPos_Index:
 
 RingPos_GHZ1:	incbin "ringpos\ghz1.bin"
                 even
-RingPos_GHZ2:	dc.w  $180,$30BF	; 0 ; DATA XREF: ROM:RingPos_Indexo
-		dc.w  $2F0,$C058	; 2
-		dc.w  $564,$5268	; 4
-		dc.w  $570,$4100	; 6
-		dc.w  $860, $1A1	; 8
-		dc.w  $86A, $1DD	; 10
-		dc.w  $874,$A334	; 12
-		dc.w  $886, $20D	; 14
-		dc.w  $8B4, $229	; 16
-		dc.w  $8C7, $2AD	; 18
-		dc.w  $8E8, $230	; 20
-		dc.w  $8EA, $2B7	; 22
-		dc.w  $912, $2B5	; 24
-		dc.w  $91C, $229	; 26
-		dc.w  $93D, $2AE	; 28
-		dc.w  $948, $20D	; 30
-		dc.w  $95B, $293	; 32
-		dc.w  $960,$8240	; 34
-		dc.w  $960,$826B	; 36
-		dc.w  $966, $1DD	; 38
-		dc.w  $977, $1A1	; 40
-		dc.w  $B90, $218	; 42
-		dc.w  $B90, $240	; 44
-		dc.w  $B91, $268	; 46
-		dc.w  $B98, $290	; 48
-		dc.w  $BB8, $2AE	; 50
-		dc.w  $BE8, $2B5	; 52
-		dc.w  $C19, $2B5	; 54
-		dc.w  $D18,$31F0	; 56
-		dc.w  $D24,$21E0	; 58
-		dc.w  $D30,$11D0	; 60
-		dc.w  $D3C, $1C0	; 62
-		dc.w  $D3D, $260	; 64
-		dc.w  $D44, $23E	; 66
-		dc.w  $D44, $282	; 68
-		dc.w  $D5C, $223	; 70
-		dc.w  $D80, $21C	; 72
-		dc.w  $DA0,$31F0	; 74
-		dc.w  $DA0, $223	; 76
-		dc.w  $DAC,$21E0	; 78
-		dc.w  $DB8,$11D0	; 80
-		dc.w  $DBC, $23E	; 82
-		dc.w  $DBC, $282	; 84
-		dc.w  $DC4, $1C0	; 86
-		dc.w  $DC4, $260	; 88
-		dc.w  $F00, $2B4	; 90
-		dc.w  $F28, $2B4	; 92
-		dc.w  $F4D, $2A6	; 94
-		dc.w  $F62, $286	; 96
-		dc.w  $F67, $261	; 98
-		dc.w $1054,$1230	; 100
-		dc.w $10D4,$1210	; 102
-		dc.w $1194,$1230	; 104
-		dc.w $1214,$1218	; 106
-		dc.w $1294,$1218	; 108
-		dc.w $1354,$1218	; 110
-		dc.w $13D4,$1230	; 112
-		dc.w $1518, $2B4	; 114
-		dc.w $1542, $2AA	; 116
-		dc.w $1568, $298	; 118
-		dc.w $158E, $286	; 120
-		dc.w $15BB, $277	; 122
-		dc.w $15C4,$904C	; 124
-		dc.w $15D4,$D040	; 126
-		dc.w $15E4,$904C	; 128
-		dc.w $1864,$51C0	; 130
-		dc.w $198F, $218	; 132
-		dc.w $198F, $23D	; 134
-		dc.w $198F, $260	; 136
-		dc.w $1994, $285	; 138
-		dc.w $19A7, $2A3	; 140
-		dc.w $19C8, $2B4	; 142
-		dc.w $19F4, $2B5	; 144
-		dc.w $1A1D, $2B6	; 146
-		dc.w $FFFF		; 148
+RingPos_GHZ2:	incbin "ringpos\ghz2.bin"
+                even
 RingPos_GHZ3:	dc.w  $350, $372	; 0 ; DATA XREF: ROM:RingPos_Indexo
 		dc.w  $374, $36A	; 2
 		dc.w  $398, $35E	; 4
