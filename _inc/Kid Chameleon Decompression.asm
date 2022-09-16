@@ -2,9 +2,6 @@
 ; Kid Chameleon compression decompression routine
 ;----------------------------------------------------
 
-; ллллллллллллллл S U B	R O U T	I N E ллллллллллллллллллллллллллллллллллллллл
-
-
 UnknownDec:				; CODE XREF: MainLevelLoadBlock:loc_732Cp
 		moveq	#0,d0
 		move.w	#$7FF,d4
@@ -75,9 +72,11 @@ loc_1AA6:				; CODE XREF: UnknownDec+7Cj
 		dbf	d0,loc_1AA6
 
 loc_1AAC:				; CODE XREF: UnknownDec+6Ej
-		rept 5
+		move.b	(a6)+,(a2)+
                 move.b	(a6)+,(a2)+
-		endr
+                move.b	(a6)+,(a2)+
+                move.b	(a6)+,(a2)+
+                move.b	(a6)+,(a2)+
 		cmp.w	a2,d7
 		bls.s	loc_1AD4
 		bra.w	loc_1DCC
@@ -157,9 +156,11 @@ loc_1B20:				; CODE XREF: UnknownDec+F6j
 		dbf	d0,loc_1B20
 
 loc_1B26:				; CODE XREF: UnknownDec+E8j
-		rept 5
+		move.b	(a6)+,(a2)+
                 move.b	(a6)+,(a2)+
-		endr
+                move.b	(a6)+,(a2)+
+                move.b	(a6)+,(a2)+
+                move.b	(a6)+,(a2)+
 		cmp.w	a2,d7
 		bls.s	loc_1B4E
 		bra.w	loc_1A62
@@ -241,9 +242,11 @@ loc_1B9E:				; CODE XREF: UnknownDec+174j
 		dbf	d0,loc_1B9E
 
 loc_1BA4:				; CODE XREF: UnknownDec+166j
-		rept 5
+		move.b	(a6)+,(a2)+
                 move.b	(a6)+,(a2)+
-		endr
+                move.b	(a6)+,(a2)+
+                move.b	(a6)+,(a2)+
+                move.b	(a6)+,(a2)+
 		cmp.w	a2,d7
 		bls.s	loc_1BCC
 		bra.w	loc_1ADE
@@ -324,9 +327,11 @@ loc_1C1A:				; CODE XREF: UnknownDec+1F0j
 		dbf	d0,loc_1C1A
 
 loc_1C20:				; CODE XREF: UnknownDec+1E2j
-		rept 5
+		move.b	(a6)+,(a2)+
                 move.b	(a6)+,(a2)+
-		endr
+                move.b	(a6)+,(a2)+
+                move.b	(a6)+,(a2)+
+                move.b	(a6)+,(a2)+
 		cmp.w	a2,d7
 		bls.s	loc_1C48
 		bra.w	loc_1B58
@@ -408,9 +413,11 @@ loc_1C98:				; CODE XREF: UnknownDec+26Ej
 		dbf	d0,loc_1C98
 
 loc_1C9E:				; CODE XREF: UnknownDec+260j
-		rept 5
+		move.b	(a6)+,(a2)+
                 move.b	(a6)+,(a2)+
-		endr
+                move.b	(a6)+,(a2)+
+                move.b	(a6)+,(a2)+
+                move.b	(a6)+,(a2)+
 		cmp.w	a2,d7
 		bls.s	loc_1CC6
 		bra.w	loc_1BD6
@@ -492,9 +499,11 @@ loc_1D16:				; CODE XREF: UnknownDec+2ECj
 		dbf	d0,loc_1D16
 
 loc_1D1C:				; CODE XREF: UnknownDec+2DEj
-		rept 5
+		move.b	(a6)+,(a2)+
                 move.b	(a6)+,(a2)+
-		endr
+                move.b	(a6)+,(a2)+
+                move.b	(a6)+,(a2)+
+                move.b	(a6)+,(a2)+
 		cmp.w	a2,d7
 		bls.s	loc_1D44
 		bra.w	loc_1C52
@@ -576,9 +585,11 @@ loc_1D94:				; CODE XREF: UnknownDec+36Aj
 		dbf	d0,loc_1D94
 
 loc_1D9A:				; CODE XREF: UnknownDec+35Cj
-		rept 5
+		move.b	(a6)+,(a2)+
                 move.b	(a6)+,(a2)+
-		endr
+                move.b	(a6)+,(a2)+
+                move.b	(a6)+,(a2)+
+                move.b	(a6)+,(a2)+
 		cmp.w	a2,d7
 		bls.s	loc_1DC2
 		bra.w	loc_1CD0
@@ -659,9 +670,11 @@ loc_1E10:				; CODE XREF: UnknownDec+3E6j
 		dbf	d0,loc_1E10
 
 loc_1E16:				; CODE XREF: UnknownDec+3D8j
-		rept 5
                 move.b	(a6)+,(a2)+
-		endr
+                move.b	(a6)+,(a2)+
+                move.b	(a6)+,(a2)+
+                move.b	(a6)+,(a2)+
+                move.b	(a6)+,(a2)+
 		cmp.w	a2,d7
 		bls.s	loc_1E3E
 		bra.w	loc_1D4E

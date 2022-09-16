@@ -31,7 +31,7 @@ LevelSizeLoad:				; CODE XREF: ROM:00003D30p
 		move.l	(a0)+,d0
 		move.l	d0,($FFFFEECC).w
 		move.l	d0,($FFFFEEC4).w
-		move.w	#$1010,($FFFFEE40).w
+		move.w	#$1010,(v_fg_horiz_rd_flags).w
 		move.w	#$60,($FFFFEED8).w ; "`"
 		bra.w	LevelSize_CheckLamp
 ; ---------------------------------------------------------------------------
@@ -58,7 +58,7 @@ S1EndingStartLoc:dc.w	$50, $3B0, $EA0, $46C,$1750,  $BD, $A00, $62C; 0
 LevelSize_CheckLamp:			; CODE XREF: LevelSizeLoad+76j
 		tst.b	($FFFFFE30).w
 		beq.s	LevelSize_StartLoc
-		jsr	Lamppost_LoadInfo
+		jsr	(Lamppost_LoadInfo).l
 		move.w	($FFFFB008).w,d1
 		move.w	($FFFFB00C).w,d0
 		bra.s	LevelSize_StartLocLoaded
@@ -97,7 +97,7 @@ loc_58E6:				; CODE XREF: LevelSizeLoad+1C2j
 
 loc_58F0:				; CODE XREF: LevelSizeLoad+1CCj
 		move.w	d1,(v_screenposx).w
-		move.w	d1,($FFFFEE20).w
+		move.w	d1,(v_screenposx_2p).w
 		subi.w	#$60,d0	; "`"
 		bcc.s	loc_5900
 		moveq	#0,d0
@@ -109,7 +109,7 @@ loc_5900:				; CODE XREF: LevelSizeLoad+1DCj
 
 loc_590A:				; CODE XREF: LevelSizeLoad+1E4j
 		move.w	d0,(v_screenposy).w
-		move.w	d0,($FFFFEE24).w
+		move.w	d0,(v_screenposy_2p).w
 		bsr.w	BgScrollSpeed
 		rts
 ; End of function LevelSizeLoad
@@ -134,11 +134,11 @@ BgScrollSpeed:				; CODE XREF: LevelSizeLoad+1F2p
 		move.w	d1,(v_bgscreenposx).w
 		move.w	d1,(v_bg2screenposx).w
 		move.w	d1,(v_bg3screenposx).w
-		move.w	d0,($FFFFEE2C).w
-		move.w	d0,($FFFFEE34).w
-		move.w	d1,($FFFFEE28).w
-		move.w	d1,($FFFFEE30).w
-		move.w	d1,($FFFFEE38).w
+		move.w	d0,(v_bgscreenposy_2p).w
+		move.w	d0,(v_bg2screenposy_2p).w
+		move.w	d1,(v_bgscreenposx_2p).w
+		move.w	d1,(v_bg2screenposx_2p).w
+		move.w	d1,(v_bg3screenposx_2p).w
 
 loc_59B6:				; CODE XREF: BgScrollSpeed+4j
 		moveq	#0,d2
@@ -168,10 +168,10 @@ BgScroll_GHZ:				; DATA XREF: ROM:BgScroll_Indexo
 		clr.l	(a2)+
 		clr.l	(a2)+
 		clr.l	(a2)+
-		clr.l	($FFFFEE28).w
-		clr.l	($FFFFEE2C).w
-		clr.l	($FFFFEE34).w
-		clr.l	($FFFFEE3C).w
+		clr.l	(v_bgscreenposx_2p).w
+		clr.l	(v_bgscreenposy_2p).w
+		clr.l	(v_bg2screenposy_2p).w
+		clr.l	(v_bg3screenposy_2p).w
 		rts
 ; ---------------------------------------------------------------------------
 
@@ -184,7 +184,7 @@ BgScroll_LZ:				; DATA XREF: ROM:BgScroll_Indexo
 BgScroll_CPZ:				; DATA XREF: ROM:BgScroll_Indexo
 		lsr.w	#2,d0
 		move.w	d0,(v_bgscreenposy).w
-		move.w	d0,($FFFFEE2C).w
+		move.w	d0,(v_bgscreenposy_2p).w
 		clr.l	(v_bgscreenposx).w
 		clr.l	(v_bg2screenposx).w
 		rts
@@ -199,10 +199,10 @@ BgScroll_EHZ:				; DATA XREF: ROM:BgScroll_Indexo
 		clr.l	(a2)+
 		clr.l	(a2)+
 		clr.l	(a2)+
-		clr.l	($FFFFEE28).w
-		clr.l	($FFFFEE2C).w
-		clr.l	($FFFFEE34).w
-		clr.l	($FFFFEE3C).w
+		clr.l	(v_bgscreenposx_2p).w
+		clr.l	(v_bgscreenposy_2p).w
+		clr.l	(v_bg2screenposy_2p).w
+		clr.l	(v_bg3screenposy_2p).w
 		rts
 ; ---------------------------------------------------------------------------
 
