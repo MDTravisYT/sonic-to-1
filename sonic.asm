@@ -37607,9 +37607,7 @@ Map128_CPZ:	incbin "map128\CPZ.bin"
                 even
 Map16_GHZ:	incbin "map16\GHZ.bin"
                 even
-Nem_GHZ:	incbin "artnem\8x8 - GHZ1.bin"
-                even
-Nem_GHZ2:	incbin "artnem\8x8 - GHZ2.bin"
+Nem_GHZ:	incbin "artnem\8x8 - GHZ.bin"
                 even
 Map128_GHZ:     incbin "map128\GHZ.bin"
                 even
