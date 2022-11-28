@@ -6446,6 +6446,10 @@ loc_72EE:				; CODE XREF: MainLevelLoadBlock+6Ej
 
 loc_72F4:				; CODE XREF: MainLevelLoadBlock+58j
 		movea.l	(a2)+,a0
+		cmpi.b	#0,(v_zone).w
+		beq.s	loc_7338
+		cmpi.b	#1,(v_zone).w
+		beq.s	loc_7338
 		cmpi.b	#2,(v_zone).w
 		beq.s	loc_7338
 		cmpi.b	#3,(v_zone).w
