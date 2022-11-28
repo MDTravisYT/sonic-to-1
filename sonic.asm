@@ -6538,8 +6538,8 @@ loc_738E:				; CODE XREF: LevelLayoutLoad+Cj
 
 
 LevelLayoutLoad2:			; CODE XREF: LevelLayoutLoad+16p
-		tst.b	(v_zone).w
-		beq.s	LevelLayoutLoad_GHZ
+	;	tst.b	(v_zone).w
+	;	beq.s	LevelLayoutLoad_GHZ
 		move.w	(v_zone).w,d0
 		lsl.b	#6,d0
 		lsr.w	#5,d0
