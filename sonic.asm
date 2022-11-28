@@ -2299,9 +2299,7 @@ Pal_CPZ:	dc.w	 2,    0, $E64,	$A68, $E86,  $44, $EEE,	$AAA, $888, $444, $666,	  
 					; ROM:00002532o
 		dc.w	 2,    0,    6,	$A0A, $C4C, $E6E, $EAE,	 $CE,  $8E,  $4E,  $2C,	 $2A,	 8,    4, $EEE,	  $E; 16
 		dc.w	 2,    0, $222,	$444, $888, $AAA, $EEE,	$E40, $C00, $800,  $CE,	$28E, $E40, $C00, $C00,	 $E0; 32
-Pal_EHZ:	dc.w  $C20,    0, $E62,	$A86, $E86,  $44, $EEE,	$AAA, $888, $444, $666,	$E86,  $EE,  $88, $EA8,	$ECA; 0
-					; DATA XREF: ROM:0000253Ao
-		dc.w  $C20,    2, $800,	 $26,  $48,  $6C,  $8E,	 $AE, $4A0,  $40,  $60,	 $80,  $A0, $6A4,  $C6,	 $E8; 16
+Pal_EHZ:	incbin "palette\Emerald Hill Zone.bin"	
 		dc.w  $C20, $800,    0,	$E86, $ECA, $20A, $EEE,	$E6E, $C4C, $A2A, $EEC,	 $80, $64E, $42C,  $A0,	 $E8; 32
 Pal_HPZ:	dc.w  $800,    0, $242,	$464, $686,  $44, $EEE,	$AAA, $888, $444, $8EA,	$46A,  $EE,  $88,  $44,	  $E; 0
 					; DATA XREF: ROM:00002542o
