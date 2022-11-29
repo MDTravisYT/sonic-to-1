@@ -12320,7 +12320,7 @@ Obj2B_Index:	dc.w loc_B72E-Obj2B_Index ; DATA XREF: ROM:Obj2B_Indexo
 loc_B72E:				; DATA XREF: ROM:Obj2B_Indexo
 		addq.b	#2,$24(a0)
 		move.l	#Map_Obj2B,4(a0)
-		move.w	#$470,2(a0)
+		move.w	#$47B,2(a0)
 		bsr.w	ModifySpriteAttr_2P
 		move.b	#4,1(a0)
 		move.b	#4,$18(a0)

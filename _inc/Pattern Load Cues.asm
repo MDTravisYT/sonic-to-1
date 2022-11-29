@@ -16,7 +16,7 @@ ArtLoadCues:	dc.w PLC_Main-ArtLoadCues,PLC_Main2-ArtLoadCues; 0
 		dc.w LeftoverArt_Unknown+6-ArtLoadCues,LeftoverArt_Unknown+8-ArtLoadCues; 30
 PLC_Main:	dc.w 4			; DATA XREF: ROM:ArtLoadCueso
 		dc.l Nem_Lamppost
-		dc.w $8F80
+		dc.w $F400
 		dc.l Nem_HUD
 		dc.w $D940
 		dc.l Nem_Lives
@@ -29,9 +29,9 @@ PLC_Main2:	dc.w 2			; DATA XREF: ROM:ArtLoadCueso
 		dc.l Nem_Monitors
 		dc.w $D000
 		dc.l Nem_Shield
-		dc.w $97C0
+		dc.w $A820
 		dc.l Nem_Stars
-		dc.w $9BC0
+		dc.w $AB80
 PLC_Explode:	dc.w 0			; DATA XREF: ROM:ArtLoadCueso
 		dc.l Nem_Explosion
 		dc.w $B400
