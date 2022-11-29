@@ -7546,7 +7546,7 @@ Obj11_Index:	dc.w loc_7BC6-Obj11_Index ; DATA XREF: ROM:Obj11_Indexo
 loc_7BC6:				; DATA XREF: ROM:Obj11_Indexo
 		addq.b	#2,$24(a0)
 		move.l	#Map_Obj11,4(a0)
-		move.w	#$44C6,2(a0)
+		move.w	#$438E,2(a0)
 		move.b	#3,$18(a0)
 		cmpi.b	#3,(v_zone).w
 		bne.s	loc_7BFA
@@ -8120,7 +8120,7 @@ Obj15_Index:	dc.w loc_821E-Obj15_Index ; DATA XREF: ROM:Obj15_Indexo
 loc_821E:				; DATA XREF: ROM:Obj15_Indexo
 		addq.b	#2,$24(a0)
 		move.l	#Map_Obj15,4(a0)
-		move.w	#$44D0,2(a0)
+		move.w	#$4380,2(a0)
 		bsr.w	ModifySpriteAttr_2P
 		move.b	#4,1(a0)
 		move.b	#3,$18(a0)
@@ -8141,7 +8141,7 @@ loc_8284:				; CODE XREF: ROM:0000825Ej
 		cmpi.b	#2,(v_zone).w
 		bne.s	loc_82BE
 		move.l	#Map_Obj15_CPZ,4(a0)
-		move.w	#$2418,2(a0)
+		move.w	#$391,2(a0)
 		bsr.w	ModifySpriteAttr_2P
 		move.b	#$20,$19(a0) 
 		move.b	#$10,$16(a0)
@@ -13439,7 +13439,7 @@ Obj36_Conf:	dc.b   0,$10		; 0 ; DATA XREF: ROM:0000C6B2t
 loc_C682:				; DATA XREF: ROM:Obj36_Indexo
 		addq.b	#2,$24(a0)
 		move.l	#Map_Obj36,4(a0)
-		move.w	#$2434,2(a0)
+		move.w	#$51B,2(a0)
 		bsr.w	ModifySpriteAttr_2P
 		ori.b	#4,1(a0)
 		move.b	#4,$18(a0)
@@ -13637,7 +13637,7 @@ Obj3B_Index:	dc.w loc_C85A-Obj3B_Index ; DATA XREF: ROM:Obj3B_Indexo
 loc_C85A:				; DATA XREF: ROM:Obj3B_Indexo
 		addq.b	#2,$24(a0)
 		move.l	#Map_Obj3B,4(a0)
-		move.w	#$66C0,2(a0)
+		move.w	#$63D0,2(a0)
 		bsr.w	ModifySpriteAttr_2P
 		move.b	#4,1(a0)
 		move.b	#$13,$19(a0)
@@ -16604,11 +16604,11 @@ Obj41_Index:	dc.w loc_E204-Obj41_Index ; DATA XREF: ROM:Obj41_Indexo
 loc_E204:				; DATA XREF: ROM:Obj41_Indexo
 		addq.b	#2,$24(a0)
 		move.l	#Map_Obj41_GHZ,4(a0)
-		move.w	#$4A8,2(a0)
+		move.w	#$523,2(a0)
 		tst.b	(v_zone).w
 		beq.s	loc_E22A
 		move.l	#Map_Obj41,4(a0)
-		move.w	#$45C,2(a0)
+		move.w	#$533,2(a0)
 
 loc_E22A:				; CODE XREF: ROM:0000E21Aj
 		ori.b	#4,1(a0)
@@ -16632,7 +16632,7 @@ loc_E258:				; DATA XREF: ROM:0000E250o
 		move.b	#4,$24(a0)
 		move.b	#2,$1C(a0)
 		move.b	#3,$1A(a0)
-		move.w	#$4B8,2(a0)
+		move.w	#$5,2(a0)
 		tst.b	(v_zone).w
 		beq.s	loc_E27C
 		move.w	#$470,2(a0)
@@ -17914,7 +17914,7 @@ off_F256:	dc.w loc_F25E-off_F256	; DATA XREF: ROM:off_F256o
 
 loc_F25E:				; DATA XREF: ROM:off_F256o
 		move.l	#Map_Obj40,4(a0)
-		move.w	#$4E0,2(a0)
+		move.w	#$4F0,2(a0)
 		bsr.w	ModifySpriteAttr_2P
 		move.b	#4,1(a0)
 		move.b	#4,$18(a0)
@@ -27859,7 +27859,7 @@ Obj52_Index:	dc.w Obj52_Init-Obj52_Index ; DATA XREF: ROM:Obj52_Indexo
 Obj52_Init:				; DATA XREF: ROM:Obj52_Indexo
 		addq.b	#2,$24(a0)
 		move.l	#Map_Obj52,4(a0)
-		move.w	#$2530,2(a0)
+		move.w	#$47B,2(a0)
 		ori.b	#4,1(a0)
 		move.b	#$A,$20(a0)
 		move.b	#4,$18(a0)

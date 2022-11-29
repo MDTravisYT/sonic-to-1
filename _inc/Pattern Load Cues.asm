@@ -42,24 +42,24 @@ PLC_GHZ:	dc.w 8			; DATA XREF: ROM:ArtLoadCueso
 		dc.l Nem_GHZ
 		dc.w 0
 		dc.l Nem_GHZ_Piranha
-		dc.w $8E00
+		dc.w $8F60
 		dc.l Nem_VSpikes
 		dc.w $9400
 		dc.l Nem_HSpring
-		dc.w $9500
+		dc.w $A460
 		dc.l Nem_VSpring
-		dc.w $9700
+		dc.w $A660
 		dc.l Nem_GHZ_Bridge
-		dc.w $98C0
+		dc.w $71C0
 		dc.l Nem_SwingPlatform
-		dc.w $9A00
+		dc.w $7000
 		dc.l Nem_Motobug
-		dc.w $9C00
+		dc.w $9E00
 		dc.l Nem_GHZ_Rock
-		dc.w $D800
-PLC_GHZ2:	dc.w 0			; DATA XREF: ROM:ArtLoadCueso
+		dc.w $7A00
+PLC_GHZ2:	dc.w 0
 		dc.l Nem_GHZ_Piranha
-		dc.w $8E00
+		dc.w $8F60
 PLC_CPZ:	dc.w 2			; DATA XREF: ROM:ArtLoadCueso
 		dc.l Nem_CPZ
 		dc.w 0
