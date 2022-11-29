@@ -11854,13 +11854,13 @@ loc_B0AC:				; CODE XREF: sub_B098+4j
 Monitor_Subroutines:dc.w Monitor_Null-Monitor_Subroutines
 					; DATA XREF: ROM:Monitor_Subroutineso
 					; ROM:0000B0C8o ...
-		dc.w Monitor_SonicLife-Monitor_Subroutines
-		dc.w Monitor_TailsLife-Monitor_Subroutines
 		dc.w Monitor_Null-Monitor_Subroutines
-		dc.w Monitor_Rigns-Monitor_Subroutines
+		dc.w Monitor_TailsLife-Monitor_Subroutines
 		dc.w Monitor_Shoes-Monitor_Subroutines
 		dc.w Monitor_Shield-Monitor_Subroutines
 		dc.w Monitor_Invincibility-Monitor_Subroutines
+		dc.w Monitor_Rigns-Monitor_Subroutines
+		dc.w Monitor_Null-Monitor_Subroutines
 		dc.w Monitor_Null-Monitor_Subroutines
 		dc.w Monitor_Null-Monitor_Subroutines
 ; ---------------------------------------------------------------------------
