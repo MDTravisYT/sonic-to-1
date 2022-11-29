@@ -52,6 +52,22 @@ v_zone:		equ $FFFFFE10	; current zone number
 v_act:		equ $FFFFFE11	; current act number
 f_2player:      equ $FFFFFFE8   ; flag for 2 player mode.
 
+f_pause:		equ $FFFFF63A	; flag set to pause the game (2 bytes)
+
+v_lani0_frame:	equ $FFFFF7B0	; level graphics animation 0 - current frame
+v_lani0_time:	equ $FFFFF7B1	; level graphics animation 0 - time until next frame
+v_lani1_frame:	equ $FFFFF7B2	; level graphics animation 1 - current frame
+v_lani1_time:	equ $FFFFF7B3	; level graphics animation 1 - time until next frame
+v_lani2_frame:	equ $FFFFF7B4	; level graphics animation 2 - current frame
+v_lani2_time:	equ $FFFFF7B5	; level graphics animation 2 - time until next frame
+v_lani3_frame:	equ $FFFFF7B6	; level graphics animation 3 - current frame
+v_lani3_time:	equ $FFFFF7B7	; level graphics animation 3 - time until next frame
+v_lani4_frame:	equ $FFFFF7B8	; level graphics animation 4 - current frame
+v_lani4_time:	equ $FFFFF7B9	; level graphics animation 4 - time until next frame
+v_lani5_frame:	equ $FFFFF7BA	; level graphics animation 5 - current frame
+v_lani5_time:	equ $FFFFF7BB	; level graphics animation 5 - time until next frame
+v_gfxbigring:	equ $FFFFF7BE	; settings for giant ring graphics loading (2 bytes)
+
 v_startofvariables:	equ $000
 v_sndprio:		equ $000	; sound priority (priority of new music/SFX must be higher or equal to this value or it won't play; bit 7 of priority being set prevents this value from changing)
 v_main_tempo_timeout:	equ $001	; Counts down to zero; when zero, resets to next value and delays song by 1 frame

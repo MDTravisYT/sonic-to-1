@@ -3520,7 +3520,7 @@ loc_3DD0:				; CODE XREF: ROM:00003DB6j
 	if removeJmpTos=1
         	jsr     (DynamicArtCues).l
         else
-                bsr.w	j_DynamicArtCues
+                bsr.w	j_AnimateLevelGfx
         endif
 		moveq	#0,d0
 		tst.b	($FFFFFE30).w
@@ -3639,7 +3639,7 @@ loc_3F54:				; CODE XREF: ROM:00003F4Ej
 	if removeJmpTos=1
 		jsr     (DynamicArtCues).l
         else
-                bsr.w	j_DynamicArtCues
+                bsr.w	j_AnimateLevelGfx
         endif
 		bsr.w	PalCycle_Load
 		bsr.w	RunPLC
@@ -4671,8 +4671,8 @@ Demo_S1SS:	dc.b   0,$26,  4,  5,  0,$2A,  8,$1B,  0,  6,  4,  9,  0,  6,$20,  1;
 ; ---------------------------------------------------------------------------
 
         if removeJmpTos=0
-j_DynamicArtCues:
-		jmp	DynamicArtCues
+j_AnimateLevelGfx:
+		jmp	AnimateLevelGfx
 
 		align 4
 	endif
@@ -34770,297 +34770,8 @@ j_ModifySpriteAttr_2P_7:		; CODE XREF: ROM:0001A3FAp
 		jmp	ModifySpriteAttr_2P
 ; ---------------------------------------------------------------------------
 		align 4
-
-; =============== S U B	R O U T	I N E =======================================
-
-
-DynamicArtCues:				; CODE XREF: ROM:j_DynamicArtCuesj
-		moveq	#0,d0
-		move.b	(v_zone).w,d0
-		add.w	d0,d0
-		add.w	d0,d0
-		move.w	DynArtCue_Index+2(pc,d0.w),d1
-		lea	DynArtCue_Index(pc,d1.w),a2
-		move.w	DynArtCue_Index(pc,d0.w),d0
-		jmp	DynArtCue_Index(pc,d0.w)
-; End of function DynamicArtCues
-
-; ---------------------------------------------------------------------------
-		rts
-; ---------------------------------------------------------------------------
-DynArtCue_Index:dc.w Dynamic_NullGHZ-DynArtCue_Index,AnimCue_EHZ-DynArtCue_Index; 0
-					; DATA XREF: ROM:DynArtCue_Indexo
-					; ROM:DynArtCue_Index+2o ...
-		dc.w Dynamic_Null-DynArtCue_Index,AnimCue_Unk-DynArtCue_Index; 2
-		dc.w Dynamic_Null-DynArtCue_Index,AnimCue_Unk-DynArtCue_Index; 4
-		dc.w Dynamic_Normal-DynArtCue_Index,AnimCue_EHZ-DynArtCue_Index; 6
-		dc.w Dynamic_Normal-DynArtCue_Index,AnimCue_HPZ-DynArtCue_Index; 8
-		dc.w Dynamic_Normal-DynArtCue_Index,AnimCue_EHZ-DynArtCue_Index; 10
-		dc.w Dynamic_Null-DynArtCue_Index,AnimCue_Unk-DynArtCue_Index; 12
-		dc.w Dynamic_Null-DynArtCue_Index,AnimCue_Unk-DynArtCue_Index; 14
-		dc.w Dynamic_Normal-DynArtCue_Index,AnimCue_HPZ-DynArtCue_Index; 16
-		dc.w Dynamic_Null-DynArtCue_Index,AnimCue_Unk-DynArtCue_Index; 18
-		dc.w Dynamic_Null-DynArtCue_Index,AnimCue_Unk-DynArtCue_Index; 20
-		dc.w Dynamic_Null-DynArtCue_Index,AnimCue_Unk-DynArtCue_Index; 22
-		dc.w Dynamic_Null-DynArtCue_Index,AnimCue_Unk-DynArtCue_Index; 24
-		dc.w Dynamic_Null-DynArtCue_Index,AnimCue_Unk-DynArtCue_Index; 26
-		dc.w Dynamic_Null-DynArtCue_Index,AnimCue_Unk-DynArtCue_Index; 28
-		dc.w Dynamic_Null-DynArtCue_Index,AnimCue_Unk-DynArtCue_Index; 30
-; ---------------------------------------------------------------------------
-
-Dynamic_Null:				; DATA XREF: ROM:DynArtCue_Indexo
-		rts
-; ---------------------------------------------------------------------------
-
-Dynamic_NullGHZ:			; DATA XREF: ROM:DynArtCue_Indexo
-		rts
-; ---------------------------------------------------------------------------
-
-Dynamic_Normal:				; DATA XREF: ROM:DynArtCue_Indexo
-		lea	($FFFFF7F0).w,a3
-		move.w	(a2)+,d6
-
-loc_1AACA:				; CODE XREF: ROM:0001AB26j
-		subq.b	#1,(a3)
-		bpl.s	loc_1AB10
-		moveq	#0,d0
-		move.b	1(a3),d0
-		cmp.b	6(a2),d0
-		bcs.s	loc_1AAE0
-		moveq	#0,d0
-		move.b	d0,1(a3)
-
-loc_1AAE0:				; CODE XREF: ROM:0001AAD8j
-		addq.b	#1,1(a3)
-		move.b	(a2),(a3)
-		bpl.s	loc_1AAEE
-		add.w	d0,d0
-		move.b	9(a2,d0.w),(a3)
-
-loc_1AAEE:				; CODE XREF: ROM:0001AAE6j
-		move.b	8(a2,d0.w),d0
-		lsl.w	#5,d0
-		move.w	4(a2),d2
-		move.l	(a2),d1
-		andi.l	#$FFFFFF,d1
-		add.l	d0,d1
-		moveq	#0,d3
-		move.b	7(a2),d3
-		lsl.w	#4,d3
-		jsr	(DMA_68KtoVRAM).l
-
-loc_1AB10:				; CODE XREF: ROM:0001AACCj
-		move.b	6(a2),d0
-		tst.b	(a2)
-		bpl.s	loc_1AB1A
-		add.b	d0,d0
-
-loc_1AB1A:				; CODE XREF: ROM:0001AB16j
-		addq.b	#1,d0
-		andi.w	#$FE,d0	; "þ"
-		lea	8(a2,d0.w),a2
-		addq.w	#2,a3
-		dbf	d6,loc_1AACA
-		rts
-; ---------------------------------------------------------------------------
-AnimCue_EHZ:	dc.w 4			; DATA XREF: ROM:DynArtCue_Indexo
-		dc.l Art_EHZFlower1+$FF000000
-		dc.w $7280
-		dc.b 6
-		dc.b 2
-		dc.b   0,$7F		; 0
-		dc.b   2,$13		; 2
-		dc.b   0,  7		; 4
-		dc.b   2,  7		; 6
-		dc.b   0,  7		; 8
-		dc.b   2,  7		; 10
-		dc.l Art_EHZFlower2+$FF000000
-		dc.w $72C0
-		dc.b 8
-		dc.b 2
-		dc.b   2,$7F		; 0
-		dc.b   0, $B		; 2
-		dc.b   2, $B		; 4
-		dc.b   0, $B		; 6
-		dc.b   2,  5		; 8
-		dc.b   0,  5		; 10
-		dc.b   2,  5		; 12
-		dc.b   0,  5		; 14
-		dc.l Art_EHZFlower3+$7000000
-		dc.w $7300
-		dc.b 2
-		dc.b 2
-		dc.b   0,  2		; 0
-		dc.l Art_EHZFlower4+$FF000000
-		dc.w $7340
-		dc.b 8
-		dc.b 2
-		dc.b   0,$7F		; 0
-		dc.b   2,  7		; 2
-		dc.b   0,  7		; 4
-		dc.b   2,  7		; 6
-		dc.b   0,  7		; 8
-		dc.b   2, $B		; 10
-		dc.b   0, $B		; 12
-		dc.b   2, $B		; 14
-		dc.l Art_EHZFlower5+$1000000
-		dc.w $7380
-		dc.b 6
-		dc.b 2
-		dc.b   0,  2		; 0
-		dc.b   4,  6		; 2
-		dc.b   4,  2		; 4
-AnimCue_HPZ:	dc.w 2			; DATA XREF: ROM:DynArtCue_Indexo
-		dc.l Art_HPZGlowingBall+$8000000
-		dc.w $5D00
-		dc.b 6
-		dc.b 8
-		dc.b   0,  0		; 0
-		dc.b   8,$10		; 2
-		dc.b $10,  8		; 4
-		dc.l Art_HPZGlowingBall+$8000000
-		dc.w $5E00
-		dc.b 6
-		dc.b 8
-		dc.b   8,$10		; 0
-		dc.b $10,  8		; 2
-		dc.b   0,  0		; 4
-		dc.l Art_HPZGlowingBall+$8000000
-		dc.w $5F00
-		dc.b 6
-		dc.b 8
-		dc.b $10,  8		; 0
-		dc.b   0,  0		; 2
-		dc.b   8,$10		; 4
-AnimCue_Unk:	dc.w 7			; DATA XREF: ROM:DynArtCue_Indexo
-		dc.l Art_UnkZone_1+$7000000
-		dc.w $9000
-		dc.b 2
-		dc.b 4
-		dc.b   0,  4		; 0
-		dc.l Art_UnkZone_2+$7000000
-		dc.w $9080
-		dc.b 3
-		dc.b 8
-		dc.b   0,  8		; 0
-		dc.b $10,  0		; 2
-		dc.l Art_UnkZone_3+$7000000
-		dc.w $9180
-		dc.b 4
-		dc.b 2
-		dc.b   0,  2		; 0
-		dc.b   0,  4		; 2
-		dc.l Art_UnkZone_4+$B000000
-		dc.w $91C0
-		dc.b 4
-		dc.b 2
-		dc.b   0,  2		; 0
-		dc.b   4,  2		; 2
-		dc.l Art_UnkZone_5+$F000000
-		dc.w $9200
-		dc.b $A
-		dc.b 1
-		dc.b   0		; 0
-		dc.b   0		; 1
-		dc.b   1		; 2
-		dc.b   2		; 3
-		dc.b   3		; 4
-		dc.b   4		; 5
-		dc.b   5		; 6
-		dc.b   4		; 7
-		dc.b   5		; 8
-		dc.b   4		; 9
-		dc.l Art_UnkZone_6+$3000000
-		dc.w $9220
-		dc.b 4
-		dc.b 4
-		dc.b   0,  4		; 0
-		dc.b   8,  4		; 2
-		dc.l Art_UnkZone_7+$7000000
-		dc.w $92A0
-		dc.b 6
-		dc.b 3
-		dc.b   0,  3		; 0
-		dc.b   6,  9		; 2
-		dc.b  $C, $F		; 4
-		dc.l Art_UnkZone_8+$7000000
-		dc.w $9300
-		dc.b 4
-		dc.b 1
-		dc.b   0		; 0
-		dc.b   1		; 1
-		dc.b   2		; 2
-		dc.b   3		; 3
-; ---------------------------------------------------------------------------
-		cmpi.b	#2,(v_zone).w
-		beq.s	loc_1AC28
-
-locret_1AC26:				; CODE XREF: ROM:0001AC30j
-					; ROM:0001AC36j ...
-		rts
-; ---------------------------------------------------------------------------
-
-loc_1AC28:				; CODE XREF: ROM:0001AC24j
-		move.w	(v_screenposx).w,d0
-		cmpi.w	#$1940,d0
-		bcs.s	locret_1AC26
-		cmpi.w	#$1F80,d0
-		bcc.s	locret_1AC26
-		subq.b	#1,($FFFFF721).w
-		bpl.s	locret_1AC26
-		move.b	#7,($FFFFF721).w
-		move.b	#1,($FFFFF720).w
-		lea	($FFFF7500).l,a1
-		bsr.s	sub_1AC58
-		lea	($FFFF7D00).l,a1
-
-; =============== S U B	R O U T	I N E =======================================
-
-
-sub_1AC58:				; CODE XREF: ROM:0001AC50p
-		move.w	#7,d1
-
-loc_1AC5C:				; CODE XREF: sub_1AC58+94j
-		move.w	(a1),d0
-		move.w	2(a1),(a1)+
-		move.w	2(a1),(a1)+
-		move.w	2(a1),(a1)+
-		move.w	2(a1),(a1)+
-		move.w	2(a1),(a1)+
-		move.w	2(a1),(a1)+
-		move.w	2(a1),(a1)+
-		move.w	$72(a1),(a1)+
-		adda.w	#$70,a1	; "p"
-		move.w	2(a1),(a1)+
-		move.w	2(a1),(a1)+
-		move.w	2(a1),(a1)+
-		move.w	2(a1),(a1)+
-		move.w	2(a1),(a1)+
-		move.w	2(a1),(a1)+
-		move.w	2(a1),(a1)+
-		move.w	$72(a1),(a1)+
-		adda.w	#$70,a1	; "p"
-		move.w	2(a1),(a1)+
-		move.w	2(a1),(a1)+
-		move.w	2(a1),(a1)+
-		move.w	2(a1),(a1)+
-		move.w	2(a1),(a1)+
-		move.w	2(a1),(a1)+
-		move.w	2(a1),(a1)+
-		move.w	$72(a1),(a1)+
-		adda.w	#$70,a1	; "p"
-		move.w	2(a1),(a1)+
-		move.w	2(a1),(a1)+
-		move.w	2(a1),(a1)+
-		move.w	2(a1),(a1)+
-		move.w	2(a1),(a1)+
-		move.w	2(a1),(a1)+
-		move.w	2(a1),(a1)+
-		move.w	d0,(a1)+
-		suba.w	#$180,a1
-		dbf	d1,loc_1AC5C
-		rts
-; End of function sub_1AC58
+		
+		include "_inc\AnimateLevelGfx.asm"
 
 ;----------------------------------------------------
 ; This subroutines changes some	16x16 mappings
@@ -36077,6 +35788,15 @@ S1SS_5:		incbin "sslayout\5.bin"
                 even
 S1SS_6:		incbin "sslayout\6.bin"
                 even
+; ---------------------------------------------------------------------------
+; Animated uncompressed graphics
+; ---------------------------------------------------------------------------
+Art_GhzWater:	incbin	"artunc\GHZ Waterfall.bin"
+		even
+Art_GhzFlower1:	incbin	"artunc\GHZ Flower Large.bin"
+		even
+Art_GhzFlower2:	incbin	"artunc\GHZ Flower Small.bin"
+		even
 Art_EHZFlower1:	dc.l	     0,	       0,	 0,	   0,	     0,	     $98, $8880087,  $998088; 0
 					; DATA XREF: ROM:0001AB2Et
 		dc.l	 $9899,	$9887777,  $988777,   $98887,	 $9988,	    $998,      $99,	   9; 8
