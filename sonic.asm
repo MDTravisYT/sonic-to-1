@@ -20524,11 +20524,10 @@ loc_109B0:				; CODE XREF: Sonic_Animate+E2j
 		bcc.s	loc_109C2
 		lea	(SonicAni_Walk).l,a1
 
-loc_109C2:				; CODE XREF: Sonic_Animate+F0j
 		move.b	d0,d1
 		lsr.b	#1,d1
 		add.b	d1,d0
-		add.b	d0,d0
+loc_109C2:				; CODE XREF: Sonic_Animate+F0j
 		add.b	d0,d0
 		move.b	d0,d3
 		neg.w	d2
@@ -20538,7 +20537,6 @@ loc_109C2:				; CODE XREF: Sonic_Animate+F0j
 
 loc_109D8:				; CODE XREF: Sonic_Animate+10Aj
 		lsr.w	#8,d2
-		lsr.w	#1,d2
 		move.b	d2,$1E(a0)
 		bsr.w	sub_10912
 		add.b	d3,$1A(a0)
