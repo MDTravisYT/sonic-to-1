@@ -9486,7 +9486,7 @@ Obj1C_Conf:	dc.l Map_Obj11_HPZ
 		dc.w $43C6
 		dc.b   1,  4,  1,  0	; 0
 		dc.l Map_Obj11
-		dc.w $44C6
+		dc.w $438E
 		dc.b   1,$10,  1,  0	; 0
 		dc.l Map_Obj16
 		dc.w $43E6
