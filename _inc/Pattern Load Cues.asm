@@ -57,13 +57,15 @@ PLC_GHZ:	dc.w 8			; DATA XREF: ROM:ArtLoadCueso
 		dc.w $9E00
 		dc.l Nem_GHZ_Rock
 		dc.w $7A00
-PLC_GHZ2:	dc.w 2
+PLC_GHZ2:	dc.w 3
 		dc.l Nem_Crabmeat
 		dc.w $8000
 		dc.l Nem_GHZBuzzbomber
 		dc.w $8880
 		dc.l Nem_S1Newtron
 		dc.w $9360
+		dc.l S1Nem_GHZFlowerBits
+		dc.w $6B00
 PLC_CPZ:	dc.w 2			; DATA XREF: ROM:ArtLoadCueso
 		dc.l Nem_CPZ
 		dc.w 0
