@@ -20626,70 +20626,134 @@ loc_10A98:				; CODE XREF: Sonic_Animate+1CAj
 		bra.w	sub_10912
 ; END OF FUNCTION CHUNK	FOR Sonic_Animate
 ; ---------------------------------------------------------------------------
-SonicAniData:	dc.w SonicAni_Walk-SonicAniData,SonicAni_Run-SonicAniData; 0
-					; DATA XREF: Sonic_Animateo
-					; ROM:SonicAniDatao ...
-		dc.w SonicAni_Roll-SonicAniData,SonicAni_Roll2-SonicAniData; 2
-		dc.w SonicAni_Push-SonicAniData,SonicAni_Wait-SonicAniData; 4
-		dc.w SonicAni_Balance-SonicAniData,SonicAni_LookUp-SonicAniData; 6
-		dc.w SonicAni_Duck-SonicAniData,SonicAni_Spindash-SonicAniData;	8
-		dc.w SonicAni_WallRecoil1-SonicAniData,SonicAni_WallRecoil2-SonicAniData; 10
-		dc.w SonicAni_0C-SonicAniData,SonicAni_Stop-SonicAniData; 12
-		dc.w SonicAni_Float1-SonicAniData,SonicAni_Float2-SonicAniData;	14
-		dc.w SonicAni_10-SonicAniData,SonicAni_S1LZHang-SonicAniData; 16
-		dc.w SonicAni_Unused12-SonicAniData,SonicAni_Unused13-SonicAniData; 18
-		dc.w SonicAni_Unused14-SonicAniData,SonicAni_Bubble-SonicAniData; 20
-		dc.w SonicAni_Death1-SonicAniData,SonicAni_Drown-SonicAniData; 22
-		dc.w SonicAni_Death2-SonicAniData,SonicAni_Unused19-SonicAniData; 24
-		dc.w SonicAni_Hurt-SonicAniData,SonicAni_S1LZSlide-SonicAniData; 26
-		dc.w SonicAni_1C-SonicAniData,SonicAni_Float3-SonicAniData; 28
-		dc.w SonicAni_1E-SonicAniData; 30
-SonicAni_Walk:	dc.b $FF,$10,$11,$12,$13,$14,$15,$16,$17, $C, $D, $E, $F,$FF; 0
-					; DATA XREF: Sonic_Animate+F2o
-					; ROM:SonicAniDatao
-SonicAni_Run:	dc.b $FF,$3C,$3D,$3E,$3F,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF; 0
-					; DATA XREF: Sonic_Animate:loc_109B0o
-					; ROM:SonicAniDatao
-SonicAni_Roll:	dc.b $FE,$6C,$70,$6D,$70,$6E,$70,$6F,$70,$FF; 0
-					; DATA XREF: Sonic_Animate+192o
-					; ROM:SonicAniDatao
-SonicAni_Roll2:	dc.b $FE,$6C,$70,$6D,$70,$6E,$70,$6F,$70,$FF; 0
-					; DATA XREF: Sonic_Animate:loc_10A50o
-					; ROM:SonicAniDatao
-SonicAni_Push:	dc.b $FD,$77,$78,$79,$7A,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF; 0
-					; DATA XREF: Sonic_Animate+1D4o
-					; ROM:SonicAniDatao
-SonicAni_Wait:	dc.b   7,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1; 0
-					; DATA XREF: ROM:SonicAniDatao
-		dc.b   1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  2; 16
-		dc.b   3,  3,  3,  4,  4,  5,  5,$FE,  4; 32
-SonicAni_Balance:dc.b	7,$89,$8A,$FF	 ; 0 ; DATA XREF: ROM:SonicAniDatao
-SonicAni_LookUp:dc.b   5,  6,  7,$FE,  1; 0 ; DATA XREF: ROM:SonicAniDatao
-SonicAni_Duck:	dc.b   5,$7F,$80,$FE,  1; 0 ; DATA XREF: ROM:SonicAniDatao
-SonicAni_Spindash:dc.b	 0,$71,$72,$71,$73,$71,$74,$71,$75,$71,$76,$71,$FF; 0
-					; DATA XREF: ROM:SonicAniDatao
-SonicAni_WallRecoil1:dc.b $3F,$82,$FF	     ; 0 ; DATA	XREF: ROM:SonicAniDatao
-SonicAni_WallRecoil2:dc.b   7,	8,  8,	9,$FD,	5; 0 ; DATA XREF: ROM:SonicAniDatao
-SonicAni_0C:	dc.b   7,  9,$FD,  5	; 0 ; DATA XREF: ROM:SonicAniDatao
-SonicAni_Stop:	dc.b   3,$81,$82,$83,$84,$85,$86,$87,$88,$FE,  2; 0
-					; DATA XREF: ROM:SonicAniDatao
-SonicAni_Float1:dc.b   7,$94,$96,$FF	; 0 ; DATA XREF: ROM:SonicAniDatao
-SonicAni_Float2:dc.b   7,$91,$92,$93,$94,$95,$FF; 0 ; DATA XREF: ROM:SonicAniDatao
-SonicAni_10:	dc.b $2F,$7E,$FD,  0	; 0 ; DATA XREF: ROM:SonicAniDatao
-SonicAni_S1LZHang:dc.b	 5,$8F,$90,$FF	  ; 0 ;	DATA XREF: ROM:SonicAniDatao
-SonicAni_Unused12:dc.b	$F,$43,$43,$43,$FE,  1;	0 ; DATA XREF: ROM:SonicAniDatao
-SonicAni_Unused13:dc.b	$F,$43,$44,$FE,	 1; 0 ;	DATA XREF: ROM:SonicAniDatao
-SonicAni_Unused14:dc.b $3F,$49,$FF	  ; 0 ;	DATA XREF: ROM:SonicAniDatao
-SonicAni_Bubble:dc.b  $B,$97,$97,$12,$13,$FD,  0; 0 ; DATA XREF: ROM:SonicAniDatao
-SonicAni_Death1:dc.b $20,$9A,$FF	; 0 ; DATA XREF: ROM:SonicAniDatao
-SonicAni_Drown:	dc.b $20,$99,$FF	; 0 ; DATA XREF: ROM:SonicAniDatao
-SonicAni_Death2:dc.b $20,$98,$FF	; 0 ; DATA XREF: ROM:SonicAniDatao
-SonicAni_Unused19:dc.b	 3,$4E,$4F,$50,$51,$52,	 0,$FE,	 1; 0 ;	DATA XREF: ROM:SonicAniDatao
-SonicAni_Hurt:	dc.b $40,$8D,$FF	; 0 ; DATA XREF: ROM:SonicAniDatao
-SonicAni_S1LZSlide:dc.b	  9,$8D,$8E,$FF	   ; 0 ; DATA XREF: ROM:SonicAniDatao
-SonicAni_1C:	dc.b $77,  0,$FD,  0	; 0 ; DATA XREF: ROM:SonicAniDatao
-SonicAni_Float3:dc.b   3,$91,$92,$93,$94,$95,$FF; 0 ; DATA XREF: ROM:SonicAniDatao
-SonicAni_1E:	dc.b   3,$3C,$FD,  0	; 0 ; DATA XREF: ROM:SonicAniDatao
+SonicAniData:	
+ptr_Walk:	dc.w SonicAni_Walk-SonicAniData
+ptr_Run:	dc.w SonicAni_Run-SonicAniData
+ptr_Roll:	dc.w SonicAni_Roll-SonicAniData
+ptr_Roll2:	dc.w SonicAni_Roll2-SonicAniData
+ptr_Push:	dc.w SonicAni_Push-SonicAniData
+ptr_Wait:	dc.w SonicAni_Wait-SonicAniData
+ptr_Balance:	dc.w SonicAni_Balance-SonicAniData
+ptr_LookUp:	dc.w SonicAni_LookUp-SonicAniData
+ptr_Duck:	dc.w SonicAni_Duck-SonicAniData
+ptr_Warp1:	dc.w SonicAni_Warp1-SonicAniData
+ptr_Warp2:	dc.w SonicAni_Warp2-SonicAniData
+ptr_Warp3:	dc.w SonicAni_Warp3-SonicAniData
+ptr_Warp4:	dc.w SonicAni_Warp4-SonicAniData
+ptr_Stop:	dc.w SonicAni_Stop-SonicAniData
+ptr_Float1:	dc.w SonicAni_Float1-SonicAniData
+ptr_Float2:	dc.w SonicAni_Float2-SonicAniData
+ptr_Spring:	dc.w SonicAni_Spring-SonicAniData
+ptr_Hang:	dc.w SonicAni_Hang-SonicAniData
+ptr_Leap1:	dc.w SonicAni_Leap1-SonicAniData
+ptr_Leap2:	dc.w SonicAni_Leap2-SonicAniData
+ptr_Surf:	dc.w SonicAni_Surf-SonicAniData
+ptr_GetAir:	dc.w SonicAni_GetAir-SonicAniData
+ptr_Burnt:	dc.w SonicAni_Burnt-SonicAniData
+ptr_Drown:	dc.w SonicAni_Drown-SonicAniData
+ptr_Death:	dc.w SonicAni_Death-SonicAniData
+ptr_Shrink:	dc.w SonicAni_Shrink-SonicAniData
+ptr_Hurt:	dc.w SonicAni_Hurt-SonicAniData
+ptr_WaterSlide:	dc.w SonicAni_WaterSlide-SonicAniData
+ptr_Null:	dc.w SonicAni_Null-SonicAniData
+ptr_Float3:	dc.w SonicAni_Float3-SonicAniData
+ptr_Float4:	dc.w SonicAni_Float4-SonicAniData
+
+SonicAni_Walk:	dc.b $FF, 8, 9,	$A, $B,	6, 7, $FF
+		even
+SonicAni_Run:	dc.b $FF, $1E, $1F, $20, $21, $FF, $FF, $FF
+		even
+SonicAni_Roll:	dc.b $FE, $2E, $2F, $30, $31, $32, $FF, $FF
+		even
+SonicAni_Roll2:	dc.b $FE, $2E, $2F, $32, $30, $31, $32,	$FF
+		even
+SonicAni_Push:	dc.b $FD, $45, $46, $47, $48, $FF, $FF, $FF
+		even
+SonicAni_Wait:	dc.b $17, 1, 1,	1, 1, 1, 1, 1, 1, 1, 1,	1, 1, 3, 2, 2, 2, 3, 4, $FE, 2
+		even
+SonicAni_Balance:	dc.b $1F, $3A, $3B, $FF
+		even
+SonicAni_LookUp:	dc.b $3F, 5, $FF
+		even
+SonicAni_Duck:	dc.b $3F, $39, $FF
+		even
+SonicAni_Warp1:	dc.b $3F, $33, $FF
+		even
+SonicAni_Warp2:	dc.b $3F, $34, $FF
+		even
+SonicAni_Warp3:	dc.b $3F, $35, $FF
+		even
+SonicAni_Warp4:	dc.b $3F, $36, $FF
+		even
+SonicAni_Stop:	dc.b 7,	$37, $38, $FF
+		even
+SonicAni_Float1:	dc.b 7,	$3C, $3F, $FF
+		even
+SonicAni_Float2:	dc.b 7,	$3C, $3D, $53, $3E, $54, $FF
+		even
+SonicAni_Spring:	dc.b $2F, $40, $FD, id_Walk
+		even
+SonicAni_Hang:	dc.b 4,	$41, $42, $FF
+		even
+SonicAni_Leap1:	dc.b $F, $43, $43, $43,	$FE, 1
+		even
+SonicAni_Leap2:	dc.b $F, $43, $44, $FE, 1
+		even
+SonicAni_Surf:	dc.b $3F, $49, $FF
+		even
+SonicAni_GetAir:	dc.b $B, $56, $56, $A, $B, $FD, id_Walk
+		even
+SonicAni_Burnt:	dc.b $20, $4B, $FF
+		even
+SonicAni_Drown:	dc.b $2F, $4C, $FF
+		even
+SonicAni_Death:	dc.b 3,	$4D, $FF
+		even
+SonicAni_Shrink:	dc.b 3,	$4E, $4F, $50, $51, $52, 0, $FE, 1
+		even
+SonicAni_Hurt:	dc.b 3,	$55, $FF
+		even
+SonicAni_WaterSlide:
+		dc.b 7, $55, $57, $FF
+		even
+SonicAni_Null:	dc.b $77, 0, $FD, id_Walk
+		even
+SonicAni_Float3:	dc.b 3,	$3C, $3D, $53, $3E, $54, $FF
+		even
+SonicAni_Float4:	dc.b 3,	$3C, $FD, id_Walk
+		even
+
+id_Walk:	equ (ptr_Walk-SonicAniData)/2	; 0
+id_Run:		equ (ptr_Run-SonicAniData)/2	; 1
+id_Roll:	equ (ptr_Roll-SonicAniData)/2	; 2
+id_Roll2:	equ (ptr_Roll2-SonicAniData)/2	; 3
+id_Push:	equ (ptr_Push-SonicAniData)/2	; 4
+id_Wait:	equ (ptr_Wait-SonicAniData)/2	; 5
+id_Balance:	equ (ptr_Balance-SonicAniData)/2	; 6
+id_LookUp:	equ (ptr_LookUp-SonicAniData)/2	; 7
+id_Duck:	equ (ptr_Duck-SonicAniData)/2	; 8
+id_Warp1:	equ (ptr_Warp1-SonicAniData)/2	; 9
+id_Warp2:	equ (ptr_Warp2-SonicAniData)/2	; $A
+id_Warp3:	equ (ptr_Warp3-SonicAniData)/2	; $B
+id_Warp4:	equ (ptr_Warp4-SonicAniData)/2	; $C
+id_Stop:	equ (ptr_Stop-SonicAniData)/2	; $D
+id_Float1:	equ (ptr_Float1-SonicAniData)/2	; $E
+id_Float2:	equ (ptr_Float2-SonicAniData)/2	; $F
+id_Spring:	equ (ptr_Spring-SonicAniData)/2	; $10
+id_Hang:	equ (ptr_Hang-SonicAniData)/2	; $11
+id_Leap1:	equ (ptr_Leap1-SonicAniData)/2	; $12
+id_Leap2:	equ (ptr_Leap2-SonicAniData)/2	; $13
+id_Surf:	equ (ptr_Surf-SonicAniData)/2	; $14
+id_GetAir:	equ (ptr_GetAir-SonicAniData)/2	; $15
+id_Burnt:	equ (ptr_Burnt-SonicAniData)/2	; $16
+id_Drown:	equ (ptr_Drown-SonicAniData)/2	; $17
+id_Death:	equ (ptr_Death-SonicAniData)/2	; $18
+id_Shrink:	equ (ptr_Shrink-SonicAniData)/2	; $19
+id_Hurt:	equ (ptr_Hurt-SonicAniData)/2	; $1A
+id_WaterSlide:	equ (ptr_WaterSlide-SonicAniData)/2 ; $1B
+id_Null:	equ (ptr_Null-SonicAniData)/2	; $1C
+id_Float3:	equ (ptr_Float3-SonicAniData)/2	; $1D
+id_Float4:	equ (ptr_Float4-SonicAniData)/2	; $1E
 
 ; =============== S U B	R O U T	I N E =======================================
 
@@ -37059,11 +37123,11 @@ Leftover_50A9C:	incbin "leftovers\0x50A9C.bin"
 
 Art_Sonic:	incbin "artunc\Sonic.bin"
                 even
-                include "_maps\Sonic.asm"
+Map_Sonic:  include "_maps\Sonic.asm"
 
 Art_Tails:	incbin "artunc\Tails.bin"
                 even
-                include "_maps\Sonic - Dynamic Gfx Script.asm"
+SonicDynPLC:include "_maps\Sonic - Dynamic Gfx Script.asm"
 
 Nem_Shield:	incbin "artnem\Shield.bin"
                 even
