@@ -12694,6 +12694,8 @@ Obj3A_Index:	dc.w loc_BB5C-Obj3A_Index ; DATA XREF: ROM:Obj3A_Indexo
 					; ROM:0000BB56o ...
 		dc.w loc_BBB8-Obj3A_Index
 		dc.w loc_BC04-Obj3A_Index
+		dc.w Got_TimeBonus-Obj3A_Index
+		dc.w loc_BC04-Obj3A_Index
 		dc.w loc_BC80-Obj3A_Index
 ; ---------------------------------------------------------------------------
 
@@ -12745,8 +12747,6 @@ loc_BBCC:				; CODE XREF: ROM:0000BBF8j
 		bmi.s	locret_BBDE
 		cmpi.w	#$200,d0
 		bcc.s	locret_BBDE
-		rts
-; ---------------------------------------------------------------------------
 		bra.w	DisplaySprite
 ; ---------------------------------------------------------------------------
 
@@ -12774,10 +12774,10 @@ loc_BC04:				; DATA XREF: ROM:0000BB58o
 		addq.b	#2,$24(a0)
 
 locret_BC0E:				; CODE XREF: ROM:0000BC08j
-		rts
-; ---------------------------------------------------------------------------
+
 		bra.w	DisplaySprite
-; ---------------------------------------------------------------------------
+		
+Got_TimeBonus:
 		bsr.w	DisplaySprite
 		move.b	#1,($FFFFF7D6).w
 		moveq	#0,d0
@@ -12847,8 +12847,6 @@ loc_BCBC:				; CODE XREF: ROM:0000BCB2j
 
 locret_BCC2:				; CODE XREF: ROM:0000BCA8j
 					; ROM:0000BCBAj
-		rts
-; ---------------------------------------------------------------------------
 		bra.w	DisplaySprite
 ; ---------------------------------------------------------------------------
 LevelOrder:	dc.w	 1,    2, $200,	   0; 0
@@ -17852,40 +17850,34 @@ Ani_Obj0D:	dc.w byte_F194-Ani_Obj0D ; DATA	XREF: ROM:0000EFAAo
 		dc.w byte_F197-Ani_Obj0D
 		dc.w byte_F1A5-Ani_Obj0D
 		dc.w byte_F1B3-Ani_Obj0D
-byte_F194:	dc.b  $F,  2,$FF	; 0 ; DATA XREF: ROM:Ani_Obj0Do
-byte_F197:	dc.b   1,  2,  3,  4,  5,  1,  3,  4; 0	; DATA XREF: ROM:0000F18Eo
-		dc.b   5,  0,  3,  4,  5,$FF; 8
-byte_F1A5:	dc.b   1,  2,  3,  4,  5,  1,  3,  4; 0	; DATA XREF: ROM:0000F190o
-		dc.b   5,  0,  3,  4,  5,$FF; 8
-byte_F1B3:	dc.b  $F,  0,$FF	; 0 ; DATA XREF: ROM:0000F192o
-Map_Obj0D:	dc.w word_F1C2-Map_Obj0D ; DATA	XREF: ROM:0000EFDAo
-					; ROM:Map_Obj0Do ...
-		dc.w word_F1DC-Map_Obj0D
-		dc.w word_F1F6-Map_Obj0D
-		dc.w word_F210-Map_Obj0D
-		dc.w word_F222-Map_Obj0D
-		dc.w word_F234-Map_Obj0D
-word_F1C2:	dc.w 3			; DATA XREF: ROM:Map_Obj0Do
-		dc.w $F00B,    0,    0,$FFE8; 0
-		dc.w $F00B, $800, $800,	   0; 4
-		dc.w $1001,  $38,  $1C,$FFFC; 8
-word_F1DC:	dc.w 3			; DATA XREF: ROM:0000F1B8o
-		dc.w $F00B,   $C,    6,$FFE8; 0
-		dc.w $F00B, $80C, $806,	   0; 4
-		dc.w $1001,  $38,  $1C,$FFFC; 8
-word_F1F6:	dc.w 3			; DATA XREF: ROM:0000F1BAo
-		dc.w $F00B,  $18,   $C,$FFE8; 0
-		dc.w $F00B, $818, $80C,	   0; 4
-		dc.w $1001,  $38,  $1C,$FFFC; 8
-word_F210:	dc.w 2			; DATA XREF: ROM:0000F1BCo
-		dc.w $F00F,  $24,  $12,$FFF0; 0
-		dc.w $1001,  $38,  $1C,$FFFC; 4
-word_F222:	dc.w 2			; DATA XREF: ROM:0000F1BEo
-		dc.w $F003,  $34,  $1A,$FFFC; 0
-		dc.w $1001,  $38,  $1C,$FFFC; 4
-word_F234:	dc.w 2			; DATA XREF: ROM:0000F1C0o
-		dc.w $F00F, $824, $812,$FFF0; 0
-		dc.w $1001,  $38,  $1C,$FFFC; 4
+byte_F194:	dc.b $F, 0, $FF
+byte_F197:	dc.b 1,	0, 1, 2, 3, $FF
+byte_F1A5:	dc.b 1,	4, 1, 2, 3, $FF
+byte_F1B3:	dc.b $F, 4, $FF
+Map_Obj0D:	
+Map_Obj0D_0: 	dc.w Map_Obj0D_A-Map_Obj0D
+Map_Obj0D_2: 	dc.w Map_Obj0D_24-Map_Obj0D
+Map_Obj0D_4: 	dc.w Map_Obj0D_36-Map_Obj0D
+Map_Obj0D_6: 	dc.w Map_Obj0D_48-Map_Obj0D
+Map_Obj0D_8: 	dc.w Map_Obj0D_5A-Map_Obj0D
+Map_Obj0D_A: 	dc.b $0, $3
+	dc.b $F0, $B, $0, $0, $0, $0, $FF, $E8
+	dc.b $F0, $B, $8, $0, $8, $0, $0, $0
+	dc.b $10, $1, $0, $38, $0, $1C, $FF, $FC
+Map_Obj0D_24: 	dc.b $0, $2
+	dc.b $F0, $F, $0, $C, $0, $6, $FF, $F0
+	dc.b $10, $1, $0, $38, $0, $1C, $FF, $FC
+Map_Obj0D_36: 	dc.b $0, $2
+	dc.b $F0, $3, $0, $1C, $0, $E, $FF, $FC
+	dc.b $10, $1, $8, $38, $8, $1C, $FF, $FC
+Map_Obj0D_48: 	dc.b $0, $2
+	dc.b $F0, $F, $8, $C, $8, $6, $FF, $F0
+	dc.b $10, $1, $8, $38, $8, $1C, $FF, $FC
+Map_Obj0D_5A: 	dc.b $0, $3
+	dc.b $F0, $B, $0, $20, $0, $10, $FF, $E8
+	dc.b $F0, $B, $0, $2C, $0, $16, $0, $0
+	dc.b $10, $1, $0, $38, $0, $1C, $FF, $FC
+	even
 ; ---------------------------------------------------------------------------
 		nop
 ;----------------------------------------------------
