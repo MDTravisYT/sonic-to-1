@@ -38,34 +38,42 @@ PLC_Explode:	dc.w 0			; DATA XREF: ROM:ArtLoadCueso
 PLC_GameOver:	dc.w 0			; DATA XREF: ROM:ArtLoadCueso
 		dc.l Nem_GameOver
 		dc.w $ABC0
-PLC_GHZ:	dc.w 8			; DATA XREF: ROM:ArtLoadCueso
+PLC_GHZ:	dc.w ((PLC_GHZ2-PLC_GHZ-2)/6)-1			; DATA XREF: ROM:ArtLoadCueso
 		dc.l Nem_GHZ
 		dc.w 0
+		dc.l S1Nem_GHZFlowerBits
+		dc.w $6B00
+		dc.l Nem_GHZ_Rock
+		dc.w $7A00
+		dc.l Nem_Crabmeat
+		dc.w $8000
+		dc.l Nem_GHZBuzzbomber
+		dc.w $8880
 		dc.l Nem_GHZ_Piranha
 		dc.w $8F60
+		dc.l Nem_S1Newtron
+		dc.w $9360
+		dc.l Nem_Motobug
+		dc.w $9E00
 		dc.l Nem_VSpikes
 		dc.w $9400
 		dc.l Nem_HSpring
 		dc.w $A460
 		dc.l Nem_VSpring
 		dc.w $A660
-		dc.l Nem_GHZ_Bridge
-		dc.w $71C0
+PLC_GHZ2:	dc.w ((PLC_CPZ-PLC_GHZ2-2)/6)-1
 		dc.l Nem_SwingPlatform
 		dc.w $7000
-		dc.l Nem_Motobug
-		dc.w $9E00
-		dc.l Nem_GHZ_Rock
-		dc.w $7A00
-PLC_GHZ2:	dc.w 3
-		dc.l Nem_Crabmeat
-		dc.w $8000
-		dc.l Nem_GHZBuzzbomber
-		dc.w $8880
-		dc.l Nem_S1Newtron
-		dc.w $9360
-		dc.l S1Nem_GHZFlowerBits
-		dc.w $6B00
+		dc.l Nem_GHZ_Bridge
+		dc.w $71C0
+	;	dc.l Nem_SpikePole
+	;	dc.w $7300
+	;	dc.l Nem_Ball
+	;	dc.w $7540
+	;	dc.l Nem_GhzWall1
+	;	dc.w $A1E0
+	;	dc.l Nem_GhzWall2
+	;	dc.w $6980
 PLC_CPZ:	dc.w 2			; DATA XREF: ROM:ArtLoadCueso
 		dc.l Nem_CPZ
 		dc.w 0
