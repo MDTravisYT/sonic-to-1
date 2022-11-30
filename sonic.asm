@@ -16616,12 +16616,6 @@ loc_E204:				; DATA XREF: ROM:Obj41_Indexo
 		addq.b	#2,$24(a0)
 		move.l	#Map_Obj41_GHZ,4(a0)
 		move.w	#$523,2(a0)
-		tst.b	(v_zone).w
-		beq.s	loc_E22A
-		move.l	#Map_Obj41,4(a0)
-		move.w	#$533,2(a0)
-
-loc_E22A:				; CODE XREF: ROM:0000E21Aj
 		ori.b	#4,1(a0)
 		move.b	#$10,$19(a0)
 		move.b	#4,$18(a0)
@@ -16643,7 +16637,7 @@ loc_E258:				; DATA XREF: ROM:0000E250o
 		move.b	#4,$24(a0)
 		move.b	#2,$1C(a0)
 		move.b	#3,$1A(a0)
-		move.w	#$5,2(a0)
+		move.w	#$533,2(a0)
 		tst.b	(v_zone).w
 		beq.s	loc_E27C
 		move.w	#$470,2(a0)
@@ -19301,7 +19295,7 @@ Sonic_WallRecoil_Right:			; CODE XREF: Sonic_Move+1D2j
 		move.w	d0,$10(a0)
 		move.w	#$FC00,$12(a0)
 		move.w	#0,$14(a0)
-		move.b	#$A,$1C(a0)
+		move.b	#$1A,$1C(a0)
 		move.b	#1,$25(a0)
 		move.w	#$A3,d0	; "£"
 		jsr	(PlaySound_Special).l
@@ -20310,7 +20304,7 @@ Sonic_HurtStop:				; CODE XREF: ROM:loc_1077Ep
 		tst.b	$25(a0)
 		beq.s	loc_107D6
 		move.b	#$FF,$25(a0)
-		move.b	#$B,$1C(a0)
+		move.b	#$8,$1C(a0)
 		rts
 ; ---------------------------------------------------------------------------
 
@@ -20639,7 +20633,7 @@ ptr_Wait:	dc.w SonicAni_Wait-SonicAniData
 ptr_Balance:	dc.w SonicAni_Balance-SonicAniData
 ptr_LookUp:	dc.w SonicAni_LookUp-SonicAniData
 ptr_Duck:	dc.w SonicAni_Duck-SonicAniData
-ptr_Warp1:	dc.w SonicAni_Warp1-SonicAniData
+ptr_Warp1:	dc.w SonicAni_Spindash-SonicAniData
 ptr_Warp2:	dc.w SonicAni_Warp2-SonicAniData
 ptr_Warp3:	dc.w SonicAni_Warp3-SonicAniData
 ptr_Warp4:	dc.w SonicAni_Warp4-SonicAniData
@@ -20680,7 +20674,7 @@ SonicAni_LookUp:	dc.b $3F, 5, $FF
 		even
 SonicAni_Duck:	dc.b $3F, $39, $FF
 		even
-SonicAni_Warp1:	dc.b $3F, $33, $FF
+SonicAni_Spindash:	dc.b $00,$58,$59,$58,$5A,$58,$5B,$58,$5C,$58,$5D,$58,$FF
 		even
 SonicAni_Warp2:	dc.b $3F, $34, $FF
 		even
