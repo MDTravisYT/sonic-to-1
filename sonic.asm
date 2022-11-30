@@ -22,6 +22,9 @@ removeJmpTos: equ 0
 ; This costs 30 bytes but ensures the DMA doesn't overload.
 safeDMA128kb: equ 0
 
+; Set this to 1 to force debug and level select to be active upon startup. ~ MDT
+forceDebug:	equ 1
+
 ; ===========================================================================
 
 StartOfRom:
@@ -2821,8 +2824,14 @@ Title_Cheat_NoC:			; CODE XREF: ROM:00003486j
 		beq.w	TitleScreen_Loop
 
 Title_CheckLvlSel:			; CODE XREF: ROM:0000365Cj
+	if	forceDebug	=	1
+		move.b	#1,($FFFFFFE2).w
+		move.b	#$B5,d0
+		bsr.w	PlaySound_Special
+	else
 		tst.b	($FFFFFFE0).w
 		beq.w	PlayLevel
+	endif
 		moveq	#2,d0
 		bsr.w	PalLoad2
 		lea	(v_hscrolltablebuffer).w,a1
@@ -13694,7 +13703,7 @@ Obj3C_Index:	dc.w loc_C8DC-Obj3C_Index ; DATA XREF: ROM:Obj3C_Indexo
 loc_C8DC:				; DATA XREF: ROM:Obj3C_Indexo
 		addq.b	#2,$24(a0)
 		move.l	#Map_Obj3C,4(a0)
-		move.w	#$4590,2(a0)
+		move.w	#$450F,2(a0)
 		bsr.w	ModifySpriteAttr_2P
 		move.b	#4,1(a0)
 		move.b	#$10,$19(a0)
@@ -32544,37 +32553,38 @@ word_19424:	dc.w 2			; DATA XREF: ROM:0001932Ao
 word_19436:	dc.w 2			; DATA XREF: ROM:0001932Co
 		dc.w $F80B, $12D, $199,	 $22; 0
 		dc.w	 1, $139, $1AB,	 $3A; 4
-Map_BossItems:	dc.w word_19458-Map_BossItems ;	DATA XREF: ROM:0001910Eo
-					; ROM:Map_BossItemso ...
-		dc.w word_19462-Map_BossItems
-		dc.w word_19474-Map_BossItems
-		dc.w word_1947E-Map_BossItems
-		dc.w word_19488-Map_BossItems
-		dc.w word_19492-Map_BossItems
-		dc.w word_194B4-Map_BossItems
-		dc.w word_194C6-Map_BossItems
-word_19458:	dc.w 1			; DATA XREF: ROM:Map_BossItemso
-		dc.w $F805,    0,    0,$FFF8; 0
-word_19462:	dc.w 2			; DATA XREF: ROM:0001944Ao
-		dc.w $FC04,    4,    2,$FFF8; 0
-		dc.w $F805,    0,    0,$FFF8; 4
-word_19474:	dc.w 1			; DATA XREF: ROM:0001944Co
-		dc.w $FC00,    6,    3,$FFFC; 0
-word_1947E:	dc.w 1			; DATA XREF: ROM:0001944Eo
-		dc.w $1409,    7,    3,$FFF4; 0
-word_19488:	dc.w 1			; DATA XREF: ROM:00019450o
-		dc.w $1405,   $D,    6,$FFF8; 0
-word_19492:	dc.w 4			; DATA XREF: ROM:00019452o
-		dc.w $F004,  $11,    8,$FFF8; 0
-		dc.w $F801,  $13,    9,$FFF8; 4
-		dc.w $F801, $813, $809,	   0; 8
-		dc.w  $804,  $15,   $A,$FFF8; 12
-word_194B4:	dc.w 2			; DATA XREF: ROM:00019454o
-		dc.w	 5,  $17,   $B,	   0; 0
-		dc.w	 0,  $1B,   $D,	 $10; 4
-word_194C6:	dc.w 2			; DATA XREF: ROM:00019456o
-		dc.w $1804,  $1C,   $E,	   0; 0
-		dc.w	$B,  $1E,   $F,	 $10; 4
+Map_BossItems:	
+Map_BossItems_0: 	dc.w Map_BossItems_10-Map_BossItems
+Map_BossItems_2: 	dc.w Map_BossItems_1A-Map_BossItems
+Map_BossItems_4: 	dc.w Map_BossItems_2C-Map_BossItems
+Map_BossItems_6: 	dc.w Map_BossItems_36-Map_BossItems
+Map_BossItems_8: 	dc.w Map_BossItems_40-Map_BossItems
+Map_BossItems_A: 	dc.w Map_BossItems_4A-Map_BossItems
+Map_BossItems_C: 	dc.w Map_BossItems_6C-Map_BossItems
+Map_BossItems_E: 	dc.w Map_BossItems_7E-Map_BossItems
+Map_BossItems_10: 	dc.b $0, $1
+	dc.b $F8, $5, $0, $0, $0, $0, $FF, $F8
+Map_BossItems_1A: 	dc.b $0, $2
+	dc.b $FC, $4, $0, $4, $0, $2, $FF, $F8
+	dc.b $F8, $5, $0, $0, $0, $0, $FF, $F8
+Map_BossItems_2C: 	dc.b $0, $1
+	dc.b $FC, $0, $0, $6, $0, $3, $FF, $FC
+Map_BossItems_36: 	dc.b $0, $1
+	dc.b $14, $9, $0, $7, $0, $3, $FF, $F4
+Map_BossItems_40: 	dc.b $0, $1
+	dc.b $14, $5, $0, $D, $0, $6, $FF, $F8
+Map_BossItems_4A: 	dc.b $0, $4
+	dc.b $F0, $4, $0, $11, $0, $8, $FF, $F8
+	dc.b $F8, $1, $0, $13, $0, $9, $FF, $F8
+	dc.b $F8, $1, $8, $13, $8, $9, $0, $0
+	dc.b $8, $4, $0, $15, $0, $A, $FF, $F8
+Map_BossItems_6C: 	dc.b $0, $2
+	dc.b $0, $5, $0, $17, $0, $B, $0, $0
+	dc.b $0, $0, $0, $1B, $0, $D, $0, $10
+Map_BossItems_7E: 	dc.b $0, $2
+	dc.b $18, $4, $0, $1C, $0, $E, $0, $0
+	dc.b $0, $B, $0, $1E, $0, $F, $0, $10
+	even
 ; ---------------------------------------------------------------------------
 
 j_ModifyA1SpriteAttr_2P_1:		; CODE XREF: ROM:00018D4Ep
