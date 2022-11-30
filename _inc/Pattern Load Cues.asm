@@ -24,7 +24,7 @@ PLC_Main:	dc.w 4			; DATA XREF: ROM:ArtLoadCueso
 		dc.l Nem_Ring
 		dc.w $D780
 		dc.l Nem_Points
-		dc.w $9580
+		dc.w $F2E0
 PLC_Main2:	dc.w 2			; DATA XREF: ROM:ArtLoadCueso
 		dc.l Nem_Monitors
 		dc.w $D000

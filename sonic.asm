@@ -2748,7 +2748,7 @@ loc_339A:				; CODE XREF: ROM:0000339Cj
 		bsr.w	LoadPLC2
 		move.w	#0,($FFFFFFE4).w
 		move.w	#0,($FFFFFFE6).w
-		move.w	#$300,(v_zone).w
+		move.w	#$000,(v_zone).w
 		move.w	#4,($FFFFEED2).w
 		move.w	#0,(v_tracktails).w
 		move.w	($FFFFF60C).w,d0
@@ -10484,7 +10484,7 @@ Obj29_Index:	dc.w loc_9FB2-Obj29_Index ; DATA XREF: ROM:Obj29_Indexo
 loc_9FB2:				; DATA XREF: ROM:Obj29_Indexo
 		addq.b	#2,$24(a0)
 		move.l	#Map_Obj29,4(a0)
-		move.w	#$4AC,2(a0)
+		move.w	#$2797,2(a0)
 		bsr.w	ModifySpriteAttr_2P
 		move.b	#4,1(a0)
 		move.b	#1,$18(a0)
@@ -10528,31 +10528,31 @@ word_A04E:	dc.w 1			; DATA XREF: ROM:Map_Obj28bo
 		dc.w $FC09,    6,    3,$FFF4; 0
 word_A058:	dc.w 1			; DATA XREF: ROM:0000A040o
 		dc.w $FC09,   $C,    6,$FFF4; 0
-Map_Obj29:	dc.w word_A070-Map_Obj29 ; DATA	XREF: ROM:00009FB6o
-					; ROM:Map_Obj29o ...
-		dc.w word_A07A-Map_Obj29
-		dc.w word_A084-Map_Obj29
-		dc.w word_A08E-Map_Obj29
-		dc.w word_A0A0-Map_Obj29
-		dc.w word_A0AA-Map_Obj29
-		dc.w word_A0BC-Map_Obj29
-word_A070:	dc.w 1			; DATA XREF: ROM:Map_Obj29o
-		dc.w $F805,    2,    1,$FFF8; 0
-word_A07A:	dc.w 1			; DATA XREF: ROM:0000A064o
-		dc.w $F805,    6,    3,$FFF8; 0
-word_A084:	dc.w 1			; DATA XREF: ROM:0000A066o
-		dc.w $F805,   $A,    5,$FFF8; 0
-word_A08E:	dc.w 2			; DATA XREF: ROM:0000A068o
-		dc.w $F801,    0,    0,$FFF8; 0
-		dc.w $F805,   $E,    7,	   0; 4
-word_A0A0:	dc.w 1			; DATA XREF: ROM:0000A06Ao
-		dc.w $F801,    0,    0,$FFFC; 0
-word_A0AA:	dc.w 2			; DATA XREF: ROM:0000A06Co
-		dc.w $F805,    2,    1,$FFF0; 0
-		dc.w $F805,   $E,    7,	   0; 4
-word_A0BC:	dc.w 2			; DATA XREF: ROM:0000A06Eo
-		dc.w $F805,   $A,    5,$FFF0; 0
-		dc.w $F805,   $E,    7,	   0; 4
+Map_Obj29:	
+Map_Obj29_0: 	dc.w Map_Obj29_E-Map_Obj29
+Map_Obj29_2: 	dc.w Map_Obj29_18-Map_Obj29
+Map_Obj29_4: 	dc.w Map_Obj29_22-Map_Obj29
+Map_Obj29_6: 	dc.w Map_Obj29_2C-Map_Obj29
+Map_Obj29_8: 	dc.w Map_Obj29_36-Map_Obj29
+Map_Obj29_A: 	dc.w Map_Obj29_40-Map_Obj29
+Map_Obj29_C: 	dc.w Map_Obj29_52-Map_Obj29
+Map_Obj29_E: 	dc.b $0, $1
+	dc.b $FC, $4, $0, $0, $0, $0, $FF, $F8
+Map_Obj29_18: 	dc.b $0, $1
+	dc.b $FC, $4, $0, $2, $0, $1, $FF, $F8
+Map_Obj29_22: 	dc.b $0, $1
+	dc.b $FC, $4, $0, $4, $0, $2, $FF, $F8
+Map_Obj29_2C: 	dc.b $0, $1
+	dc.b $FC, $8, $0, $6, $0, $3, $FF, $F8
+Map_Obj29_36: 	dc.b $0, $1
+	dc.b $FC, $0, $0, $6, $0, $3, $FF, $FC
+Map_Obj29_40: 	dc.b $0, $2
+	dc.b $FC, $8, $0, $6, $0, $3, $FF, $F4
+	dc.b $FC, $4, $0, $7, $0, $3, $0, $1
+Map_Obj29_52: 	dc.b $0, $2
+	dc.b $FC, $8, $0, $6, $0, $3, $FF, $F4
+	dc.b $FC, $4, $0, $7, $0, $3, $0, $6
+	even
 ; ---------------------------------------------------------------------------
 		nop
 ;----------------------------------------------------
@@ -20801,6 +20801,7 @@ j_KillSonic:
 ;----------------------------------------------------
 
 Obj02:					; DATA XREF: ROM:Obj_Indexo
+		rts
 		moveq	#0,d0
 		move.b	$24(a0),d0
 		move.w	Obj02_Index(pc,d0.w),d1
@@ -23191,10 +23192,10 @@ Obj38_Init:				; DATA XREF: ROM:Obj38_Indexo
 		move.b	#$18,$19(a0)
 		tst.b	$1C(a0)
 		bne.s	loc_1240C
-		move.w	#$4BE,2(a0)
+		move.w	#$541,2(a0)
 		cmpi.b	#3,(v_zone).w
 		bne.s	loc_12406
-		move.w	#$560,2(a0)
+		move.w	#$55C,2(a0)
 
 loc_12406:				; CODE XREF: ROM:000123FEj
 		bsr.w	ModifySpriteAttr_2P
@@ -24792,7 +24793,7 @@ Obj79_Index:	dc.w Obj79_Init-Obj79_Index ; DATA XREF: ROM:Obj79_Indexo
 Obj79_Init:				; DATA XREF: ROM:Obj79_Indexo
 		addq.b	#2,$24(a0)
 		move.l	#Map_Obj79,4(a0)
-		move.w	#$47C,2(a0)
+		move.w	#$7A0,2(a0)
 		bsr.w	ModifySpriteAttr_2P
 		move.b	#4,1(a0)
 		move.b	#8,$19(a0)
