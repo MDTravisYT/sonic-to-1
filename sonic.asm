@@ -23363,79 +23363,59 @@ Ani_Obj38_Shield:dc.w byte_125C2-Ani_Obj38_Shield ; DATA XREF: ROM:00012448o
 		dc.w byte_125D4-Ani_Obj38_Shield
 		dc.w byte_125EE-Ani_Obj38_Shield
 		dc.w byte_12608-Ani_Obj38_Shield
-byte_125C2:	dc.b   0,  5,  0,  5,  1,  5,  2,  5,  3,  5,  4,$FF; 0
+byte_125C2:	dc.b 1,	1, 0, 2, 0, 3, 0, $FF
 					; DATA XREF: ROM:Ani_Obj38_Shieldo
-byte_125CE:	dc.b   5,  4,  5,  6,  7,$FF; 0	; DATA XREF: ROM:000125BAo
-byte_125D4:	dc.b   0,  4,  4,  0,  4,  4,  0,  5,  5,  0,  5,  5,  0,  6,  6,  0; 0
-					; DATA XREF: ROM:000125BCo
-		dc.b   6,  6,  0,  7,  7,  0,  7,  7,  0,$FF; 16
-byte_125EE:	dc.b   0,  4,  4,  0,  4,  0,  0,  5,  5,  0,  5,  0,  0,  6,  6,  0; 0
-					; DATA XREF: ROM:000125BEo
-		dc.b   6,  0,  0,  7,  7,  0,  7,  0,  0,$FF; 16
-byte_12608:	dc.b   0,  4,  0,  0,  4,  0,  0,  5,  0,  0,  5,  0,  0,  6,  0,  0; 0
-					; DATA XREF: ROM:000125C0o
-		dc.b   6,  0,  0,  7,  0,  0,  7,  0,  0,$FF; 16
-Map_Obj38:	dc.w word_12636-Map_Obj38 ; DATA XREF: ROM:000123D2o
-					; ROM:Map_Obj38o ...
-		dc.w word_12658-Map_Obj38
-		dc.w word_1267A-Map_Obj38
-		dc.w word_1269C-Map_Obj38
-		dc.w word_126BE-Map_Obj38
-		dc.w word_126E0-Map_Obj38
-		dc.w word_12702-Map_Obj38
-		dc.w word_12724-Map_Obj38
-		dc.w word_12746-Map_Obj38
-		dc.w word_12768-Map_Obj38
-word_12636:	dc.w 4			; DATA XREF: ROM:Map_Obj38o
-		dc.w $F005,    0,    0,$FFF0; 0
-		dc.w $F005, $800, $800,	   0; 4
-		dc.w	 5,$1000,$1000,$FFF0; 8
-		dc.w	 5,$1800,$1800,	   0; 12
-word_12658:	dc.w 4			; DATA XREF: ROM:00012624o
-		dc.w $F005,    4,    2,$FFF0; 0
-		dc.w $F005, $804, $802,	   0; 4
-		dc.w	 5,$1004,$1002,$FFF0; 8
-		dc.w	 5,$1804,$1802,	   0; 12
-word_1267A:	dc.w 4			; DATA XREF: ROM:00012626o
-		dc.w $F005,    8,    4,$FFF0; 0
-		dc.w $F005, $808, $804,	   0; 4
-		dc.w	 5,$1008,$1004,$FFF0; 8
-		dc.w	 5,$1808,$1804,	   0; 12
-word_1269C:	dc.w 4			; DATA XREF: ROM:00012628o
-		dc.w $F005,   $C,    6,$FFF0; 0
-		dc.w $F005, $80C, $806,	   0; 4
-		dc.w	 5,$100C,$1006,$FFF0; 8
-		dc.w	 5,$180C,$1806,	   0; 12
-word_126BE:	dc.w 4			; DATA XREF: ROM:0001262Ao
-		dc.w $F005,  $10,    8,$FFF0; 0
-		dc.w $F005, $810, $808,	   0; 4
-		dc.w	 5,$1010,$1008,$FFF0; 8
-		dc.w	 5,$1810,$1808,	   0; 12
-word_126E0:	dc.w 4			; DATA XREF: ROM:0001262Co
-		dc.w $E00B,  $14,   $A,$FFE8; 0
-		dc.w $E00B, $814, $80A,	   0; 4
-		dc.w	$B,$1014,$100A,$FFE8; 8
-		dc.w	$B,$1814,$180A,	   0; 12
-word_12702:	dc.w 4			; DATA XREF: ROM:0001262Eo
-		dc.w $E80A,    0,    0,$FFE8; 0
-		dc.w $E80A,    9,    4,	   0; 4
-		dc.w	$A,$1809,$1804,$FFE8; 8
-		dc.w	$A,$1800,$1800,	   0; 12
-word_12724:	dc.w 4			; DATA XREF: ROM:00012630o
-		dc.w $E80A, $809, $804,$FFE8; 0
-		dc.w $E80A, $800, $800,	   0; 4
-		dc.w	$A,$1000,$1000,$FFE8; 8
-		dc.w	$A,$1009,$1004,	   0; 12
-word_12746:	dc.w 4			; DATA XREF: ROM:00012632o
-		dc.w $E80A,  $12,    9,$FFE8; 0
-		dc.w $E80A,  $1B,   $D,	   0; 4
-		dc.w	$A,$181B,$180D,$FFE8; 8
-		dc.w	$A,$1812,$1809,	   0; 12
-word_12768:	dc.w 4			; DATA XREF: ROM:00012634o
-		dc.w $E80A, $81B, $80D,$FFE8; 0
-		dc.w $E80A, $812, $809,	   0; 4
-		dc.w	$A,$1012,$1009,$FFE8; 8
-		dc.w	$A,$101B,$100D,	   0; 12
+byte_125CE:	dc.b 5,	4, 5, 6, 7, $FF
+byte_125D4:	dc.b 0,	4, 4, 0, 4, 4, 0, 5, 5,	0, 5, 5, 0, 6, 6, 0, 6
+		dc.b 6,	0, 7, 7, 0, 7, 7, 0, $FF
+byte_125EE:	dc.b 0,	4, 4, 0, 4, 0, 0, 5, 5,	0, 5, 0, 0, 6, 6, 0, 6
+		dc.b 0,	0, 7, 7, 0, 7, 0, 0, $FF
+byte_12608:	dc.b 0,	4, 0, 0, 4, 0, 0, 5, 0,	0, 5, 0, 0, 6, 0, 0, 6
+		dc.b 0,	0, 7, 0, 0, 7, 0, 0, $FF
+Map_Obj38:	
+Map_Obj38_0: 	dc.w Map_Obj38_E-Map_Obj38
+Map_Obj38_2: 	dc.w Map_Obj38_30-Map_Obj38
+Map_Obj38_4: 	dc.w Map_Obj38_52-Map_Obj38
+Map_Obj38_6: 	dc.w Map_Obj38_74-Map_Obj38
+Map_Obj38_8: 	dc.w Map_Obj38_96-Map_Obj38
+Map_Obj38_A: 	dc.w Map_Obj38_B8-Map_Obj38
+Map_Obj38_C: 	dc.w Map_Obj38_DA-Map_Obj38
+Map_Obj38_E: 	dc.b $0, $4
+	dc.b $E8, $A, $0, $0, $0, $0, $FF, $E8
+	dc.b $E8, $A, $0, $9, $0, $4, $0, $0
+	dc.b $0, $A, $10, $0, $10, $0, $FF, $E8
+	dc.b $0, $A, $10, $9, $10, $4, $0, $0
+Map_Obj38_30: 	dc.b $0, $4
+	dc.b $E8, $A, $8, $12, $8, $9, $FF, $E9
+	dc.b $E8, $A, $0, $12, $0, $9, $0, $0
+	dc.b $0, $A, $18, $12, $18, $9, $FF, $E9
+	dc.b $0, $A, $10, $12, $10, $9, $0, $0
+Map_Obj38_52: 	dc.b $0, $4
+	dc.b $E8, $A, $8, $9, $8, $4, $FF, $E8
+	dc.b $E8, $A, $8, $0, $8, $0, $0, $0
+	dc.b $0, $A, $18, $9, $18, $4, $FF, $E8
+	dc.b $0, $A, $18, $0, $18, $0, $0, $0
+Map_Obj38_74: 	dc.b $0, $4
+	dc.b $E8, $A, $0, $0, $0, $0, $FF, $E8
+	dc.b $E8, $A, $0, $9, $0, $4, $0, $0
+	dc.b $0, $A, $18, $9, $18, $4, $FF, $E8
+	dc.b $0, $A, $18, $0, $18, $0, $0, $0
+Map_Obj38_96: 	dc.b $0, $4
+	dc.b $E8, $A, $8, $9, $8, $4, $FF, $E8
+	dc.b $E8, $A, $8, $0, $8, $0, $0, $0
+	dc.b $0, $A, $10, $0, $10, $0, $FF, $E8
+	dc.b $0, $A, $10, $9, $10, $4, $0, $0
+Map_Obj38_B8: 	dc.b $0, $4
+	dc.b $E8, $A, $0, $12, $0, $9, $FF, $E8
+	dc.b $E8, $A, $0, $1B, $0, $D, $0, $0
+	dc.b $0, $A, $18, $1B, $18, $D, $FF, $E8
+	dc.b $0, $A, $18, $12, $18, $9, $0, $0
+Map_Obj38_DA: 	dc.b $0, $4
+	dc.b $E8, $A, $8, $1B, $8, $D, $FF, $E8
+	dc.b $E8, $A, $8, $12, $8, $9, $0, $0
+	dc.b $0, $A, $10, $12, $10, $9, $FF, $E8
+	dc.b $0, $A, $10, $1B, $10, $D, $0, $0
+	even
 Ani_S1Obj4A:	dc.w byte_1278C-Ani_S1Obj4A ; DATA XREF: ROM:00012514o
 					; ROM:Ani_S1Obj4Ao
 byte_1278C:	dc.b   5,  0,  1,  0,  1,  0,  7,  1,  7,  2,  7,  3,  7,  4,  7,  5; 0
