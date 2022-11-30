@@ -56,7 +56,7 @@ PLC_GHZ:	dc.w ((PLC_GHZ2-PLC_GHZ-2)/6)-1			; DATA XREF: ROM:ArtLoadCueso
 		dc.l Nem_Motobug
 		dc.w $9E00
 		dc.l Nem_VSpikes
-		dc.w $9400
+		dc.w $A360
 		dc.l Nem_HSpring
 		dc.w $A460
 		dc.l Nem_VSpring
