@@ -13596,17 +13596,37 @@ locret_C828:				; CODE XREF: sub_C7C8+Aj sub_C7C8+10j	...
 ; End of function sub_C7C8
 
 ; ---------------------------------------------------------------------------
-Map_Obj36:	dc.w word_C836-Map_Obj36 ; DATA	XREF: ROM:0000C686o
-					; ROM:Map_Obj36o ...
-		dc.w word_C836-Map_Obj36
-		dc.w word_C836-Map_Obj36
-		dc.w word_C836-Map_Obj36
-		dc.w word_C836-Map_Obj36
-		dc.w word_C836-Map_Obj36
-word_C836:	dc.w 2			; DATA XREF: ROM:Map_Obj36o
-					; ROM:0000C82Co ...
-		dc.w $F007,    0,    0,$FFF0; 0
-		dc.w $F007,    0,    0,	   0; 4
+Map_Obj36:	
+Map_Obj36_0: 	dc.w Map_Obj36_C-Map_Obj36
+Map_Obj36_2: 	dc.w Map_Obj36_26-Map_Obj36
+Map_Obj36_4: 	dc.w Map_Obj36_40-Map_Obj36
+Map_Obj36_6: 	dc.w Map_Obj36_4A-Map_Obj36
+Map_Obj36_8: 	dc.w Map_Obj36_64-Map_Obj36
+Map_Obj36_A: 	dc.w Map_Obj36_96-Map_Obj36
+Map_Obj36_C: 	dc.b $0, $3
+	dc.b $F0, $3, $0, $4, $0, $2, $FF, $EC
+	dc.b $F0, $3, $0, $4, $0, $2, $FF, $FC
+	dc.b $F0, $3, $0, $4, $0, $2, $0, $C
+Map_Obj36_26: 	dc.b $0, $3
+	dc.b $EC, $C, $0, $0, $0, $0, $FF, $F0
+	dc.b $FC, $C, $0, $0, $0, $0, $FF, $F0
+	dc.b $C, $C, $0, $0, $0, $0, $FF, $F0
+Map_Obj36_40: 	dc.b $0, $1
+	dc.b $F0, $3, $0, $4, $0, $2, $FF, $FC
+Map_Obj36_4A: 	dc.b $0, $3
+	dc.b $F0, $3, $0, $4, $0, $2, $FF, $E4
+	dc.b $F0, $3, $0, $4, $0, $2, $FF, $FC
+	dc.b $F0, $3, $0, $4, $0, $2, $0, $14
+Map_Obj36_64: 	dc.b $0, $6
+	dc.b $F0, $3, $0, $4, $0, $2, $FF, $C0
+	dc.b $F0, $3, $0, $4, $0, $2, $FF, $D8
+	dc.b $F0, $3, $0, $4, $0, $2, $FF, $F0
+	dc.b $F0, $3, $0, $4, $0, $2, $0, $8
+	dc.b $F0, $3, $0, $4, $0, $2, $0, $20
+	dc.b $F0, $3, $0, $4, $0, $2, $0, $38
+Map_Obj36_96: 	dc.b $0, $1
+	dc.b $FC, $C, $0, $0, $0, $0, $FF, $F0
+	even
 ; ---------------------------------------------------------------------------
 ;----------------------------------------------------
 ; Object 3B - GHZ Purple Rock
@@ -37025,10 +37045,7 @@ Nem_Lives:		incbin "artnem\HUD - Life Counter Icon.bin"
 Nem_Ring:		incbin "artnem\Rings.bin"	
 Nem_Monitors:	incbin "artnem\Monitors.bin"
                 even
-Nem_VSpikes:	dc.b $80,  8,$80,  4, $B,$24, $C,$35,$1C,$57,$7D,$71,  0,$81,  5,$1D,$82,  4, $A,$87,  5,$1E,$88,  7,$7C,$8A,  3,  4,$8F,  4, $D,$FF,$E7,$BF,$C1,$D3,$EC,$B8,$7F,  2,$AE,$8E,$4C,$8E,$6D,$E8,$C9,$59,$53,$3B,$7D,$73,$73,$45,$C1,$5F,$C0,$A0,$4F,$9E,$FD,$37,$BE,$33; 0
-					; DATA XREF: ROM:0001C0EEo
-					; ROM:0001C136o ...
-		dc.b $E3,$FC,$1A,$FB,$2E,  1,$C9,$57,$50,$FB,$A3,$27,$2A,  1,  0,  0; 64
+Nem_VSpikes:	incbin "artnem\Spikes.bin"
 Nem_Points:	incbin "artnem\Points.bin"
                 even
 Nem_Lamppost:	incbin "artnem\Lamppost.bin"
