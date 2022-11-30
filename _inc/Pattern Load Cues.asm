@@ -66,14 +66,14 @@ PLC_GHZ2:	dc.w ((PLC_CPZ-PLC_GHZ2-2)/6)-1
 		dc.w $7000
 		dc.l Nem_GHZ_Bridge
 		dc.w $71C0
-	;	dc.l Nem_SpikePole
-	;	dc.w $7300
-	;	dc.l Nem_Ball
-	;	dc.w $7540
-	;	dc.l Nem_GhzWall1
-	;	dc.w $A1E0
-	;	dc.l Nem_GhzWall2
-	;	dc.w $6980
+		dc.l S1Nem_GHZLogSpikes
+		dc.w $7300
+		dc.l S1Nem_GHZRollingBall	;	cool s1 beta leftover you have here s2 team
+		dc.w $7540
+		dc.l S1Nem_GHZBreakableWall
+		dc.w $A1E0
+		dc.l S1Nem_GHZWall
+		dc.w $6980
 PLC_CPZ:	dc.w 2			; DATA XREF: ROM:ArtLoadCueso
 		dc.l Nem_CPZ
 		dc.w 0
