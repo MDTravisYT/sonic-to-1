@@ -13421,174 +13421,187 @@ word_C660:	dc.w 0			; DATA XREF: ROM:0000C622o
 
 Obj36:					; DATA XREF: ROM:Obj_Indexo
 		moveq	#0,d0
-		move.b	obRoutine(a0),d0
-		move.w	Spik_Index(pc,d0.w),d1
-		jmp	Spik_Index(pc,d1.w)
-; ===========================================================================
-Spik_Index:	dc.w Spik_Main-Spik_Index
-		dc.w Spik_Solid-Spik_Index
+		move.b	$24(a0),d0
+		move.w	Obj36_Index(pc,d0.w),d1
+		jmp	Obj36_Index(pc,d1.w)
+; ---------------------------------------------------------------------------
+Obj36_Index:	dc.w loc_C682-Obj36_Index ; DATA XREF: ROM:Obj36_Indexo
+					; ROM:0000C674o
+		dc.w loc_C6CE-Obj36_Index
+Obj36_Conf:	dc.b   0,$10		; 0 ; DATA XREF: ROM:0000C6B2t
+		dc.b   0,$10		; 2
+		dc.b   0,$10		; 4
+		dc.b   0,$10		; 6
+		dc.b   0,$10		; 8
+		dc.b   0,$10		; 10
+; ---------------------------------------------------------------------------
 
-spik_origX:	equ $30		; start X position
-spik_origY:	equ $32		; start Y position
-
-Spik_Var:	dc.b 0,	$14		; frame	number,	object width
-		dc.b 1,	$10
-		dc.b 2,	4
-		dc.b 3,	$1C
-		dc.b 4,	$40
-		dc.b 5,	$10
-; ===========================================================================
-
-Spik_Main:	; Routine 0
-		addq.b	#2,obRoutine(a0)
-		move.l	#Map_Obj36,obMap(a0)
-		move.w	#$51B,obGfx(a0)
-		ori.b	#4,obRender(a0)
-		move.b	#4,obPriority(a0)
-		move.b	obSubtype(a0),d0
-		andi.b	#$F,obSubtype(a0)
-		andi.w	#$F0,d0
-		lea	(Spik_Var).l,a1
+loc_C682:				; DATA XREF: ROM:Obj36_Indexo
+		addq.b	#2,$24(a0)
+		move.l	#Map_Obj36,4(a0)
+		move.w	#$51B,2(a0)
+		bsr.w	ModifySpriteAttr_2P
+		ori.b	#4,1(a0)
+		move.b	#4,$18(a0)
+		move.b	$28(a0),d0
+		andi.b	#$F,$28(a0)
+		andi.w	#$F0,d0	; "ð"
+		lea	Obj36_Conf(pc),a1
 		lsr.w	#3,d0
 		adda.w	d0,a1
-		move.b	(a1)+,obFrame(a0)
-		move.b	(a1)+,obActWid(a0)
-		move.w	obX(a0),spik_origX(a0)
-		move.w	obY(a0),spik_origY(a0)
+		move.b	(a1)+,$1A(a0)
+		move.b	(a1)+,$19(a0)
+		move.w	8(a0),$30(a0)
+		move.w	$C(a0),$32(a0)
 
-Spik_Solid:	; Routine 2
-		bsr.w	Spik_Type0x	; make the object move
+loc_C6CE:				; DATA XREF: ROM:0000C674o
+		bsr.w	sub_C788
 		move.w	#4,d2
-		cmpi.b	#5,obFrame(a0)	; is object type $5x ?
-		beq.s	Spik_SideWays	; if yes, branch
-		cmpi.b	#1,obFrame(a0)	; is object type $1x ?
-		bne.s	Spik_Upright	; if not, branch
+		cmpi.b	#5,$1A(a0)
+		beq.s	loc_C6EA
+		cmpi.b	#1,$1A(a0)
+		bne.s	loc_C70C
 		move.w	#$14,d2
 
-; Spikes types $1x and $5x face	sideways
-
-Spik_SideWays:
+loc_C6EA:				; CODE XREF: ROM:0000C6DCj
 		move.w	#$1B,d1
 		move.w	d2,d3
 		addq.w	#1,d3
-		move.w	obX(a0),d4
+		move.w	8(a0),d4
 		bsr.w	SolidObject
-		btst	#3,obStatus(a0)
-		bne.s	Spik_Display
-		cmpi.w	#1,d4
-		beq.s	Spik_Hurt
-		bra.s	Spik_Display
-; ===========================================================================
+		btst	#3,$22(a0)
+		bne.s	loc_C766
+		swap	d6
+		andi.w	#3,d6
+		bne.s	loc_C736
+		bra.s	loc_C766
+; ---------------------------------------------------------------------------
 
-; Spikes types $0x, $2x, $3x and $4x face up or	down
-
-Spik_Upright:
+loc_C70C:				; CODE XREF: ROM:0000C6E4j
 		moveq	#0,d1
-		move.b	obActWid(a0),d1
+		move.b	$19(a0),d1
 		addi.w	#$B,d1
 		move.w	#$10,d2
 		move.w	#$11,d3
-		move.w	obX(a0),d4
+		move.w	8(a0),d4
 		bsr.w	SolidObject
-		btst	#3,obStatus(a0)
-		bne.s	Spik_Hurt
-		tst.w	d4
-		bpl.s	Spik_Display
+		btst	#3,$22(a0)
+		bne.s	loc_C736
+		swap	d6
+		andi.w	#$C0,d6	; "À"
+		beq.s	loc_C766
 
-Spik_Hurt:
-		tst.b	($FFFFFE2D).w	; is Sonic invincible?
-		bne.s	Spik_Display	; if yes, branch
+loc_C736:				; CODE XREF: ROM:0000C708j
+					; ROM:0000C72Cj
+		tst.b	($FFFFFE2D).w
+		bne.s	loc_C766
 		move.l	a0,-(sp)
 		movea.l	a0,a2
-		lea	($FFFFD000).w,a0
-		cmpi.b	#4,obRoutine(a0)
-		bcc.s	loc_CF20
-		move.l	obY(a0),d3
-		move.w	obVelY(a0),d0
+		lea	(v_objspace).w,a0
+		cmpi.b	#4,$24(a0)
+		bcc.s	loc_C764
+		move.l	$C(a0),d3
+		move.w	$12(a0),d0
 		ext.l	d0
 		asl.l	#8,d0
-loc_D5A2_Spikes:
 		sub.l	d0,d3
-		move.l	d3,obY(a0)
+		move.l	d3,$C(a0)
 		jsr	(HurtSonic).l
 
-loc_CF20:
+loc_C764:				; CODE XREF: ROM:0000C74Aj
 		movea.l	(sp)+,a0
 
-Spik_Display:
-		bsr.w	DisplaySprite
-		out_of_range	DeleteObject,spik_origX(a0)
-		rts	
-; ===========================================================================
+loc_C766:				; CODE XREF: ROM:0000C700j
+					; ROM:0000C70Aj ...
+		tst.w	(f_2player).w
+		beq.s	loc_C770
+		bra.w	DisplaySprite
+; ---------------------------------------------------------------------------
 
-Spik_Type0x:
+loc_C770:				; CODE XREF: ROM:0000C76Aj
+		move.w	$30(a0),d0
+		andi.w	#$FF80,d0
+		sub.w	($FFFFF7DA).w,d0
+		cmpi.w	#$280,d0
+		bhi.w	DeleteObject
+		bra.w	DisplaySprite
+
+; =============== S U B	R O U T	I N E =======================================
+
+
+sub_C788:				; CODE XREF: ROM:loc_C6CEp
 		moveq	#0,d0
-		move.b	obSubtype(a0),d0
+		move.b	$28(a0),d0
 		add.w	d0,d0
-		move.w	Spik_TypeIndex(pc,d0.w),d1
-		jmp	Spik_TypeIndex(pc,d1.w)
-; ===========================================================================
-Spik_TypeIndex:	dc.w Spik_Type00-Spik_TypeIndex
-		dc.w Spik_Type01-Spik_TypeIndex
-		dc.w Spik_Type02-Spik_TypeIndex
-; ===========================================================================
+		move.w	off_C798(pc,d0.w),d1
+		jmp	off_C798(pc,d1.w)
+; End of function sub_C788
 
-Spik_Type00:
-		rts			; don't move the object
-; ===========================================================================
+; ---------------------------------------------------------------------------
+off_C798:	dc.w locret_C79E-off_C798 ; DATA XREF: ROM:off_C798o
+					; ROM:0000C79Ao ...
+		dc.w loc_C7A0-off_C798
+		dc.w loc_C7B4-off_C798
+; ---------------------------------------------------------------------------
 
-Spik_Type01:
-		bsr.w	Spik_Wait
+locret_C79E:				; DATA XREF: ROM:off_C798o
+		rts
+; ---------------------------------------------------------------------------
+
+loc_C7A0:				; DATA XREF: ROM:0000C79Ao
+		bsr.w	sub_C7C8
 		moveq	#0,d0
 		move.b	$34(a0),d0
-		add.w	spik_origY(a0),d0
-		move.w	d0,obY(a0)	; move the object vertically
-		rts	
-; ===========================================================================
+		add.w	$32(a0),d0
+		move.w	d0,$C(a0)
+		rts
+; ---------------------------------------------------------------------------
 
-Spik_Type02:
-		bsr.w	Spik_Wait
+loc_C7B4:				; DATA XREF: ROM:0000C79Co
+		bsr.w	sub_C7C8
 		moveq	#0,d0
 		move.b	$34(a0),d0
-		add.w	spik_origX(a0),d0
-		move.w	d0,obX(a0)	; move the object horizontally
-		rts	
-; ===========================================================================
+		add.w	$30(a0),d0
+		move.w	d0,8(a0)
+		rts
 
-Spik_Wait:
-		tst.w	$38(a0)		; is time delay	= zero?
-		beq.s	loc_CFA4	; if yes, branch
-		subq.w	#1,$38(a0)	; subtract 1 from time delay
-		bne.s	locret_CFE6
-		tst.b	obRender(a0)
-		bpl.s	locret_CFE6
-		move.w	#$B6,d0	; "?"
+; =============== S U B	R O U T	I N E =======================================
+
+
+sub_C7C8:				; CODE XREF: ROM:loc_C7A0p
+					; ROM:loc_C7B4p
+		tst.w	$38(a0)
+		beq.s	loc_C7E6
+		subq.w	#1,$38(a0)
+		bne.s	locret_C828
+		tst.b	1(a0)
+		bpl.s	locret_C828
+		move.w	#$B6,d0	; "¶"
 		jsr	(PlaySound_Special).l
-		bra.s	locret_CFE6
-; ===========================================================================
+		bra.s	locret_C828
+; ---------------------------------------------------------------------------
 
-loc_CFA4:
+loc_C7E6:				; CODE XREF: sub_C7C8+4j
 		tst.w	$36(a0)
-		beq.s	loc_CFC6
+		beq.s	loc_C808
 		subi.w	#$800,$34(a0)
-		bcc.s	locret_CFE6
+		bcc.s	locret_C828
 		move.w	#0,$34(a0)
 		move.w	#0,$36(a0)
-		move.w	#60,$38(a0)	; set time delay to 1 second
-		bra.s	locret_CFE6
-; ===========================================================================
+		move.w	#$3C,$38(a0) ; "<"
+		bra.s	locret_C828
+; ---------------------------------------------------------------------------
 
-loc_CFC6:
+loc_C808:				; CODE XREF: sub_C7C8+22j
 		addi.w	#$800,$34(a0)
 		cmpi.w	#$2000,$34(a0)
-		bcs.s	locret_CFE6
+		bcs.s	locret_C828
 		move.w	#$2000,$34(a0)
 		move.w	#1,$36(a0)
-		move.w	#60,$38(a0)	; set time delay to 1 second
+		move.w	#$3C,$38(a0) ; "<"
 
-locret_CFE6:
-		rts	
-
+locret_C828:				; CODE XREF: sub_C7C8+Aj sub_C7C8+10j	...
+		rts
 ; End of function sub_C7C8
 
 ; ---------------------------------------------------------------------------
