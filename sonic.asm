@@ -13428,12 +13428,12 @@ Obj36:					; DATA XREF: ROM:Obj_Indexo
 Obj36_Index:	dc.w loc_C682-Obj36_Index ; DATA XREF: ROM:Obj36_Indexo
 					; ROM:0000C674o
 		dc.w loc_C6CE-Obj36_Index
-Obj36_Conf:	dc.b   0,$10		; 0 ; DATA XREF: ROM:0000C6B2t
-		dc.b   0,$10		; 2
-		dc.b   0,$10		; 4
-		dc.b   0,$10		; 6
-		dc.b   0,$10		; 8
-		dc.b   0,$10		; 10
+Obj36_Conf:	dc.b 0,	$14		; frame	number,	object width
+		dc.b 1,	$10
+		dc.b 2,	4
+		dc.b 3,	$1C
+		dc.b 4,	$40
+		dc.b 5,	$10
 ; ---------------------------------------------------------------------------
 
 loc_C682:				; DATA XREF: ROM:Obj36_Indexo
