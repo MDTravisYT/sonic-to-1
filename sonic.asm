@@ -706,7 +706,8 @@ DemoTime:
 		bsr.w	LoadTilesAsYouMove
 
 loc_DEA:
-		jsr	(HudUpdate).l
+		jsr	(AnimateLevelGfx).l
+                jsr	(HudUpdate).l
 		bsr.w	loc_174E
 		tst.w	($FFFFF614).w
 		beq.w	DemoTime_End
@@ -802,6 +803,7 @@ loc_F08:				; CODE XREF: ROM:00000EE2j
 		movem.l	($FFFFEE50).w,d0-d1
 		movem.l	d0-d1,($FFFFEEA0).w
 		bsr.w	LoadTilesAsYouMove
+		jsr	(AnimateLevelGfx).l
 		jsr	(HudUpdate).l
 		bsr.w	sub_1732
 		rts
@@ -3526,11 +3528,6 @@ loc_3DD0:				; CODE XREF: ROM:00003DB6j
 		jsr	(RingPosLoad).l
 		jsr	(ObjectsLoad).l
 		jsr	(BuildSprites).l
-	if removeJmpTos=1
-        	jsr     (DynamicArtCues).l
-        else
-                bsr.w	j_AnimateLevelGfx
-        endif
 		moveq	#0,d0
 		tst.b	($FFFFFE30).w
 		bne.s	loc_3E00
@@ -3645,11 +3642,6 @@ loc_3F50:				; CODE XREF: ROM:00003F46j
 loc_3F54:				; CODE XREF: ROM:00003F4Ej
 		bsr.w	ChangeWaterSurfacePos
 		jsr	(RingPosLoad).l
-	if removeJmpTos=1
-		jsr     (DynamicArtCues).l
-        else
-                bsr.w	j_AnimateLevelGfx
-        endif
 		bsr.w	PalCycle_Load
 		bsr.w	RunPLC
 		bsr.w	OscillateNumDo
