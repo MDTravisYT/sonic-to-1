@@ -120,40 +120,24 @@ PLC_EHZ2:	dc.w 4			; DATA XREF: ROM:ArtLoadCueso
 		dc.w $8040
 		dc.l Nem_EHZ_Piranha
 		dc.w $8380
-PLC_HPZ:	dc.w 7			; DATA XREF: ROM:ArtLoadCueso
+PLC_HPZ:	dc.w ((PLC_HPZ2-PLC_HPZ-2)/6)-1			; DATA XREF: ROM:ArtLoadCueso
 		dc.l Nem_HPZ
 		dc.w 0
-		dc.l Nem_HPZ_Bridge
-		dc.w $6000
-		dc.l Nem_HPZ_Waterfall
-		dc.w $62A0
-		dc.l Nem_HPZ_Platform
-		dc.w $6940
-		dc.l Nem_HPZ_PulsingBall
-		dc.w $6B40
-		dc.l Nem_HPZ_Various
-		dc.w $6F80
-		dc.l Nem_HPZ_Emerald
-		dc.w $7240
-		dc.l Nem_HPZ_WaterSurface
+		dc.l Nem_Crabmeat
 		dc.w $8000
-PLC_HPZ2:	dc.w 1			; DATA XREF: ROM:ArtLoadCueso
-		dc.l Nem_Dinobot
-		dc.w $A000
-		dc.l Nem_Bat
-word_1C1E4:	dc.w $A600		; DATA XREF: ROM:0000C3FAo
-		dc.l Nem_Crocobot
-		dc.w $6000
-		dc.l Nem_Buzzbomber
-		dc.w $6580
-		dc.l Nem_Bat
-		dc.w $6A00
-		dc.l Nem_Triceratops
-		dc.w $7880
-		dc.l Nem_Dinobot
-		dc.w $A000
-		dc.l Nem_HPZ_Piranha
-		dc.w $A600
+		dc.l Nem_GHZBuzzbomber
+		dc.w $8880
+		dc.l S1Nem_SYZSnail
+		dc.w $8F60
+		dc.l Nem_S1SYZRoller
+		dc.w $9700
+PLC_HPZ2:	dc.w ((PLC_HTZ-PLC_HPZ2-2)/6)-1			; DATA XREF: ROM:ArtLoadCueso
+		dc.l Nem_VSpikes
+		dc.w $A360
+		dc.l Nem_HSpring
+		dc.w $A460
+		dc.l Nem_VSpring
+		dc.w $A660
 PLC_HTZ:	dc.w 9			; DATA XREF: ROM:ArtLoadCueso
 		dc.l Nem_EHZ
 		dc.w 0

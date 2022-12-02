@@ -13303,7 +13303,6 @@ Map_S1Obj7E:	dc.w word_C406-Map_S1Obj7E ; DATA XREF:	ROM:0000BDDCo
 					; ROM:Map_S1Obj7Eo ...
 		dc.w word_C470-Map_S1Obj7E
 		dc.w word_C4A2-Map_S1Obj7E
-		dc.w word_1C1E4-Map_S1Obj7E
 		dc.w word_C4DC-Map_S1Obj7E
 		dc.w word_C4FE-Map_S1Obj7E
 		dc.w word_C520-Map_S1Obj7E
@@ -16636,9 +16635,6 @@ loc_E258:				; DATA XREF: ROM:0000E250o
 		move.b	#2,$1C(a0)
 		move.b	#3,$1A(a0)
 		move.w	#$533,2(a0)
-		tst.b	(v_zone).w
-		beq.s	loc_E27C
-		move.w	#$470,2(a0)
 
 loc_E27C:				; CODE XREF: ROM:0000E274j
 		move.b	#8,$19(a0)
@@ -36457,99 +36453,8 @@ RingPos_LZ3:	dc.w  $154,$1130	; 0 ; DATA XREF: ROM:RingPos_Indexo
 		dc.w $14B8,$24F4	; 58
 		dc.w $1518,$2752	; 60
 		dc.w $FFFF		; 62
-RingPos_HPZ1:	dc.w  $2B0,$3178	; 0 ; DATA XREF: ROM:RingPos_Indexo
-		dc.w  $3E0,$2170	; 2
-		dc.w  $528,$2148	; 4
-		dc.w  $628,$3128	; 6
-		dc.w  $6C0,$D1A8	; 8
-		dc.w  $614,$4270	; 10
-		dc.w  $5C0,$C2C0	; 12
-		dc.w  $50E,$4370	; 14
-		dc.w  $4C0,$F3BC	; 16
-		dc.w  $4C0,$F47C	; 18
-		dc.w  $530,$857C	; 20
-		dc.w  $550,$8584	; 22
-		dc.w  $570,$858C	; 24
-		dc.w  $590,$8594	; 26
-		dc.w  $5B0,$859C	; 28
-		dc.w  $5D0,$85A4	; 30
-		dc.w  $5F0,$85AC	; 32
-		dc.w  $6DC,$2568	; 34
-		dc.w  $8A8,$2568	; 36
-		dc.w  $928,$2548	; 38
-		dc.w  $9A8,$3520	; 40
-		dc.w  $AF0, $4D0	; 42
-		dc.w  $AF0, $4F4	; 44
-		dc.w  $AEC, $518	; 46
-		dc.w  $ADF, $538	; 48
-		dc.w  $AC6, $553	; 50
-		dc.w  $AA8, $566	; 52
-		dc.w  $A82, $56F	; 54
-		dc.w  $A5D, $570	; 56
-		dc.w  $710, $380	; 58
-		dc.w  $718, $3A8	; 60
-		dc.w  $718, $358	; 62
-		dc.w  $730, $337	; 64
-		dc.w  $730, $3CB	; 66
-		dc.w  $754, $3E8	; 68
-		dc.w  $754, $318	; 70
-		dc.w  $77C, $310	; 72
-		dc.w  $77C, $3F0	; 74
-		dc.w  $908,$3318	; 76
-		dc.w  $AB4,$3318	; 78
-		dc.w  $BF1, $306	; 80
-		dc.w  $BE8, $32C	; 82
-		dc.w  $BD4, $34B	; 84
-		dc.w  $BB6, $364	; 86
-		dc.w  $B90, $370	; 88
-		dc.w  $F90, $370	; 90
-		dc.w  $FB8, $378	; 92
-		dc.w  $FDC, $388	; 94
-		dc.w  $FFC, $3A2	; 96
-		dc.w $1010, $3C6	; 98
-		dc.w $101C, $3EC	; 100
-		dc.w  $E88,$2450	; 102
-		dc.w  $DB8,$3460	; 104
-		dc.w  $E00,$2510	; 106
-		dc.w  $E5A,$1530	; 108
-		dc.w  $E96,$1550	; 110
-		dc.w $11F0, $448	; 112
-		dc.w $11F0, $468	; 114
-		dc.w $11F0, $488	; 116
-		dc.w $11E8, $4A8	; 118
-		dc.w $11BE, $4DC	; 120
-		dc.w $11A0, $4EB	; 122
-		dc.w $11D8, $4C6	; 124
-		dc.w $1180, $4F0	; 126
-		dc.w  $F68,$2528	; 128
-		dc.w $1100,$24C8	; 130
-		dc.w $1230,$23E8	; 132
-		dc.w $1300,$33A0	; 134
-		dc.w $14D8,$33A0	; 136
-		dc.w $1648,$23B0	; 138
-		dc.w $16A8,$23E8	; 140
-		dc.w $172C,$43D4	; 142
-		dc.w $132C,$3498	; 144
-		dc.w $1494,$34A0	; 146
-		dc.w  $7F0,$2328	; 148
-		dc.w $1948,$21B8	; 150
-		dc.w $1988,$2138	; 152
-		dc.w $19C8,$20B8	; 154
-		dc.w $1A08,$2038	; 156
-		dc.w $1A48,$27B8	; 158
-		dc.w $1A88,$2738	; 160
-		dc.w $1AC8,$26B8	; 162
-		dc.w $1B08,$2638	; 164
-		dc.w $1B48,$25B8	; 166
-		dc.w $1B88,$2538	; 168
-		dc.w $1C68,$2518	; 170
-		dc.w $1E70,$2518	; 172
-		dc.w $2070,$2518	; 174
-		dc.w $1D68,$2558	; 176
-		dc.w $1F68,$2558	; 178
-		dc.w  $AC8,$2450	; 180
-		dc.w  $998,$2428	; 182
-		dc.w $FFFF		; 184
+RingPos_HPZ1:	incbin	"ringpos\syz.bin"
+				even
 RingPos_EHZ1:	dc.w  $4C8, $286	; 0 ; DATA XREF: ROM:RingPos_Indexo
 		dc.w  $4B1, $2A2	; 2
 		dc.w  $48F, $2B3	; 4
