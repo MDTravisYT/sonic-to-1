@@ -2306,10 +2306,7 @@ Pal_CPZ:	dc.w	 2,    0, $E64,	$A68, $E86,  $44, $EEE,	$AAA, $888, $444, $666,	  
 		dc.w	 2,    0, $222,	$444, $888, $AAA, $EEE,	$E40, $C00, $800,  $CE,	$28E, $E40, $C00, $C00,	 $E0; 32
 Pal_EHZ:	incbin "palette\Emerald Hill Zone.bin"	
 		dc.w  $C20, $800,    0,	$E86, $ECA, $20A, $EEE,	$E6E, $C4C, $A2A, $EEC,	 $80, $64E, $42C,  $A0,	 $E8; 32
-Pal_HPZ:	dc.w  $800,    0, $242,	$464, $686,  $44, $EEE,	$AAA, $888, $444, $8EA,	$46A,  $EE,  $88,  $44,	  $E; 0
-					; DATA XREF: ROM:00002542o
-		dc.w  $200, $402, $604,	$806, $808, $602, $620,	$202, $640,  $26,  $68,	$28A, $6CE,  $24,  $46,	$4AC; 16
-		dc.w  $200,  $20,  $40,	 $60,  $80,  $C0, $4E6,	$EEE, $602, $E44, $E82,	$EA8, $EEE,  $24,  $46,	$4AC; 32
+Pal_HPZ:	incbin "palette\Spring Yard Zone.bin"	
 Pal_HTZ:	dc.w  $C20,    0, $200,	  $E,  $6E,  $44, $EEE,	$AAA, $888, $444, $666,	$E86,  $EE,  $88,  $AE,	 $EE; 0
 					; DATA XREF: ROM:0000254Ao
 					; ROM:00002572o
@@ -37290,11 +37287,11 @@ Nem_HTZ_AniPlaceholders:incbin "artnem\HTZ zip-line platform.bin"
                 even
 Map128_EHZ:	incbin "map128\EHZ_HTZ.bin"
                 even
-Map16_HPZ:	incbin "map16\HPZ.bin"
+Map16_HPZ:	incbin "map16\SYZ.bin"
                 even
-Nem_HPZ:	incbin "artnem\8x8 - HPZ.bin"
+Nem_HPZ:	incbin "artnem\8x8 - SYZ.bin"
                 even
-Map128_HPZ:	incbin "map128\HPZ.bin"
+Map128_HPZ:	incbin "map128\SYZ.bin"
                 even
 Map16_CPZ:	incbin "map16\CPZ.bin"
                 even
