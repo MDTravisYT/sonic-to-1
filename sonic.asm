@@ -2660,6 +2660,11 @@ loc_3250:				; CODE XREF: ROM:00003252j
 loc_3260:				; CODE XREF: ROM:00003262j
 		move.l	d0,(a1)+
 		dbf	d1,loc_3260
+		
+		locVRAM	$14C0
+		lea	(S1Nem_CreditsFont).l,a0 ;	load alphabet
+		bsr.w	NemDec
+		
 		lea	($FFFFFB80).w,a1
 		moveq	#0,d0
 		move.w	#$1F,d1
@@ -2669,6 +2674,9 @@ loc_3270:				; CODE XREF: ROM:00003272j
 		dbf	d1,loc_3270
 		moveq	#3,d0
 		bsr.w	PalLoad1
+		move.b	#$8A,(v_objspace+$80).w ; load "SONIC TEAM PRESENTS" object
+		jsr	(ObjectsLoad).l
+		jsr	(BuildSprites).l
 		bsr.w	Pal_FadeTo
 		move	#$2700,sr
 		locVRAM	$4000
@@ -31635,7 +31643,7 @@ loc_185F2:				; DATA XREF: ROM:off_185EEo
 		move.b	#0,$18(a0)
 		cmpi.b	#4,($FFFFF600).w
 		bne.s	loc_18660
-		move.w	#$300,2(a0)
+		move.w	#$A6,2(a0)
 		bsr.w	j_ModifySpriteAttr_2P_4
 		move.b	#$A,$1A(a0)
 		tst.b	($FFFFFFE3).w
