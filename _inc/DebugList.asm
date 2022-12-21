@@ -78,12 +78,12 @@ Debug_EHZ:	dc.w $13		; DATA XREF: ROM:0001BCF2o
 		dc.b   1,  0,  4,$7C	; 0
 		dc.l Map_Obj03+$03000000
 		dc.b   0,  0,$26,$BC	; 0
-		dc.l Map_Obj49+$49000000
-		dc.b   0,  0,$23,$AE	; 0
-		dc.l Map_Obj49+$49000000
-		dc.b   2,  3,$23,$AE	; 0
-		dc.l Map_Obj49+$49000000
-		dc.b   4,  5,$23,$AE	; 0
+	;	dc.l Map_Obj49+$49000000
+	;	dc.b   0,  0,$23,$AE	; 0
+	;	dc.l Map_Obj49+$49000000
+	;	dc.b   2,  3,$23,$AE	; 0
+	;	dc.l Map_Obj49+$49000000
+	;	dc.b   4,  5,$23,$AE	; 0
 		dc.l Map_Obj18_EHZ+$18000000
 		dc.b   1,  0,$40,  0	; 0
 		dc.l Map_Obj18_EHZ+$18000000

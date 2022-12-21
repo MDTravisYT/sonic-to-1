@@ -2280,11 +2280,7 @@ Pal_SegaBG:	dc.w  $EEE, $EEE, $EEE,	$EEE, $EEE, $EEE, $EEE,	$EEE, $EEE, $EEE, $E
 		dc.w  $EEE, $EEE, $EEE,	$EEE, $EEE, $EEE, $EEE,	$EEE, $EEE, $EEE, $EEE,	$EEE, $EEE, $EEE, $EEE,	$EEE; 16
 		dc.w  $EEE, $EEE, $EEE,	$EEE, $EEE, $EEE, $EEE,	$EEE, $EEE, $EEE, $EEE,	$EEE, $EEE, $EEE, $EEE,	$EEE; 32
 		dc.w  $EEE, $EEE, $EEE,	$EEE, $EEE, $EEE, $EEE,	$EEE, $EEE, $EEE, $EEE,	$EEE, $EEE, $EEE, $EEE,	$EEE; 48
-Pal_Title:	dc.w  $C00,    2, $800,	 $26,  $48,  $6C,  $8E,	 $AE, $4A0,  $40,  $60,	 $80,  $A0, $6A4,    0,	   0; 0
-					; DATA XREF: ROM:0000250Ao
-		dc.w  $C8C, $800,    0,	$A66, $EA8, $ECA, $EEE,	 $AE,  $8E,  $6C, $8CE,	$EEC,  $4A,    6,    0,	   0; 16
-		dc.w  $C00, $C00, $E22,	$E44, $E66, $E88, $EEE,	$AAA, $888, $666,  $24,	$248, $8AE, $68C,    0,	$ECA; 32
-		dc.w  $C00, $600, $C00,	$E44, $E66, $E88, $EEE,	 $AE,  $6A,  $26,  $EE,	$EAA,	$C,    6,    2,	   0; 48
+Pal_Title:	incbin "palette\Title Screen.bin"
 Pal_LevelSelect:dc.w	 0,    0,    0,	   0,	 0,    0,    0,	   0,	 0,    0,    0,	   0,	 0,    0,    0,	$EEE; 0
 					; DATA XREF: ROM:00002512o
 		dc.w  $C00,  $24, $246,	$468, $68A, $8AC, $ACE,	$8AC, $68A, $468, $ACE,	$ACE, $246,  $24,    0,	   0; 16
@@ -2675,10 +2671,10 @@ loc_3270:				; CODE XREF: ROM:00003272j
 		bsr.w	PalLoad1
 		bsr.w	Pal_FadeTo
 		move	#$2700,sr
-		move.l	#$40000000,(vdp_control_port).l
+		locVRAM	$4000
 		lea	(Nem_Title).l,a0
 		bsr.w	NemDec
-		move.l	#$40000001,(vdp_control_port).l
+		locVRAM	$6000
 		lea	(Nem_TitleSonicTails).l,a0
 		bsr.w	NemDec
 		lea	(vdp_data_port).l,a6
@@ -2702,14 +2698,7 @@ loc_32C4:				; CODE XREF: ROM:000032C6j
 		lea	(Eni_TitleMap).l,a0
 		move.w	#0,d0
 		bsr.w	EniDec
-		lea	($FFFF0000).l,a1
-		move.l	#$40000003,d0
-		moveq	#$27,d1	; """
-		moveq	#$1B,d2
-		bsr.w	ShowVDPGraphics
-		lea	($FFFF0000).l,a1
-		lea	(Eni_TitleBg1).l,a0
-		move.w	#0,d0
+		copyTilemap	$FF0000,$C206,$21,$15
 
 loc_3330:
 		bsr.w	EniDec
@@ -12075,58 +12064,61 @@ word_B36E:	dc.w 1			; DATA XREF: ROM:0000B2AEo
 
 Obj0E:					; DATA XREF: ROM:Obj_Indexo
 		moveq	#0,d0
-		move.b	$24(a0),d0
-		move.w	Obj0E_Index(pc,d0.w),d1
-		jmp	Obj0E_Index(pc,d1.w)
-; ---------------------------------------------------------------------------
-Obj0E_Index:	dc.w loc_B38E-Obj0E_Index ; DATA XREF: ROM:Obj0E_Indexo
-					; ROM:0000B388o ...
-		dc.w loc_B3D0-Obj0E_Index
-		dc.w loc_B3E4-Obj0E_Index
-		dc.w loc_B3FA-Obj0E_Index
-; ---------------------------------------------------------------------------
+		move.b	obRoutine(a0),d0
+		move.w	TSon_Index(pc,d0.w),d1
+		jmp	TSon_Index(pc,d1.w)
+; ===========================================================================
+TSon_Index:	dc.w TSon_Main-TSon_Index
+		dc.w TSon_Delay-TSon_Index
+		dc.w TSon_Move-TSon_Index
+		dc.w TSon_Animate-TSon_Index
+; ===========================================================================
 
-loc_B38E:				; DATA XREF: ROM:Obj0E_Indexo
-		addq.b	#2,$24(a0)
-		move.w	#$148,8(a0)
-		move.w	#$C4,$A(a0) ; "-"
-		move.l	#Map_Obj0E,4(a0)
-		move.w	#$4200,2(a0)
-		move.b	#1,$18(a0)
-		move.b	#$1D,$1F(a0)
-		tst.b	$1A(a0)
-		beq.s	loc_B3D0
-		move.w	#$FC,8(a0) ; "ü"
-		move.w	#$CC,$A(a0) ; "Ì"
-		move.w	#$2200,2(a0)
+TSon_Main:	; Routine 0
+		addq.b	#2,obRoutine(a0)
+		move.w	#$F0,obX(a0)
+		move.w	#$DE,obScreenY(a0) ; position is fixed to screen
+		move.l	#Map_Obj0E,obMap(a0)
+		move.w	#$2300,obGfx(a0)
+		move.b	#1,obPriority(a0)
+		move.b	#29,obDelayAni(a0) ; set time delay to 0.5 seconds
+		lea	(Ani_TSon).l,a1
+		bsr.w	AnimateSprite
 
-loc_B3D0:				; CODE XREF: ROM:0000B3BCj
-					; DATA XREF: ROM:0000B388o
+TSon_Delay:	;Routine 2
+		subq.b	#1,obDelayAni(a0) ; subtract 1 from time delay
+		bpl.s	@wait		; if time remains, branch
+		addq.b	#2,obRoutine(a0) ; go to next routine
 		bra.w	DisplaySprite
-; ---------------------------------------------------------------------------
-		subq.b	#1,$1F(a0)
-		bpl.s	locret_B3E2
-		addq.b	#2,$24(a0)
+
+	@wait:
+		rts	
+; ===========================================================================
+
+TSon_Move:	; Routine 4
+		subq.w	#8,obScreenY(a0) ; move Sonic up
+		cmpi.w	#$96,obScreenY(a0) ; has Sonic reached final position?
+		bne.s	@display	; if not, branch
+		addq.b	#2,obRoutine(a0)
+
+	@display:
 		bra.w	DisplaySprite
-; ---------------------------------------------------------------------------
 
-locret_B3E2:				; CODE XREF: ROM:0000B3D8j
-		rts
-; ---------------------------------------------------------------------------
+		rts	
+; ===========================================================================
 
-loc_B3E4:				; DATA XREF: ROM:0000B38Ao
-		subi.w	#8,$A(a0)
-		cmpi.w	#$96,$A(a0) ; "–"
-		bne.s	loc_B3F6
-		addq.b	#2,$24(a0)
-
-loc_B3F6:				; CODE XREF: ROM:0000B3F0j
+TSon_Animate:	; Routine 6
+		lea	(Ani_TSon).l,a1
+		bsr.w	AnimateSprite
 		bra.w	DisplaySprite
-; ---------------------------------------------------------------------------
 
-loc_B3FA:				; DATA XREF: ROM:0000B38Co
-		bra.w	DisplaySprite
+		rts	
 ; ---------------------------------------------------------------------------
+; Animation script - Sonic on the title screen
+; ---------------------------------------------------------------------------
+Ani_TSon:	dc.w byte_A706-Ani_TSon
+byte_A706:	dc.b 7,	0, 1, 2, 3, 4, 5, 6, 7,	$FE, 2
+		even
 ;----------------------------------------------------
 ; Object 0F - ???
 ;----------------------------------------------------
@@ -12271,33 +12263,153 @@ word_B56A:	dc.w $1E		; DATA XREF: ROM:0000B532o
 		dc.w $F80F,    0,    0,$FF80; 116
 word_B65C:	dc.w 1			; DATA XREF: ROM:0000B534o
 		dc.w $FC04,    0,    0,$FFF8; 0
-Map_Obj0E:	dc.w word_B66A-Map_Obj0E ; DATA	XREF: ROM:0000B39Eo
-					; ROM:Map_Obj0Eo ...
-		dc.w word_B6C4-Map_Obj0E
-word_B66A:	dc.w $B			; DATA XREF: ROM:Map_Obj0Eo
-		dc.w $D40D,    0,    0,$FFD8; 0
-		dc.w $CC0E,    8,    4,$FFF8; 4
-		dc.w $CC07,  $14,   $A,	 $18; 8
-		dc.w $E40F,  $1C,   $E,$FFE0; 12
-		dc.w $E40B,  $2C,  $16,	   0; 16
-		dc.w $EC07,  $38,  $1C,	 $18; 20
-		dc.w  $40F,  $40,  $20,$FFD8; 24
-		dc.w  $40F,  $50,  $28,$FFF8; 28
-		dc.w  $C06,  $60,  $30,	 $18; 32
-		dc.w $2404,  $66,  $33,$FFE8; 36
-		dc.w $240D,  $68,  $34,$FFF8; 40
-word_B6C4:	dc.w $A			; DATA XREF: ROM:0000B668o
-		dc.w $DC06,  $70,  $38,$FFEC; 0
-		dc.w $F40F,  $76,  $3B,$FFD4; 4
-		dc.w $F40F,  $86,  $43,$FFF4; 8
-		dc.w $E409,  $96,  $4B,$FFFC; 12
-		dc.w $DC0B,  $9C,  $4E,	 $14; 16
-		dc.w $FC08,  $A8,  $54,	 $14; 20
-		dc.w  $405,  $AB,  $55,	 $14; 24
-		dc.w $1404,  $AF,  $57,$FFD4; 28
-		dc.w $140D,  $B1,  $58,$FFE4; 32
-		dc.w $140D,  $B9,  $5C,	   4; 36
-		dc.w $4E71		; 40
+Map_Obj0E:	
+Map_d92e:
+Map_d92e_0: 	dc.w Map_d92e_10-Map_d92e
+Map_d92e_2: 	dc.w Map_d92e_62-Map_d92e
+Map_d92e_4: 	dc.w Map_d92e_DC-Map_d92e
+Map_d92e_6: 	dc.w Map_d92e_166-Map_d92e
+Map_d92e_8: 	dc.w Map_d92e_1D0-Map_d92e
+Map_d92e_A: 	dc.w Map_d92e_22A-Map_d92e
+Map_d92e_C: 	dc.w Map_d92e_2C4-Map_d92e
+Map_d92e_E: 	dc.w Map_d92e_36E-Map_d92e
+Map_d92e_10: 	dc.b $0, $A
+	dc.b $8, $8, $0, $0, $0, $0, $0, $8
+	dc.b $10, $F, $0, $3, $0, $1, $0, $8
+	dc.b $10, $F, $0, $13, $0, $9, $0, $28
+	dc.b $30, $E, $0, $23, $0, $11, $0, $8
+	dc.b $30, $E, $0, $2F, $0, $17, $0, $28
+	dc.b $48, $D, $0, $3B, $0, $1D, $0, $0
+	dc.b $48, $9, $0, $43, $0, $21, $0, $20
+	dc.b $48, $0, $0, $49, $0, $24, $0, $38
+	dc.b $58, $C, $0, $4A, $0, $25, $0, $8
+	dc.b $58, $0, $0, $4E, $0, $27, $0, $28
+Map_d92e_62: 	dc.b $0, $F
+	dc.b $48, $E, $1, $BD, $0, $DE, $0, $20
+	dc.b $38, $5, $1, $C9, $0, $E4, $0, $38
+	dc.b $40, $0, $1, $CD, $0, $E6, $0, $30
+	dc.b $48, $0, $1, $CE, $0, $E7, $0, $40
+	dc.b $60, $0, $1, $CF, $0, $E7, $0, $20
+	dc.b $10, $E, $0, $4F, $0, $27, $0, $8
+	dc.b $10, $E, $0, $5B, $0, $2D, $0, $28
+	dc.b $18, $1, $0, $67, $0, $33, $0, $48
+	dc.b $28, $2, $0, $69, $0, $34, $0, $0
+	dc.b $28, $F, $0, $6C, $0, $36, $0, $8
+	dc.b $28, $F, $0, $7C, $0, $3E, $0, $28
+	dc.b $30, $2, $0, $8C, $0, $46, $0, $48
+	dc.b $48, $E, $0, $8F, $0, $47, $0, $10
+	dc.b $48, $9, $0, $9B, $0, $4D, $0, $30
+	dc.b $58, $4, $0, $A1, $0, $50, $0, $30
+Map_d92e_DC: 	dc.b $0, $11
+	dc.b $38, $E, $1, $BD, $0, $DE, $0, $28
+	dc.b $28, $5, $1, $C9, $0, $E4, $0, $40
+	dc.b $30, $0, $1, $CD, $0, $E6, $0, $38
+	dc.b $38, $0, $1, $CE, $0, $E7, $0, $48
+	dc.b $50, $0, $1, $CF, $0, $E7, $0, $28
+	dc.b $20, $F, $1, $A9, $0, $D4, $0, $8
+	dc.b $20, $3, $1, $B9, $0, $DC, $0, $28
+	dc.b $10, $E, $0, $4F, $0, $27, $0, $8
+	dc.b $10, $E, $0, $5B, $0, $2D, $0, $28
+	dc.b $18, $1, $0, $67, $0, $33, $0, $48
+	dc.b $28, $2, $0, $69, $0, $34, $0, $0
+	dc.b $28, $F, $0, $6C, $0, $36, $0, $8
+	dc.b $28, $F, $0, $7C, $0, $3E, $0, $28
+	dc.b $30, $2, $0, $8C, $0, $46, $0, $48
+	dc.b $48, $E, $0, $8F, $0, $47, $0, $10
+	dc.b $48, $9, $0, $9B, $0, $4D, $0, $30
+	dc.b $58, $4, $0, $A1, $0, $50, $0, $30
+Map_d92e_166: 	dc.b $0, $D
+	dc.b $10, $F, $0, $A3, $0, $51, $0, $8
+	dc.b $8, $8, $0, $B3, $0, $59, $0, $28
+	dc.b $10, $F, $0, $B6, $0, $5B, $0, $28
+	dc.b $18, $0, $0, $C6, $0, $63, $0, $48
+	dc.b $20, $6, $0, $C7, $0, $63, $0, $48
+	dc.b $38, $0, $0, $CD, $0, $66, $0, $48
+	dc.b $30, $D, $0, $CE, $0, $67, $0, $8
+	dc.b $30, $E, $0, $D6, $0, $6B, $0, $28
+	dc.b $40, $B, $0, $E2, $0, $71, $0, $10
+	dc.b $48, $8, $0, $EE, $0, $77, $0, $28
+	dc.b $50, $1, $0, $F1, $0, $78, $0, $8
+	dc.b $50, $4, $0, $F3, $0, $79, $0, $28
+	dc.b $58, $0, $0, $F5, $0, $7A, $0, $28
+Map_d92e_1D0: 	dc.b $0, $B
+	dc.b $8, $F, $0, $F6, $0, $7B, $0, $10
+	dc.b $8, $B, $1, $6, $0, $83, $0, $30
+	dc.b $10, $6, $1, $12, $0, $89, $0, $48
+	dc.b $28, $E, $1, $18, $0, $8C, $0, $18
+	dc.b $28, $E, $1, $24, $0, $92, $0, $38
+	dc.b $28, $1, $1, $30, $0, $98, $0, $10
+	dc.b $40, $E, $1, $32, $0, $99, $0, $10
+	dc.b $40, $6, $1, $3E, $0, $9F, $0, $30
+	dc.b $40, $4, $1, $44, $0, $A2, $0, $40
+	dc.b $48, $0, $1, $46, $0, $A3, $0, $40
+	dc.b $58, $8, $1, $47, $0, $A3, $0, $18
+Map_d92e_22A: 	dc.b $0, $13
+	dc.b $28, $E, $1, $E4, $0, $F2, $0, $38
+	dc.b $18, $5, $1, $F0, $0, $F8, $0, $48
+	dc.b $40, $8, $1, $F4, $0, $FA, $0, $38
+	dc.b $48, $4, $1, $F7, $0, $FB, $0, $38
+	dc.b $10, $F, $1, $4A, $0, $A5, $0, $10
+	dc.b $8, $4, $1, $5A, $0, $AD, $0, $20
+	dc.b $0, $B, $1, $5C, $0, $AE, $0, $30
+	dc.b $8, $0, $1, $68, $0, $B4, $0, $48
+	dc.b $18, $0, $1, $69, $0, $B4, $0, $48
+	dc.b $18, $5, $1, $6A, $0, $B5, $0, $0
+	dc.b $28, $2, $1, $6E, $0, $B7, $0, $8
+	dc.b $30, $F, $1, $71, $0, $B8, $0, $10
+	dc.b $20, $D, $1, $81, $0, $C0, $0, $30
+	dc.b $20, $1, $1, $89, $0, $C4, $0, $50
+	dc.b $30, $8, $1, $8B, $0, $C5, $0, $30
+	dc.b $38, $E, $1, $8E, $0, $C7, $0, $30
+	dc.b $50, $D, $1, $9A, $0, $CD, $0, $8
+	dc.b $50, $C, $1, $A2, $0, $D1, $0, $28
+	dc.b $58, $8, $1, $A6, $0, $D3, $0, $28
+Map_d92e_2C4: 	dc.b $0, $15
+	dc.b $28, $E, $1, $E4, $0, $F2, $0, $38
+	dc.b $18, $5, $1, $F0, $0, $F8, $0, $48
+	dc.b $40, $8, $1, $F4, $0, $FA, $0, $38
+	dc.b $48, $4, $1, $F7, $0, $FB, $0, $38
+	dc.b $18, $F, $1, $D0, $0, $E8, $0, $8
+	dc.b $18, $3, $1, $E0, $0, $F0, $0, $28
+	dc.b $10, $F, $1, $4A, $0, $A5, $0, $10
+	dc.b $8, $4, $1, $5A, $0, $AD, $0, $20
+	dc.b $0, $B, $1, $5C, $0, $AE, $0, $30
+	dc.b $8, $0, $1, $68, $0, $B4, $0, $48
+	dc.b $18, $0, $1, $69, $0, $B4, $0, $48
+	dc.b $18, $5, $1, $6A, $0, $B5, $0, $0
+	dc.b $28, $2, $1, $6E, $0, $B7, $0, $8
+	dc.b $30, $F, $1, $71, $0, $B8, $0, $10
+	dc.b $20, $D, $1, $81, $0, $C0, $0, $30
+	dc.b $20, $1, $1, $89, $0, $C4, $0, $50
+	dc.b $30, $8, $1, $8B, $0, $C5, $0, $30
+	dc.b $38, $E, $1, $8E, $0, $C7, $0, $30
+	dc.b $50, $D, $1, $9A, $0, $CD, $0, $8
+	dc.b $50, $C, $1, $A2, $0, $D1, $0, $28
+	dc.b $58, $8, $1, $A6, $0, $D3, $0, $28
+Map_d92e_36E: 	dc.b $0, $16
+	dc.b $18, $4, $1, $F9, $0, $FC, $0, $38
+	dc.b $20, $0, $1, $FB, $0, $FD, $0, $38
+	dc.b $28, $8, $1, $FC, $0, $FE, $0, $30
+	dc.b $30, $1, $1, $FF, $0, $FF, $0, $30
+	dc.b $30, $B, $2, $1, $1, $0, $0, $38
+	dc.b $18, $F, $1, $D0, $0, $E8, $0, $8
+	dc.b $18, $3, $1, $E0, $0, $F0, $0, $28
+	dc.b $10, $F, $1, $4A, $0, $A5, $0, $10
+	dc.b $8, $4, $1, $5A, $0, $AD, $0, $20
+	dc.b $0, $B, $1, $5C, $0, $AE, $0, $30
+	dc.b $8, $0, $1, $68, $0, $B4, $0, $48
+	dc.b $18, $0, $1, $69, $0, $B4, $0, $48
+	dc.b $18, $5, $1, $6A, $0, $B5, $0, $0
+	dc.b $28, $2, $1, $6E, $0, $B7, $0, $8
+	dc.b $30, $F, $1, $71, $0, $B8, $0, $10
+	dc.b $20, $D, $1, $81, $0, $C0, $0, $30
+	dc.b $20, $1, $1, $89, $0, $C4, $0, $50
+	dc.b $30, $8, $1, $8B, $0, $C5, $0, $30
+	dc.b $38, $E, $1, $8E, $0, $C7, $0, $30
+	dc.b $50, $D, $1, $9A, $0, $CD, $0, $8
+	dc.b $50, $C, $1, $A2, $0, $D1, $0, $28
+	dc.b $58, $8, $1, $A6, $0, $D3, $0, $28
+	even
 ; ---------------------------------------------------------------------------
 ;----------------------------------------------------
 ; Object 2B - GHZ Chopper Badnik
@@ -14264,9 +14376,40 @@ loc_CF40:
 		rts
 ; End of function sub_CF3C
 
+;----------------------------------------------------
+; Object 49 - Waterfall Sound 
+;----------------------------------------------------
+
+Obj49:					; DATA XREF: ROM:Obj_Indexo
+		moveq	#0,d0
+		move.b	obRoutine(a0),d0
+		move.w	WSnd_Index(pc,d0.w),d1
+		jmp	WSnd_Index(pc,d1.w)
+; ===========================================================================
+WSnd_Index:	dc.w WSnd_Main-WSnd_Index
+		dc.w WSnd_PlaySnd-WSnd_Index
+; ===========================================================================
+
+WSnd_Main:	; Routine 0
+		addq.b	#2,obRoutine(a0)
+		move.b	#4,obRender(a0)
+
+WSnd_PlaySnd:	; Routine 2
+		move.b	($FFFFFE0E).w,d0 ; get low byte of VBlank counter
+		andi.b	#$3F,d0
+		bne.s	WSnd_ChkDel
+		move.w	#sfx_Waterfall,d0
+		jsr	(PlaySound_Special).l	; play waterfall sound
+
+	WSnd_ChkDel:
+		move.w	8(a0),d0
+		andi.w	#$FF80,d0
+		sub.w	($FFFFF7DA).w,d0
+		cmpi.w	#$280,d0
+		bhi.w	DeleteObject
+		rts	
 
 ; =============== S U B	R O U T	I N E =======================================
-
 
 AnimateSprite:				; CODE XREF: ROM:0000946Ap
 					; ROM:0000956Ap ...
@@ -27452,134 +27595,7 @@ word_1565E:	dc.w 6			; DATA XREF: ROM:000155AAo
 		dc.w $F80D,  $10,    8,	 $20; 16
 		dc.w $F80D,    8,    4,	 $40; 20
 ; ---------------------------------------------------------------------------
-;----------------------------------------------------
-; Object 49 - EHZ waterfalls
-;----------------------------------------------------
 
-Obj49:					; DATA XREF: ROM:Obj_Indexo
-		moveq	#0,d0
-		move.b	$24(a0),d0
-		move.w	Obj49_Index(pc,d0.w),d1
-		jmp	Obj49_Index(pc,d1.w)
-; ---------------------------------------------------------------------------
-Obj49_Index:	dc.w Obj49_Init-Obj49_Index ; DATA XREF: ROM:Obj49_Indexo
-					; ROM:000156A0o
-		dc.w Obj49_Main-Obj49_Index
-; ---------------------------------------------------------------------------
-
-Obj49_Init:				; DATA XREF: ROM:Obj49_Indexo
-		addq.b	#2,$24(a0)
-		move.l	#Map_Obj49,4(a0)
-		move.w	#$23AE,2(a0)
-	if removeJmpTos=1
-		jsr	(ModifySpriteAttr_2P).l
-	else
-		bsr.w	j_ModifySpriteAttr_2P_0
-	endif
-		move.b	#4,1(a0)
-		move.b	#$20,$19(a0)
-		move.w	8(a0),$30(a0)
-		move.b	#0,$18(a0)
-		move.b	#$80,$16(a0)
-		bset	#4,1(a0)
-
-Obj49_Main:				; DATA XREF: ROM:000156A0o
-		tst.w	(f_2player).w
-		bne.s	loc_156F6
-		move.w	8(a0),d0
-		andi.w	#$FF80,d0
-		sub.w	($FFFFF7DA).w,d0
-		cmpi.w	#$280,d0
-		bhi.w	loc_1586E
-
-loc_156F6:				; CODE XREF: ROM:000156E0j
-		move.w	8(a0),d1
-		move.w	d1,d2
-		subi.w	#$40,d1
-		addi.w	#$40,d2
-		move.b	$28(a0),d3
-		move.b	#0,$1A(a0)
-		move.w	(v_objspace+8).w,d0
-		cmp.w	d1,d0
-		bcs.s	loc_15728
-		cmp.w	d2,d0
-		bcc.s	loc_15728
-		move.b	#1,$1A(a0)
-		add.b	d3,$1A(a0)
-		bra.w	loc_15868
-; ---------------------------------------------------------------------------
-
-loc_15728:				; CODE XREF: ROM:00015714j
-					; ROM:00015718j
-		move.w	(v_objspace+$48).w,d0
-		cmp.w	d1,d0
-		bcs.s	loc_1573A
-		cmp.w	d2,d0
-		bcc.s	loc_1573A
-		move.b	#1,$1A(a0)
-
-loc_1573A:				; CODE XREF: ROM:0001572Ej
-					; ROM:00015732j
-		add.b	d3,$1A(a0)
-		bra.w	loc_15868
-; ---------------------------------------------------------------------------
-Map_Obj49:	dc.w word_1574E-Map_Obj49 ; DATA XREF: ROM:000156A6o
-					; ROM:Map_Obj49o ...
-		dc.w word_15760-Map_Obj49
-		dc.w word_157F2-Map_Obj49
-		dc.w word_157F4-Map_Obj49
-		dc.w word_157F2-Map_Obj49
-		dc.w word_15816-Map_Obj49
-word_1574E:	dc.w 2			; DATA XREF: ROM:Map_Obj49o
-		dc.w $800D,    0,    0,$FFE0; 0
-		dc.w $800D,    0,    0,	   0; 4
-word_15760:	dc.w $12		; DATA XREF: ROM:00015744o
-		dc.w $800D,    0,    0,$FFE0; 0
-		dc.w $800D,    0,    0,	   0; 4
-		dc.w $800F,    8,    4,$FFE0; 8
-		dc.w $800F,    8,    4,	   0; 12
-		dc.w $A00F,    8,    4,$FFE0; 16
-		dc.w $A00F,    8,    4,	   0; 20
-		dc.w $C00F,    8,    4,$FFE0; 24
-		dc.w $C00F,    8,    4,	   0; 28
-		dc.w $E00F,    8,    4,$FFE0; 32
-		dc.w $E00F,    8,    4,	   0; 36
-		dc.w	$F,    8,    4,$FFE0; 40
-		dc.w	$F,    8,    4,	   0; 44
-		dc.w $200F,    8,    4,$FFE0; 48
-		dc.w $200F,    8,    4,	   0; 52
-		dc.w $400F,    8,    4,$FFE0; 56
-		dc.w $400F,    8,    4,	   0; 60
-		dc.w $600F,    8,    4,$FFE0; 64
-		dc.w $600F,    8,    4,	   0; 68
-word_157F2:	dc.w 0			; DATA XREF: ROM:00015746o
-					; ROM:0001574Ao
-word_157F4:	dc.w 4			; DATA XREF: ROM:00015748o
-		dc.w $E00F,    8,    4,$FFE0; 0
-		dc.w $E00F,    8,    4,	   0; 4
-		dc.w	$F,    8,    4,$FFE0; 8
-		dc.w	$F,    8,    4,	   0; 12
-word_15816:	dc.w $A			; DATA XREF: ROM:0001574Co
-		dc.w $C00F,    8,    4,$FFE0; 0
-		dc.w $C00F,    8,    4,	   0; 4
-		dc.w $E00F,    8,    4,$FFE0; 8
-		dc.w $E00F,    8,    4,	   0; 12
-		dc.w	$F,    8,    4,$FFE0; 16
-		dc.w	$F,    8,    4,	   0; 20
-		dc.w $200F,    8,    4,$FFE0; 24
-		dc.w $200F,    8,    4,	   0; 28
-		dc.w $400F,    8,    4,$FFE0; 32
-		dc.w $400F,    8,    4,	   0; 36
-; ---------------------------------------------------------------------------
-
-loc_15868:				; CODE XREF: ROM:0001555Cj
-					; ROM:00015724j ...
-		jmp	DisplaySprite
-; ---------------------------------------------------------------------------
-
-loc_1586E:				; CODE XREF: ROM:000156F2j
-		jmp	DeleteObject
-; ---------------------------------------------------------------------------
 
         if removeJmpTos=0
 j_ModifySpriteAttr_2P_0:		; CODE XREF: ROM:000154F8p
@@ -30534,6 +30550,10 @@ j_AnimateSprite_8:			; CODE XREF: ROM:000176ACp
 					; ROM:000176C8p ...
 		jmp	AnimateSprite
 ; ---------------------------------------------------------------------------
+
+loc_15868:				; CODE XREF: ROM:0001555Cj
+					; ROM:00015724j ...
+		jmp	DisplaySprite
 
 j_ModifyA1SpriteAttr_2P_0:		; CODE XREF: ROM:0001763Ep
 					; sub_17714+20p
@@ -36757,7 +36777,7 @@ Eni_TitleBg2:	incbin "tilemaps\Title Screen Bg2.bin"
                 even
 Nem_Title:	incbin "artnem\Title Screen Foreground.bin"
                 even
-Nem_TitleSonicTails:incbin "artnem\Title Screen Sonic And Tails.bin"
+Nem_TitleSonicTails:incbin "artnem\Title Screen Sonic.bin"
                 even
 S1Nem_GHZFlowerBits:incbin "artnem\GHZ Flower Stalk.bin"
                 even
