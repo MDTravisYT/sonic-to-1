@@ -2738,8 +2738,10 @@ loc_3330:
 loc_339A:				; CODE XREF: ROM:0000339Cj
 		move.l	d0,(a1)+
 		dbf	d1,loc_339A
-		move.b	#$E,(v_objspace+$40).w
-		move.b	#$E,(v_objspace+$80).w
+		move.b	#$0E,(v_objspace+$40).w ; load big Sonic object
+		move.b	#$0F,(v_objspace+$80).w ; load "PRESS START BUTTON" object
+		clr.b	(v_objspace+$80+obRoutine).w ; The 'Mega Games 10' version of Sonic 1 added this line, to fix the 'PRESS START BUTTON' object not appearing
+		move.b	#$0F,(v_objspace+$C0).w ; load "TM" object
 		move.b	#1,(v_objspace+$9A).w
 		jsr	(ObjectsLoad).l
 		jsr	(BuildSprites).l
@@ -12133,40 +12135,40 @@ byte_A706:	dc.b 7,	0, 1, 2, 3, 4, 5, 6, 7,	$FE, 2
 
 Obj0F:					; DATA XREF: ROM:Obj_Indexo
 		moveq	#0,d0
-		move.b	$24(a0),d0
-		move.w	Obj0F_Index(pc,d0.w),d1
-		jsr	Obj0F_Index(pc,d1.w)
+		move.b	obRoutine(a0),d0
+		move.w	PSB_Index(pc,d0.w),d1
+		jsr	PSB_Index(pc,d1.w)
 		bra.w	DisplaySprite
-; ---------------------------------------------------------------------------
-Obj0F_Index:	dc.w loc_B416-Obj0F_Index ; DATA XREF: ROM:Obj0F_Indexo
-					; ROM:0000B412o ...
-		dc.w loc_B438-Obj0F_Index
-		dc.w loc_B438-Obj0F_Index
-; ---------------------------------------------------------------------------
+; ===========================================================================
+PSB_Index:	dc.w PSB_Main-PSB_Index
+		dc.w PSB_PrsStart-PSB_Index
+		dc.w PSB_Exit-PSB_Index
+; ===========================================================================
 
-loc_B416:				; DATA XREF: ROM:Obj0F_Indexo
-		addq.b	#2,$24(a0)
-		move.w	#$90,8(a0) ; "ê"
-		move.w	#$90,$A(a0) ; "ê"
-		move.l	#Map_Obj0F,4(a0)
-		move.w	#$680,2(a0)
-		bsr.w	ModifySpriteAttr_2P
+PSB_Main:	; Routine 0
+		addq.b	#2,obRoutine(a0)
+		move.w	#$D0,obX(a0)
+		move.w	#$130,obScreenY(a0)
+		move.l	#Map_S1Obj0F,obMap(a0)
+		move.w	#$200,obGfx(a0)
+		cmpi.b	#2,obFrame(a0)	; is object "PRESS START"?
+		bcs.s	PSB_PrsStart	; if yes, branch
 
-loc_B438:				; DATA XREF: ROM:0000B412o
-					; ROM:0000B414o
-		move.b	($FFFFF605).w,d0
-		btst	#5,d0
-		beq.s	loc_B44C
-		addq.b	#1,$1A(a0)
-		andi.b	#$F,$1A(a0)
+		addq.b	#2,obRoutine(a0)
+		cmpi.b	#3,obFrame(a0)	; is the object	"TM"?
+		bne.s	PSB_Exit	; if not, branch
 
-loc_B44C:				; CODE XREF: ROM:0000B440j
-		btst	#4,d0
-		beq.s	locret_B458
-		bchg	#0,($FFFFFFE9).w
+		move.w	#$2510,obGfx(a0) ; "TM" specific code
+		move.w	#$170,obX(a0)
+		move.w	#$F8,obScreenY(a0)
 
-locret_B458:				; CODE XREF: ROM:0000B450j
-		rts
+PSB_Exit:	; Routine 4
+		rts	
+; ===========================================================================
+
+PSB_PrsStart:	; Routine 2
+		lea	(off_B528).l,a1
+		bra.w	AnimateSprite	; "PRESS START" is animated
 ; ---------------------------------------------------------------------------
 Map_Obj0F:	dc.w word_B47A-Map_Obj0F ; DATA	XREF: ROM:0000B426o
 					; ROM:Map_Obj0Fo ...
