@@ -2685,6 +2685,9 @@ loc_3270:				; CODE XREF: ROM:00003272j
 		locVRAM	$6000
 		lea	(Nem_TitleSonicTails).l,a0
 		bsr.w	NemDec
+		locVRAM	$A200
+		lea	(Nem_TitleTM).l,a0 ; load "TM" patterns
+		bsr.w	NemDec
 		lea	(vdp_data_port).l,a6
 		move.l	#$50000003,4(a6)
 		lea	(Art_Text).l,a5
@@ -2742,7 +2745,9 @@ loc_339A:				; CODE XREF: ROM:0000339Cj
 		move.b	#$0F,(v_objspace+$80).w ; load "PRESS START BUTTON" object
 		clr.b	(v_objspace+$80+obRoutine).w ; The 'Mega Games 10' version of Sonic 1 added this line, to fix the 'PRESS START BUTTON' object not appearing
 		move.b	#$0F,(v_objspace+$C0).w ; load "TM" object
-		move.b	#1,(v_objspace+$9A).w
+		move.b	#3,(v_objspace+$C0+obFrame).w
+		move.b	#$0F,(v_objspace+$100).w ; load object which hides part of Sonic
+		move.b	#2,(v_objspace+$100+obFrame).w
 		jsr	(ObjectsLoad).l
 		jsr	(BuildSprites).l
 		moveq	#0,d0
@@ -36789,6 +36794,8 @@ Nem_Title:	incbin "artnem\Title Screen Foreground.bin"
                 even
 Nem_TitleSonicTails:incbin "artnem\Title Screen Sonic.bin"
                 even
+Nem_TitleTM:	incbin	"artnem\Title Screen TM.bin"
+				even
 S1Nem_GHZFlowerBits:incbin "artnem\GHZ Flower Stalk.bin"
                 even
 Nem_SwingPlatform:incbin "artnem\GHZ Swinging Platform.bin"
