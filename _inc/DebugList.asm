@@ -40,5 +40,6 @@ Debug_MZ:
 Debug_SLZ:
 Debug_SYZ:
 Debug_SBZ:
-Debug_Null:
-	dc.w 0
+Debug_Null:	dc.w $1			; DATA XREF: ROM:DebugListo
+		dc.l Map_Obj25+$25000000
+		dc.b   0,  0,$26,$BC	; subtype, frame, VRAM setting (2 bytes)
