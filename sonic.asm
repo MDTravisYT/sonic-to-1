@@ -2281,11 +2281,8 @@ Pal_SegaBG:	dc.w  $EEE, $EEE, $EEE,	$EEE, $EEE, $EEE, $EEE,	$EEE, $EEE, $EEE, $E
 		dc.w  $EEE, $EEE, $EEE,	$EEE, $EEE, $EEE, $EEE,	$EEE, $EEE, $EEE, $EEE,	$EEE, $EEE, $EEE, $EEE,	$EEE; 32
 		dc.w  $EEE, $EEE, $EEE,	$EEE, $EEE, $EEE, $EEE,	$EEE, $EEE, $EEE, $EEE,	$EEE, $EEE, $EEE, $EEE,	$EEE; 48
 Pal_Title:	incbin "palette\Title Screen.bin"
-Pal_LevelSelect:dc.w	 0,    0,    0,	   0,	 0,    0,    0,	   0,	 0,    0,    0,	   0,	 0,    0,    0,	$EEE; 0
-					; DATA XREF: ROM:00002512o
-		dc.w  $C00,  $24, $246,	$468, $68A, $8AC, $ACE,	$8AC, $68A, $468, $ACE,	$ACE, $246,  $24,    0,	   0; 16
-		dc.w  $C00,  $24, $246,	$468, $68A, $8AC, $ACE,	$8AC, $68A, $468,  $24,	$246, $8AC, $68A,    0,	 $EE; 32
-		dc.w  $C00,  $24, $246,	$468, $68A, $8AC, $ACE,	$8AC, $68A, $468, $ACE,	$ACE, $468, $246,    2,	   0; 48
+Pal_LevelSelect:incbin "palette\Level Select.bin"
+                even
 Pal_SonicTails:	incbin "palette\Sonic.bin"
                 even
 Pal_GHZ:	incbin "palette\Green Hill Zone.bin"
