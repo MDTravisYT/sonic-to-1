@@ -1,7 +1,7 @@
 ArtLoadCues:	dc.w PLC_Main-ArtLoadCues,PLC_Main2-ArtLoadCues; 0
 		dc.w PLC_Explode-ArtLoadCues,PLC_GameOver-ArtLoadCues; 2
 		dc.w PLC_GHZ-ArtLoadCues,PLC_GHZ2-ArtLoadCues; 4
-		dc.w PLC_MZ-ArtLoadCues,PLC_MZ2-ArtLoadCues; 6
+		dc.w PLC_LZ-ArtLoadCues,PLC_LZ2-ArtLoadCues; 6
 		dc.w PLC_MZ-ArtLoadCues,PLC_MZ2-ArtLoadCues; 8
 		dc.w PLC_SLZ-ArtLoadCues,PLC_SLZ2-ArtLoadCues; 10
 		dc.w PLC_SYZ-ArtLoadCues,PLC_SYZ2-ArtLoadCues; 12
@@ -12,7 +12,7 @@ ArtLoadCues:	dc.w PLC_Main-ArtLoadCues,PLC_Main2-ArtLoadCues; 0
 		dc.w PLC_LZAnimals-ArtLoadCues,PLC_MZAnimals-ArtLoadCues; 22
 		dc.w PLC_SLZAnimals-ArtLoadCues,PLC_SYZAnimals-ArtLoadCues; 24
 		dc.w PLC_SBZAnimals-ArtLoadCues
-PLC_Main:	dc.w 4			; DATA XREF: ROM:ArtLoadCueso
+PLC_Main:	dc.w 4			
 		dc.l Nem_Lamppost
 		dc.w $F400
 		dc.l Nem_HUD
@@ -23,20 +23,20 @@ PLC_Main:	dc.w 4			; DATA XREF: ROM:ArtLoadCueso
 		dc.w $D780
 		dc.l Nem_Points
 		dc.w $F2E0
-PLC_Main2:	dc.w 2			; DATA XREF: ROM:ArtLoadCueso
+PLC_Main2:	dc.w 2			
 		dc.l Nem_Monitors
 		dc.w $D000
 		dc.l Nem_Shield
 		dc.w $A820
 		dc.l Nem_Stars
 		dc.w $AB80
-PLC_Explode:	dc.w 0			; DATA XREF: ROM:ArtLoadCueso
+PLC_Explode:	dc.w 0			
 		dc.l Nem_Explosion
 		dc.w $B400
-PLC_GameOver:	dc.w 0			; DATA XREF: ROM:ArtLoadCueso
+PLC_GameOver:	dc.w 0			
 		dc.l Nem_GameOver
 		dc.w $ABC0
-PLC_GHZ:	dc.w ((PLC_GHZ2-PLC_GHZ-2)/6)-1			; DATA XREF: ROM:ArtLoadCueso
+PLC_GHZ:	dc.w ((PLC_GHZ2-PLC_GHZ-2)/6)-1			
 		dc.l Nem_GHZ
 		dc.w 0
 		dc.l S1Nem_GHZFlowerBits
@@ -72,64 +72,64 @@ PLC_GHZ2:	dc.w ((PLC_LZ-PLC_GHZ2-2)/6)-1
 		dc.w $A1E0
 		dc.l S1Nem_GHZWall
 		dc.w $6980
-PLC_LZ:	dc.w ((PLC_LZ2-PLC_LZ-2)/6)-1			; DATA XREF: ROM:ArtLoadCueso
+PLC_LZ:	dc.w ((PLC_LZ2-PLC_LZ-2)/6)-1			
 		dc.l Nem_LZ
 		dc.w 0
-PLC_LZ2:	dc.w ((PLC_MZ-PLC_LZ2-2)/6)-1			; DATA XREF: ROM:ArtLoadCueso
-PLC_MZ:	dc.w ((PLC_MZ2-PLC_MZ-2)/6)-1			; DATA XREF: ROM:ArtLoadCueso
+PLC_LZ2:	dc.w ((PLC_MZ-PLC_LZ2-2)/6)-1			
+PLC_MZ:	dc.w ((PLC_MZ2-PLC_MZ-2)/6)-1			
 		dc.l Nem_MZ
 		dc.w 0
-PLC_MZ2:	dc.w ((PLC_SLZ-PLC_MZ2-2)/6)-1			; DATA XREF: ROM:ArtLoadCueso
-PLC_SLZ:	dc.w ((PLC_SLZ2-PLC_SLZ-2)/6)-1			; DATA XREF: ROM:ArtLoadCueso
+PLC_MZ2:	dc.w ((PLC_SLZ-PLC_MZ2-2)/6)-1			
+PLC_SLZ:	dc.w ((PLC_SLZ2-PLC_SLZ-2)/6)-1			
 		dc.l Nem_SLZ
 		dc.w 0
-PLC_SLZ2:	
-PLC_SYZ:	dc.w ((PLC_SYZ2-PLC_SYZ-2)/6)-1			; DATA XREF: ROM:ArtLoadCueso
+PLC_SLZ2:	dc.w ((PLC_SYZ-PLC_SLZ2-2)/6)-1		
+PLC_SYZ:	dc.w ((PLC_SYZ2-PLC_SYZ-2)/6)-1			
 		dc.l Nem_SYZ
 		dc.w 0
-PLC_SYZ2:	
-PLC_SBZ:	dc.w ((PLC_SBZ2-PLC_SBZ-2)/6)-1			; DATA XREF: ROM:ArtLoadCueso
+PLC_SYZ2:	dc.w ((PLC_SBZ-PLC_SYZ2-2)/6)-1		
+PLC_SBZ:	dc.w ((PLC_SBZ2-PLC_SBZ-2)/6)-1			
 		dc.l Nem_SBZ
 		dc.w 0
-PLC_SBZ2:	
-PLC_S1TitleCard:dc.w 0			; DATA XREF: ROM:ArtLoadCueso
+PLC_SBZ2:	dc.w ((PLC_SYZ-PLC_S1TitleCard-2)/6)-1	
+PLC_S1TitleCard:dc.w 0			
 		dc.l Nem_S1TitleCard
 		dc.w $B000
 PLC_Boss:	
-PLC_Signpost:	dc.w 2			; DATA XREF: ROM:ArtLoadCueso
+PLC_Signpost:	dc.w 2			
 		dc.l Nem_Signpost
 		dc.w $D000
 		dc.l Nem_S1BonusPoints
 		dc.w $96C0
 		dc.l Nem_BigFlash
 		dc.w $8C40
-PLC_Invalid:	dc.w $10		; DATA XREF: ROM:ArtLoadCueso
-PLC_GHZAnimals:	dc.w 1			; DATA XREF: ROM:ArtLoadCueso
+PLC_Invalid:	dc.w $10		
+PLC_GHZAnimals:	dc.w 1			
 		dc.l Nem_Bunny
 		dc.w $B000
 		dc.l Nem_Flicky
 		dc.w $B240
-PLC_LZAnimals:	dc.w 1			; DATA XREF: ROM:ArtLoadCueso
+PLC_LZAnimals:	dc.w 1			
 		dc.l Nem_Penguin
 		dc.w $B000
 		dc.l Nem_Seal
 		dc.w $B240
-PLC_MZAnimals:	dc.w 1			; DATA XREF: ROM:ArtLoadCueso
+PLC_MZAnimals:	dc.w 1			
 		dc.l Nem_Squirrel
 		dc.w $B000
 		dc.l Nem_Seal
 		dc.w $B240
-PLC_SLZAnimals:	dc.w 1			; DATA XREF: ROM:ArtLoadCueso
+PLC_SLZAnimals:	dc.w 1			
 		dc.l Nem_Pig
 		dc.w $B000
 		dc.l Nem_Flicky
 		dc.w $B240
-PLC_SYZAnimals:	dc.w 1			; DATA XREF: ROM:ArtLoadCueso
+PLC_SYZAnimals:	dc.w 1			
 		dc.l Nem_Pig
 		dc.w $B000
 		dc.l Nem_Chicken
 		dc.w $B240
-PLC_SBZAnimals:	dc.w 1			; DATA XREF: ROM:ArtLoadCueso
+PLC_SBZAnimals:	dc.w 1			
 		dc.l Nem_Bunny
 		dc.w $B000
 		dc.l Nem_Chicken

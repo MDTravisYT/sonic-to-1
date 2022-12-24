@@ -35927,7 +35927,7 @@ LevelLayout_Index:
 		dc.w Level_LZ1-LevelLayout_Index,Level_LZBg-LevelLayout_Index,Level_Null-LevelLayout_Index; 12
 		dc.w Level_LZ2-LevelLayout_Index,Level_LZBg-LevelLayout_Index,Level_Null-LevelLayout_Index; 15
 		dc.w Level_LZ3-LevelLayout_Index,Level_LZBg-LevelLayout_Index,Level_Null-LevelLayout_Index; 18
-		dc.w Level_Null-LevelLayout_Index,Level_Null-LevelLayout_Index, Level_Null-LevelLayout_Index; 9
+		dc.w Level_LZ4-LevelLayout_Index,Level_LZBg-LevelLayout_Index, Level_Null-LevelLayout_Index; 9
                 ; MZ
 		dc.w Level_MZ1-LevelLayout_Index,Level_MZBg-LevelLayout_Index,Level_Null-LevelLayout_Index; 12
 		dc.w Level_MZ2-LevelLayout_Index,Level_MZBg-LevelLayout_Index,Level_Null-LevelLayout_Index; 15
@@ -35946,7 +35946,7 @@ LevelLayout_Index:
                 ; SBZ
 		dc.w Level_SBZ1-LevelLayout_Index,Level_SBZBg-LevelLayout_Index,Level_Null-LevelLayout_Index; 60
 		dc.w Level_SBZ2-LevelLayout_Index,Level_SBZBg-LevelLayout_Index,Level_Null-LevelLayout_Index; 63
-		dc.w Level_SBZ3-LevelLayout_Index,Level_SBZBg-LevelLayout_Index,Level_Null-LevelLayout_Index; 66
+		dc.w Level_SBZ2-LevelLayout_Index,Level_SBZBg-LevelLayout_Index,Level_Null-LevelLayout_Index; 66
 		dc.w Level_Null-LevelLayout_Index,Level_Null-LevelLayout_Index, Level_Null-LevelLayout_Index; 9
                 ; Ending
 		dc.w Level_Null-LevelLayout_Index,Level_Null-LevelLayout_Index, Level_Null-LevelLayout_Index; 9
@@ -35966,6 +35966,8 @@ Level_LZ1:	incbin "levels\lz1.bin"
 Level_LZ2:	incbin "levels\lz2.bin"
                 even
 Level_LZ3:	incbin "levels\lz3.bin"
+                even
+Level_LZ4:	incbin "levels\lz4.bin"
                 even
 Level_LZBg:	;incbin "levels\LZbg.bin"
                 even
@@ -35996,8 +35998,6 @@ Level_SYZBg:	;incbin "levels\SYZbg.bin"
 Level_SBZ1:	incbin "levels\SBZ1.bin"
                 even
 Level_SBZ2:	incbin "levels\SBZ2.bin"
-                even
-Level_SBZ3:	incbin "levels\SBZ3.bin"
                 even
 Level_SBZBg:	;incbin "levels\SBZbg.bin"
                 even
@@ -36085,20 +36085,35 @@ ObjPos_GHZ2:	incbin "objpos\ghz2.bin"
 ObjPos_GHZ3:	incbin "objpos\ghz3.bin"
                 even
 ObjPos_LZ1:	incbin "objpos\lz1.bin"
+                even
 ObjPos_LZ2:	incbin "objpos\lz1.bin"
+                even
 ObjPos_LZ3:	incbin "objpos\lz3.bin"
+                even
 ObjPos_MZ1:	incbin "objpos\MZ1.bin"
+                even
 ObjPos_MZ2:	incbin "objpos\MZ2.bin"
+                even
 ObjPos_MZ3:	incbin "objpos\MZ3.bin"
+                even
 ObjPos_SLZ1:	incbin "objpos\SLZ1.bin"
+                even
 ObjPos_SLZ2:	incbin "objpos\SLZ2.bin"
+                even
 ObjPos_SLZ3:	incbin "objpos\SLZ3.bin"
+                even
 ObjPos_SYZ1:	incbin "objpos\SYZ1.bin"
+                even
 ObjPos_SYZ2:	incbin "objpos\SYZ2.bin"
+                even
 ObjPos_SYZ3:	incbin "objpos\SYZ3.bin"
+                even
 ObjPos_SBZ1:	incbin "objpos\SBZ1.bin"
+                even
 ObjPos_SBZ2:	incbin "objpos\SBZ2.bin"
+                even
 ObjPos_SBZ3:	incbin "objpos\SBZ3.bin"
+                even
 ObjPos_S1Ending:dc.w   $10, $170,$280C	; 0 ; DATA XREF: ROM:ObjPos_Indexo
 		dc.w   $14, $1B2,$2812	; 3
 		dc.w   $28, $1B0,$280C	; 6
