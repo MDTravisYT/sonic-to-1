@@ -72,26 +72,62 @@ PLC_GHZ2:	dc.w ((PLC_LZ-PLC_GHZ2-2)/6)-1
 		dc.w $A1E0
 		dc.l S1Nem_GHZWall
 		dc.w $6980
+		
 PLC_LZ:	dc.w ((PLC_LZ2-PLC_LZ-2)/6)-1			
 		dc.l Nem_LZ
 		dc.w 0
-PLC_LZ2:	dc.w ((PLC_MZ-PLC_LZ2-2)/6)-1			
+		dc.l Nem_VSpikes
+		dc.w $A360
+		dc.l Nem_HSpring
+		dc.w $A460
+		dc.l Nem_VSpring
+		dc.w $A660
+PLC_LZ2:	dc.w ((PLC_MZ-PLC_LZ2-2)/6)-1	
+		
 PLC_MZ:	dc.w ((PLC_MZ2-PLC_MZ-2)/6)-1			
 		dc.l Nem_MZ
 		dc.w 0
-PLC_MZ2:	dc.w ((PLC_SLZ-PLC_MZ2-2)/6)-1			
+		dc.l Nem_VSpikes
+		dc.w $A360
+		dc.l Nem_HSpring
+		dc.w $A460
+		dc.l Nem_VSpring
+		dc.w $A660
+PLC_MZ2:	dc.w ((PLC_SLZ-PLC_MZ2-2)/6)-1		
+	
 PLC_SLZ:	dc.w ((PLC_SLZ2-PLC_SLZ-2)/6)-1			
 		dc.l Nem_SLZ
 		dc.w 0
+		dc.l Nem_VSpikes
+		dc.w $A360
+		dc.l Nem_HSpring
+		dc.w $A460
+		dc.l Nem_VSpring
+		dc.w $A660
 PLC_SLZ2:	dc.w ((PLC_SYZ-PLC_SLZ2-2)/6)-1		
+
 PLC_SYZ:	dc.w ((PLC_SYZ2-PLC_SYZ-2)/6)-1			
 		dc.l Nem_SYZ
 		dc.w 0
+		dc.l Nem_VSpikes
+		dc.w $A360
+		dc.l Nem_HSpring
+		dc.w $A460
+		dc.l Nem_VSpring
+		dc.w $A660
 PLC_SYZ2:	dc.w ((PLC_SBZ-PLC_SYZ2-2)/6)-1		
+
 PLC_SBZ:	dc.w ((PLC_SBZ2-PLC_SBZ-2)/6)-1			
 		dc.l Nem_SBZ
 		dc.w 0
+		dc.l Nem_VSpikes
+		dc.w $A360
+		dc.l Nem_HSpring
+		dc.w $A460
+		dc.l Nem_VSpring
+		dc.w $A660
 PLC_SBZ2:	dc.w ((PLC_SYZ-PLC_S1TitleCard-2)/6)-1	
+
 PLC_S1TitleCard:dc.w 0			
 		dc.l Nem_S1TitleCard
 		dc.w $B000
