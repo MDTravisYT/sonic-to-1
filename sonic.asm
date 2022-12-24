@@ -3374,7 +3374,7 @@ loc_3BF0:				; CODE XREF: ROM:00003BF2j
 loc_3C00:				; CODE XREF: ROM:00003C02j
 		move.l	d0,(a1)+
 		dbf	d1,loc_3C00
-		cmpi.b	#4,(v_zone).w
+		cmpi.b	#1,(v_zone).w
 		bne.s	loc_3C1A
 		move.b	#1,($FFFFF730).w
 		move.w	#0,(f_2player).w
