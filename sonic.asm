@@ -2230,7 +2230,7 @@ PalPointers:	dc.l Pal_SegaBG		; DATA XREF: PalLoad1o	PalLoad2o ...
 		dc.l Pal_GHZ
 		dc.w $FB20
 		dc.w $17
-		dc.l Pal_MZ
+		dc.l Pal_LZ
 		dc.w $FB20
 		dc.w $17
 		dc.l Pal_MZ
@@ -2295,28 +2295,20 @@ Pal_SYZWater:	dc.w	 0, $402, $A20,	$B40, $B60, $B80, $ECA,	$CA8, $A84, $860, $AA
 		dc.w	 0, $202, $242,	$464, $686, $442, $EAA,	$D88, $D66, $A22, $666,	$46A, $6CA, $484, $EEE,	  $E; 16
 		dc.w  $400, $A20, $C22,	$E26, $E28, $A22, $A40,	$C22, $A60, $E28, $E4A,	$E6A, $CAA, $E24, $E26,	$E8A; 32
 		dc.w  $400, $440, $660,	$880, $8A0, $8C0, $AE4,	$EEA, $A60, $E84, $EA6,	$EC6, $EE6, $E6A, $E8A,	$CAA; 48
-Pal_MZ:	dc.w	 2,    0, $E64,	$A68, $E86,  $44, $EEE,	$AAA, $888, $444, $666,	   0,  $EE,  $88, $EA8,	$ECA; 0
-					; DATA XREF: ROM:0000252Ao
-					; ROM:00002532o
-		dc.w	 2,    0,    6,	$A0A, $C4C, $E6E, $EAE,	 $CE,  $8E,  $4E,  $2C,	 $2A,	 8,    4, $EEE,	  $E; 16
-		dc.w	 2,    0, $222,	$444, $888, $AAA, $EEE,	$E40, $C00, $800,  $CE,	$28E, $E40, $C00, $C00,	 $E0; 32
-Pal_SLZ:	incbin "palette\Emerald Hill Zone.bin"	
+Pal_MZ:	incbin "palette\Marble Zone.bin"
+                even
+Pal_SLZ:	incbin "palette\Star Light Zone.bin"	
 		dc.w  $C20, $800,    0,	$E86, $ECA, $20A, $EEE,	$E6E, $C4C, $A2A, $EEC,	 $80, $64E, $42C,  $A0,	 $E8; 32
 Pal_SYZ:	incbin "palette\Spring Yard Zone.bin"	
-Pal_SBZ:	dc.w  $C20,    0, $200,	  $E,  $6E,  $44, $EEE,	$AAA, $888, $444, $666,	$E86,  $EE,  $88,  $AE,	 $EE; 0
-					; DATA XREF: ROM:0000254Ao
-					; ROM:00002572o
-		dc.w  $E42, $200, $E86,	$640, $860, $A82, $CA4,	$EC6,  $24,  $40,  $62,	 $82,  $A4,  $6C,  $C4,	 $E8; 16
-		dc.w  $E42,    4, $E64,	$E86, $EA8,  $28, $EEC,	$E6E, $C4C, $A2A, $ECA,	 $80, $26E,  $4C,  $A4,	 $E8; 32
+Pal_SBZ:	incbin "palette\SBZ Act 1.bin"
+                even
 Pal_SpecialStage:dc.w  $400,	0, $822, $A44, $C66, $E88, $EEE, $AAA, $888, $444, $8AE, $46A,	 $E,	8,    4,  $EE; 0
 					; DATA XREF: ROM:00002552o
 		dc.w  $400,    0,  $24,	 $68,  $AC, $2EE, $EEE,	$AAA, $888, $444, $AE4,	$6A2,  $EE,  $88,  $44,	   0; 16
 		dc.w  $400,    0, $204,	$628, $A4C, $C6E, $ECE,	$800, $C42, $E86, $ECA,	$EEC,	 0, $EE0, $AA0,	$440; 32
 		dc.w  $400,    0,  $60,	 $A0,  $C6,  $EA, $AEC,	$EEA, $EE0, $AA0, $880,	$660, $440, $EE0, $AA0,	$440; 48
-Pal_LZ:		dc.w  $800,    0, $626,	$A2A, $C4C, $E8E, $EEE,	$AAA, $888, $444, $8E0,	$260,  $EE,  $88,  $44,	  $E; 0
-					; DATA XREF: ROM:00002562o
-		dc.w	 0, $444, $666,	$888, $AAA, $CCC, $EEE,	   0, $C8C, $A6A, $848,	$ECE, $E8C, $A48, $826,	$EEE; 16
-		dc.w	 0,    0,  $20,	$240, $462, $882, $CC6,	$EEA, $282, $4A4, $8E8,	$AAA, $666, $222, $684,	$EEE; 32
+Pal_LZ:		incbin "palette\Labyrinth Zone.bin"
+                even
 Pal_LZ4:	dc.w	 0,    0, $A26,	$C48, $E6A, $E8C, $ECE,	$CAC, $868, $646, $CAE,	$86C, $60C, $426,    4,	 $EE; 0
 					; DATA XREF: ROM:0000256Ao
 		dc.w  $800,    0, $226,	$22A, $44C, $88E, $EEE,	$AAA, $888, $444, $6C0,	$240,  $EA,  $84,  $40,	  $E; 16
