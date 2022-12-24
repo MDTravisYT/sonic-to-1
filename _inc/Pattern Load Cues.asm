@@ -59,7 +59,7 @@ PLC_GHZ:	dc.w ((PLC_GHZ2-PLC_GHZ-2)/6)-1			; DATA XREF: ROM:ArtLoadCueso
 		dc.w $A460
 		dc.l Nem_VSpring
 		dc.w $A660
-PLC_GHZ2:	dc.w ((PLC_MZ-PLC_GHZ2-2)/6)-1
+PLC_GHZ2:	dc.w ((PLC_LZ-PLC_GHZ2-2)/6)-1
 		dc.l Nem_SwingPlatform
 		dc.w $7000
 		dc.l Nem_GHZ_Bridge
@@ -72,13 +72,25 @@ PLC_GHZ2:	dc.w ((PLC_MZ-PLC_GHZ2-2)/6)-1
 		dc.w $A1E0
 		dc.l S1Nem_GHZWall
 		dc.w $6980
-PLC_MZ:	
-PLC_MZ2:	
-PLC_SLZ:	
+PLC_LZ:	dc.w ((PLC_LZ2-PLC_LZ-2)/6)-1			; DATA XREF: ROM:ArtLoadCueso
+		dc.l Nem_LZ
+		dc.w 0
+PLC_LZ2:	dc.w ((PLC_MZ-PLC_LZ2-2)/6)-1			; DATA XREF: ROM:ArtLoadCueso
+PLC_MZ:	dc.w ((PLC_MZ2-PLC_MZ-2)/6)-1			; DATA XREF: ROM:ArtLoadCueso
+		dc.l Nem_MZ
+		dc.w 0
+PLC_MZ2:	dc.w ((PLC_SLZ-PLC_MZ2-2)/6)-1			; DATA XREF: ROM:ArtLoadCueso
+PLC_SLZ:	dc.w ((PLC_SLZ2-PLC_SLZ-2)/6)-1			; DATA XREF: ROM:ArtLoadCueso
+		dc.l Nem_SLZ
+		dc.w 0
 PLC_SLZ2:	
-PLC_SYZ:	
+PLC_SYZ:	dc.w ((PLC_SYZ2-PLC_SYZ-2)/6)-1			; DATA XREF: ROM:ArtLoadCueso
+		dc.l Nem_SYZ
+		dc.w 0
 PLC_SYZ2:	
-PLC_SBZ:	
+PLC_SBZ:	dc.w ((PLC_SBZ2-PLC_SBZ-2)/6)-1			; DATA XREF: ROM:ArtLoadCueso
+		dc.l Nem_SBZ
+		dc.w 0
 PLC_SBZ2:	
 PLC_S1TitleCard:dc.w 0			; DATA XREF: ROM:ArtLoadCueso
 		dc.l Nem_S1TitleCard
