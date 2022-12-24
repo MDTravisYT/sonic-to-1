@@ -4349,17 +4349,17 @@ loc_4616:				; CODE XREF: Col_Load+Aj
 
 ; ---------------------------------------------------------------------------
 ColP_Index:	dc.l ColP_GHZ		; 0
-		dc.l ColP_MZ		; 1
+		dc.l ColP_LZ		; 1
 		dc.l ColP_MZ		; 2
 		dc.l ColP_SLZ		; 3
 		dc.l ColP_SYZ		; 4
-		dc.l ColP_SLZ		; 5
+		dc.l ColP_SBZ		; 5
 ColS_Index:	dc.l ColS_GHZ		; 0
-		dc.l ColS_MZ		; 1
+		dc.l ColS_LZ		; 1
 		dc.l ColS_MZ		; 2
 		dc.l ColS_SLZ		; 3
 		dc.l ColS_SYZ		; 4
-		dc.l ColS_SLZ		; 5
+		dc.l ColS_SBZ		; 5
 
 ; =============== S U B	R O U T	I N E =======================================
 
