@@ -9317,6 +9317,7 @@ Obj1A_Conf:	dc.b $20,$20,$20,$20	; 0 ; DATA XREF: ROM:loc_8CB0o
 		dc.b $2F,$2F,$30,$30	; 36
 		dc.b $30,$30,$30,$30	; 40
 		dc.b $30,$30,$30,$30	; 44
+		dc.b $30,$30,$30,$30,$30,$30,$30,$30,$30,$30,$30,$30,$30,$30,$30,$30; 48    ;dummy values, to prevent accidentally going out of bounds.
 Map_Obj1A:	dc.w word_8F60-Map_Obj1A ; DATA	XREF: ROM:00008C5Co
 					; ROM:Map_Obj1Ao ...
 		dc.w word_8FE2-Map_Obj1A
