@@ -19419,7 +19419,7 @@ loc_FE8E:				; CODE XREF: Sonic_Move+14Cj
 		beq.s	loc_FED8
 		cmpi.b	#$80,d0
 		beq.s	loc_FED2
-		cmpi.w	#$600,$10(a0)
+		cmpi.w	#$C00,$10(a0)
 		bge.s	Sonic_WallRecoil
 		add.w	d1,$10(a0)
 		bset	#5,$22(a0)
