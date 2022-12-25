@@ -1669,7 +1669,7 @@ Pal_SYZCyc2:	dc.w  $E84, $EA6, $EC6,	$EE6, $E84, $EA6, $EC6,	$EE6; 0
 
 Pal_FadeTo:				; CODE XREF: ROM:0000327Cp
 					; ROM:000033F0p
-		move.w	#$3F,($FFFFF626).w 
+		move.w	#$3F,($FFFFF626).w
 
 Pal_FadeTo2:				; CODE XREF: ROM:00003EE0p
 		moveq	#0,d0
@@ -1747,7 +1747,7 @@ Pal_AddColor:				; CODE XREF: Pal_FadeIn:loc_2198p
 
 Pal_AddGreen:				; CODE XREF: Pal_AddColor+10j
 		move.w	d3,d1
-		addi.w	#$20,d1	
+		addi.w	#$20,d1
 		cmp.w	d2,d1
 		bhi.s	Pal_AddRed
 		move.w	d1,(a0)+
@@ -1770,7 +1770,7 @@ Pal_NoAdd:				; CODE XREF: Pal_AddColor+6j
 
 Pal_FadeFrom:				; CODE XREF: ROM:000030C4p
 					; ROM:000031ECp ...
-		move.w	#$3F,($FFFFF626).w 
+		move.w	#$3F,($FFFFF626).w
 		move.w	#$15,d4
 
 loc_21F8:				; CODE XREF: Pal_FadeFrom+1Aj
@@ -1828,7 +1828,7 @@ Pal_DecGreen:				; CODE XREF: Pal_DecColor+Aj
 		move.w	d2,d1
 		andi.w	#$E0,d1	; "à"
 		beq.s	Pal_DecBlue
-		subi.w	#$20,(a0)+ 
+		subi.w	#$20,(a0)+
 		rts
 ; ---------------------------------------------------------------------------
 
@@ -1851,7 +1851,7 @@ Pal_NoDec:				; CODE XREF: Pal_DecColor+2j
 
 
 Pal_MakeWhite:				; CODE XREF: ROM:00005166p
-		move.w	#$3F,($FFFFF626).w 
+		move.w	#$3F,($FFFFF626).w
 		moveq	#0,d0
 		lea	($FFFFFB00).w,a0
 		move.b	($FFFFF626).w,d0
@@ -1929,7 +1929,7 @@ Pal_DecColor2:				; CODE XREF: Pal_WhiteToBlack:loc_22BCp
 loc_22FE:				; CODE XREF: Pal_DecColor2+Ej
 					; Pal_DecColor2+12j
 		move.w	d3,d1
-		subi.w	#$20,d1	
+		subi.w	#$20,d1
 		bcs.s	loc_230E
 		cmp.w	d2,d1
 		bcs.s	loc_230E
@@ -1954,7 +1954,7 @@ loc_2312:				; CODE XREF: Pal_DecColor2+6j
 
 Pal_MakeFlash:				; CODE XREF: ROM:00005024p
 					; ROM:000052CEp
-		move.w	#$3F,($FFFFF626).w 
+		move.w	#$3F,($FFFFF626).w
 		move.w	#$15,d4
 
 loc_2320:				; CODE XREF: Pal_MakeFlash+1Aj
@@ -2019,7 +2019,7 @@ loc_237C:				; CODE XREF: Pal_AddColor2+12j
 		beq.s	loc_238E
 
 loc_2388:
-		addi.w	#$20,(a0)+ 
+		addi.w	#$20,(a0)+
 		rts
 ; ---------------------------------------------------------------------------
 
@@ -2066,7 +2066,7 @@ loc_23C4:				; CODE XREF: PalCycle_Sega:loc_23BAj
 		addq.w	#2,d0
 
 loc_23CE:				; CODE XREF: PalCycle_Sega+26j
-		cmpi.w	#$60,d0	
+		cmpi.w	#$60,d0
 		bcc.s	loc_23D8
 		move.w	(a0)+,(a1,d0.w)
 
@@ -2148,7 +2148,7 @@ PalLoad1:				; CODE XREF: ROM:00003278p
 		adda.w	d0,a1
 		movea.l	(a1)+,a2
 		movea.w	(a1)+,a3
-		adda.w	#$80,a3	
+		adda.w	#$80,a3
 		move.w	(a1)+,d7
 
 loc_24AA:				; CODE XREF: PalLoad1+16j
@@ -2186,7 +2186,7 @@ PalLoad3_Water:				; CODE XREF: ROM:loc_3CB6p
 		adda.w	d0,a1
 		movea.l	(a1)+,a2
 		movea.w	(a1)+,a3
-		suba.w	#$80,a3	
+		suba.w	#$80,a3
 		move.w	(a1)+,d7
 
 loc_24DE:				; CODE XREF: PalLoad3_Water+16j
@@ -2294,9 +2294,9 @@ Pal_SYZWater:	dc.w	 0, $402, $A20,	$B40, $B60, $B80, $ECA,	$CA8, $A84, $860, $AA
 		dc.w  $400, $440, $660,	$880, $8A0, $8C0, $AE4,	$EEA, $A60, $E84, $EA6,	$EC6, $EE6, $E6A, $E8A,	$CAA; 48
 Pal_MZ:	incbin "palette\Marble Zone.bin"
                 even
-Pal_SLZ:	incbin "palette\Star Light Zone.bin"	
+Pal_SLZ:	incbin "palette\Star Light Zone.bin"
 		dc.w  $C20, $800,    0,	$E86, $ECA, $20A, $EEE,	$E6E, $C4C, $A2A, $EEC,	 $80, $64E, $42C,  $A0,	 $E8; 32
-Pal_SYZ:	incbin "palette\Spring Yard Zone.bin"	
+Pal_SYZ:	incbin "palette\Spring Yard Zone.bin"
 Pal_SBZ:	incbin "palette\SBZ Act 1.bin"
                 even
 Pal_SpecialStage:dc.w  $400,	0, $822, $A44, $C66, $E88, $EEE, $AAA, $888, $444, $8AE, $46A,	 $E,	8,    4,  $EE; 0
@@ -2376,9 +2376,9 @@ CalcSine:				; CODE XREF: S1SS_BgAnimate+46p
 					; sub_7F36+4p ...
 		andi.w	#$FF,d0
 		add.w	d0,d0
-		addi.w	#$80,d0	
+		addi.w	#$80,d0
 		move.w	Sine_Data(pc,d0.w),d1
-		subi.w	#$80,d0	
+		subi.w	#$80,d0
 		move.w	Sine_Data(pc,d0.w),d0
 		rts
 ; End of function CalcSine
@@ -2460,14 +2460,14 @@ loc_2F70:				; CODE XREF: CalcAngle+1Cj
 loc_2F82:				; CODE XREF: CalcAngle+24j
 		lsl.l	#8,d3
 		divu.w	d4,d3
-		moveq	#$40,d0	
+		moveq	#$40,d0
 		sub.b	AngleData(pc,d3.w),d0
 
 loc_2F8C:				; CODE XREF: CalcAngle+32j
 		tst.w	d1
 		bpl.w	loc_2F98
 		neg.w	d0
-		addi.w	#$80,d0	
+		addi.w	#$80,d0
 
 loc_2F98:				; CODE XREF: CalcAngle+40j
 		tst.w	d2
@@ -2481,7 +2481,7 @@ loc_2FA4:				; CODE XREF: CalcAngle+4Cj
 ; ---------------------------------------------------------------------------
 
 loc_2FAA:				; CODE XREF: CalcAngle+Ej
-		move.w	#$40,d0	
+		move.w	#$40,d0
 		movem.l	(sp)+,d3-d4
 		rts
 ; End of function CalcAngle
@@ -2574,7 +2574,7 @@ loc_316A:				; CODE XREF: ROM:00003154j
 		move.w	#0,($FFFFF662).w
 		move.w	#0,($FFFFF660).w
 		move.w	($FFFFF60C).w,d0
-		ori.b	#$40,d0	
+		ori.b	#$40,d0
 		move.w	d0,(vdp_control_port).l
 
 Sega_WaitPalette:			; CODE XREF: ROM:000031A4j
@@ -2637,23 +2637,23 @@ loc_3240:				; CODE XREF: ROM:00003242j
 		dbf	d1,loc_3240
 		lea	($FFFFF700).w,a1
 		moveq	#0,d0
-		move.w	#$3F,d1	
+		move.w	#$3F,d1
 
 loc_3250:				; CODE XREF: ROM:00003252j
 		move.l	d0,(a1)+
 		dbf	d1,loc_3250
 		lea	(v_screenposx).w,a1
 		moveq	#0,d0
-		move.w	#$3F,d1	
+		move.w	#$3F,d1
 
 loc_3260:				; CODE XREF: ROM:00003262j
 		move.l	d0,(a1)+
 		dbf	d1,loc_3260
-		
+
 		locVRAM	$14C0
 		lea	(S1Nem_CreditsFont).l,a0 ;	load alphabet
 		bsr.w	NemDec
-		
+
 		lea	($FFFFFB80).w,a1
 		moveq	#0,d0
 		move.w	#$1F,d1
@@ -2692,8 +2692,33 @@ loc_32C4:				; CODE XREF: ROM:000032C6j
 		move.w	#0,($FFFFFFEA).w
 		move.w	#0,(v_zone).w
 		move.w	#0,($FFFFF634).w
+		bsr.w   LevelSizeLoad
+		bsr.w   DeformBGLayer
+		lea     (Map16_GHZ).l,a0
+		lea	(v_16x16).w,a1
+		move.w	#$BFF,d2
+
+@loadblocks:		; CODE XREF: MainLevelLoadBlock+4Ej
+		move.w	(a0)+,(a1)+
+		dbf	d2,@loadblocks
+		
+		lea     (Map128_GHZ).l,a0
+		lea	(v_128x128).l,a1
+		move.w	#$3FFF,d0
+
+@loadchunks:				; CODE XREF: MainLevelLoadBlock+D4j
+		move.w	(a0)+,(a1)+
+		dbf	d0,@loadchunks
+		bsr.w	LevelLayoutLoad
 		bsr.w	Pal_FadeFrom
 		move	#$2700,sr
+		bsr.w	ClearScreen
+		lea	(vdp_control_port).l,a5
+		lea	(vdp_data_port).l,a6
+		lea	(v_bgscreenposx).w,a3
+		lea	(v_lvllayout+$80).w,a4
+		move.w	#$6000,d2
+		bsr.w	LoadTilesFromStart2
 		lea	($FFFF0000).l,a1
 		lea	(Eni_TitleMap).l,a0
 		move.w	#0,d0
@@ -2701,22 +2726,10 @@ loc_32C4:				; CODE XREF: ROM:000032C6j
 		copyTilemap	$FF0000,$C206,$21,$15
 
 loc_3330:
-		bsr.w	EniDec
-		lea	($FFFF0000).l,a1
-		move.l	#$60000003,d0
-		moveq	#$1F,d1
-		moveq	#$1B,d2
-		bsr.w	ShowVDPGraphics
-		lea	($FFFF0000).l,a1
-		lea	(Eni_TitleBg2).l,a0
-		move.w	#0,d0
-		bsr.w	EniDec
-		lea	($FFFF0000).l,a1
-		move.l	#$60400003,d0
-		moveq	#$1F,d1
-		moveq	#$1B,d2
-		bsr.w	ShowVDPGraphics
-		moveq	#1,d0
+		locVRAM	0
+		lea	(Nem_Title_8x8).l,a0 ; load GHZ patterns
+		bsr.w	NemDec
+                moveq	#1,d0
 		bsr.w	PalLoad1
 		move.b	#$8A,d0
 		bsr.w	PlaySound_Special
@@ -2738,16 +2751,16 @@ loc_339A:				; CODE XREF: ROM:0000339Cj
 		move.b	#$0F,(v_objspace+$100).w ; load object which hides part of Sonic
 		move.b	#2,(v_objspace+$100+obFrame).w
 		jsr	(ObjectsLoad).l
+		bsr.w   DeformBGLayer
 		jsr	(BuildSprites).l
 		moveq	#0,d0
 		bsr.w	LoadPLC2
 		move.w	#0,($FFFFFFE4).w
 		move.w	#0,($FFFFFFE6).w
-		move.w	#$000,(v_zone).w
 		move.w	#4,($FFFFEED2).w
 		move.w	#0,(v_tracktails).w
 		move.w	($FFFFF60C).w,d0
-		ori.b	#$40,d0	
+		ori.b	#$40,d0
 		move.w	d0,(vdp_control_port).l
 		bsr.w	Pal_FadeTo
 
@@ -2755,9 +2768,21 @@ TitleScreen_Loop:			; CODE XREF: ROM:0000349Aj
 		move.b	#4,($FFFFF62A).w
 		bsr.w	DelayProgram
 		jsr	(ObjectsLoad).l
-		bsr.w	Deform_TitleScreen
+		bsr.w	DeformBGLayer
 		jsr	(BuildSprites).l
+		bsr.w   PalCycle_S1TitleScreen
 		bsr.w	RunPLC
+		move.w	(v_objspace+obX).w,d0
+		addq.w	#2,d0
+		move.w	d0,(v_objspace+obX).w ; move Sonic to the right
+		cmpi.w	#$1C00,d0	; has Sonic object passed $1C00 on x-axis?
+		blo.s	Tit_ChkRegion	; if not, branch
+
+		move.b	#0,($FFFFF600).w ; go to Sega screen
+		rts
+; ===========================================================================
+
+Tit_ChkRegion:
 		tst.b	($FFFFFFF8).w
 		bpl.s	Title_RegionJ
 		lea	(LvlSelCode_US).l,a0
@@ -5155,6 +5180,7 @@ byte_5709:	dc.b   8,  2,  4,$FF,  2,  3,  8,$FF,  4,  2,  2,  3,  8,$FD,  4,  2;
                 include "_inc\LevelSizeLoad & BgScrollSpeed.asm"
                 include "_inc\DeformLayers.asm"
 
+LoadTilesAsYouMove_BGOnly:
 		lea	(vdp_control_port).l,a5
 		lea	(vdp_data_port).l,a6
 		lea	($FFFFEE52).w,a2
@@ -5521,10 +5547,10 @@ sub_6B7C:				; CODE XREF: LoadTilesAsYouMove+34p
 		beq.w	loc_6C0C
 		bclr	#0,(a2)
 		beq.s	loc_6BA8
-		move.w	#$40,d4	
+		move.w	#$40,d4
 		moveq	#$FFFFFFF0,d5
 		bsr.w	sub_7084
-		move.w	#$40,d4	
+		move.w	#$40,d4
 		moveq	#$FFFFFFF0,d5
 		moveq	#2,d6
 		bsr.w	sub_6D00
@@ -5532,10 +5558,10 @@ sub_6B7C:				; CODE XREF: LoadTilesAsYouMove+34p
 loc_6BA8:				; CODE XREF: sub_6B7C+14j
 		bclr	#1,(a2)
 		beq.s	locret_6BC8
-		move.w	#$40,d4	
+		move.w	#$40,d4
 		move.w	#$140,d5
 		bsr.w	sub_7084
-		move.w	#$40,d4	
+		move.w	#$40,d4
 		move.w	#$140,d5
 		moveq	#2,d6
 		bsr.w	sub_6D00
@@ -37005,6 +37031,8 @@ Map128_LZ:	incbin "map128\LZ.bin"
 Map16_GHZ:	incbin "map16\GHZ.bin"
                 even
 Nem_GHZ:	incbin "artnem\8x8 - GHZ.bin"
+                even
+Nem_Title_8x8:  incbin "artnem\8x8 - Title.bin"
                 even
 Map128_GHZ:     incbin "map128\GHZ.bin"
                 even
