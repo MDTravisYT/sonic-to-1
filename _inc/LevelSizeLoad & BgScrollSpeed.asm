@@ -72,6 +72,7 @@ s1endingstartloc:
 		dc.w $0000, $0DC0, $0110, $0110
 		dc.w $0000, $2FFF, $0000, $0320
 		dc.w $0000, $2FFF, $0000, $0320
+
 ; ---------------------------------------------------------------------------
 
 LevelSize_CheckLamp:			; CODE XREF: LevelSizeLoad+76j
@@ -171,7 +172,7 @@ loc_59B6:				; CODE XREF: BgScrollSpeed+4j
 BgScroll_Index:	dc.w BgScroll_GHZ-BgScroll_Index; 0 ; DATA XREF: ROM:BgScroll_Indexo
 					; ROM:BgScroll_Index+2o ...
 		dc.w BgScroll_LZ-BgScroll_Index; 1
-		dc.w BgScroll_CPZ-BgScroll_Index; 2
+		dc.w BgScroll_MZ-BgScroll_Index; 2
 		dc.w BgScroll_SLZ-BgScroll_Index; 3
 		dc.w BgScroll_SYZ-BgScroll_Index; 4
 		dc.w BgScroll_SBZ-BgScroll_Index; 5
@@ -200,12 +201,7 @@ BgScroll_LZ:				; DATA XREF: ROM:BgScroll_Indexo
 		rts
 ; ---------------------------------------------------------------------------
 
-BgScroll_CPZ:				; DATA XREF: ROM:BgScroll_Indexo
-		lsr.w	#2,d0
-		move.w	d0,(v_bgscreenposy).w
-		move.w	d0,(v_bgscreenposy_2p).w
-		clr.l	(v_bgscreenposx).w
-		clr.l	(v_bg2screenposx).w
+BgScroll_MZ:				; DATA XREF: ROM:BgScroll_Indexo
 		rts
 ; ---------------------------------------------------------------------------
 

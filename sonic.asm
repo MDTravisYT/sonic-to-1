@@ -3,7 +3,11 @@
 ;   mappingts instead of the actual label)
 ; * Restored backgrounds to other zones
 ; * Partially restored SLZ scrolling (buggy), ring layouts. and palette cycle
-; * Restored LZ ring layouts, Act 1 water level and palette cycle
+
+; * Restored LZ ring layouts, water levels, palette cycle, and some graphics
+; * Partially restored MZ scrolling (buggy), ring layouts, and lack of palette cycle
+; * Restored SBZ scrolling (background is broken, though)
+; * Restored S1 giant ring (WARNING: entering it kills the game)
 
 ;  =========================================================================
 ; |   Sonic the Hedgehog 2 Early Prototype Disassembly for Sega Mega Drive  |
@@ -1624,38 +1628,7 @@ PCycLZ_Skip2:
 PCycLZ_Seq:	dc.b 1,	0, 0, 1, 0, 0, 1, 0
 ; ---------------------------------------------------------------------------
 
-PalCycle_MZ:				; DATA XREF: ROM:00001E62o
-					; ROM:00001E64o
-		subq.w	#1,($FFFFF634).w
-		bpl.s	locret_1F14
-		move.w	#7,($FFFFF634).w
-		lea	(Pal_MZCyc1).l,a0
-		move.w	($FFFFF632).w,d0
-		addq.w	#6,($FFFFF632).w
-		cmpi.w	#$36,($FFFFF632).w ; "6"
-		bcs.s	loc_1ECC
-		move.w	#0,($FFFFF632).w
-
-loc_1ECC:				; CODE XREF: ROM:00001EC4j
-		lea	($FFFFFB78).w,a1
-		move.l	(a0,d0.w),(a1)+
-		move.w	4(a0,d0.w),(a1)
-		lea	(Pal_MZCyc2).l,a0
-		move.w	($FFFFF652).w,d0
-		addq.w	#2,($FFFFF652).w
-		cmpi.w	#$2A,($FFFFF652).w ; "*"
-		bcs.s	loc_1EF4
-		move.w	#0,($FFFFF652).w
-
-loc_1EF4:				; CODE XREF: ROM:00001EECj
-		move.w	(a0,d0.w),($FFFFFB7E).w
-		lea	(Pal_MZCyc3).l,a0
-		move.w	($FFFFF654).w,d0
-		addq.w	#2,($FFFFF654).w
-		andi.w	#$1E,($FFFFF654).w
-		move.w	(a0,d0.w),($FFFFFB5E).w
-
-locret_1F14:				; CODE XREF: ROM:00001EA8j
+PalCycle_MZ:
 		rts
 ; ---------------------------------------------------------------------------
 
@@ -1739,14 +1712,6 @@ Pal_SBZCyc1:	dc.w	$E,  $6E,  $AE,	 $EE,  $EE,   $E,  $6E,	 $AE, $2CE,  $EE,   $E
 		dc.w   $4E,  $8E, $6EE,	$AEE, $8EE,  $2E,  $6E,	$4EE, $2CE,  $EE,   $E,	 $6E,  $6E, $2CE,  $EE,	  $E; 16
 		dc.w	$E,  $6E,  $AE,	 $EE,  $CE,   $C,  $4E,	 $8E,  $6E,  $AC,   $A,	 $2E,	$C,  $4C,  $8E,	   8; 32
 		dc.w	$A,  $2E,  $6E,	 $AC,  $CE,   $C,  $4E,	 $8E,  $AE,  $EE,   $E,	 $6E,  $6E,  $AE,  $EE,	  $E; 48
-Pal_MZCyc1:	dc.w  $E40, $C00, $C00,	$E60, $C20, $C00, $E40,	$E40, $C00, $C20, $E60,	$C20, $C00, $E40, $C40,	$C00; 0
-					; DATA XREF: ROM:00001EB0o
-		dc.w  $C20, $E40, $C00,	$C00, $E60, $C20, $C00,	$E40, $E20, $C00, $C20;	16
-Pal_MZCyc2:	dc.w   $E0,  $C2,  $A4,	 $86,  $68,  $4A,  $2C,	  $E, $20C, $40A, $608,	$806, $A04, $C02, $E00,	$C20; 0
-					; DATA XREF: ROM:00001ED8o
-		dc.w  $A40, $860, $680,	$4A0, $2C0; 16
-Pal_MZCyc3:	dc.w	$E,   $C,   $A,	   8,	 6,    4,    2,	   4,	 6,    8,   $A,	  $C,	$E,  $2E,  $4E,	 $2E; 0
-					; DATA XREF: ROM:00001EFAo
 Pal_SYZCyc1:	dc.w  $E44, $E82, $EA8,	$EEE, $E44, $E82, $EA8,	$EEE; 0
 					; DATA XREF: ROM:00001F22o
 Pal_SYZCyc2:	dc.w  $E84, $EA6, $EC6,	$EE6, $E84, $EA6, $EC6,	$EE6; 0
@@ -3892,34 +3857,14 @@ locret_40C6:				; CODE XREF: DynamicWaterHeight+1Ej
 ; End of function DynamicWaterHeight
 
 ; ---------------------------------------------------------------------------
-DynWater_Index:	dc.w DynWater_SYZ1-DynWater_Index; 0 ; DATA XREF: ROM:DynWater_Indexo
+DynWater_Index:	dc.w DynWater_LZ1-DynWater_Index; 0 ; DATA XREF: ROM:DynWater_Indexo
 					; ROM:DynWater_Index+2o ...
-		dc.w DynWater_SYZ2-DynWater_Index; 1 ; leftover	from Sonic 1"s LZ2
-		dc.w DynWater_SYZ3-DynWater_Index; 2
-		dc.w DynWater_SYZ4-DynWater_Index; 3
+		dc.w DynWater_LZ2-DynWater_Index; 1 ; leftover	from Sonic 1"s LZ2
+		dc.w DynWater_LZ3-DynWater_Index; 2
+		dc.w DynWater_LZ4-DynWater_Index; 3
 ; ---------------------------------------------------------------------------
 
-DynWater_SYZ1:				; DATA XREF: ROM:DynWater_Indexo
-		btst	#0,($FFFFF606).w
-		beq.s	loc_40E2
-		tst.w	($FFFFF64A).w
-		beq.s	loc_40E2
-		subq.w	#1,($FFFFF64A).w
-
-loc_40E2:				; CODE XREF: ROM:000040D6j
-					; ROM:000040DCj
-		btst	#1,($FFFFF606).w
-		beq.s	locret_40F6
-		cmpi.w	#$700,($FFFFF64A).w
-		beq.s	locret_40F6
-		addq.w	#1,($FFFFF64A).w
-
-locret_40F6:				; CODE XREF: ROM:000040E8j
-					; ROM:000040F0j
-		rts
-; ---------------------------------------------------------------------------
-
-S1DynWater_LZ1:				; leftover from	Sonic 1
+DynWater_LZ1:
 		move.w	(v_screenposx).w,d0
 		move.b	($FFFFF64D).w,d2
 		bne.s	loc_4164
@@ -3978,23 +3923,22 @@ locret_4188:				; CODE XREF: ROM:00004166j
 		rts
 ; ---------------------------------------------------------------------------
 
-DynWater_SYZ2:				; DATA XREF: ROM:DynWater_Indexo
-		move.w	(v_screenposx).w,d0 ; leftover from Sonic 1"s LZ2
+DynWater_LZ2:
+		move.w	(v_screenposx).w,d0
 		move.w	#$328,d1
 		cmpi.w	#$500,d0
-		bcs.s	loc_41A6
+		bcs.s	@setwater
 		move.w	#$3C8,d1
 		cmpi.w	#$B00,d0
-		bcs.s	loc_41A6
+		bcs.s	@setwater
 		move.w	#$428,d1
 
-loc_41A6:				; CODE XREF: ROM:00004196j
-					; ROM:000041A0j
+@setwater:
 		move.w	d1,($FFFFF64A).w
-		rts
+		rts	
 ; ---------------------------------------------------------------------------
 
-DynWater_SYZ3:				; DATA XREF: ROM:DynWater_Indexo
+DynWater_LZ3:
 		move.w	(v_screenposx).w,d0 ; in fact, this is a leftover from Sonic 1"s LZ3
 		move.b	($FFFFF64D).w,d2
 		bne.s	loc_41F2
@@ -4101,7 +4045,7 @@ locret_42AE:				; CODE XREF: ROM:000042A6j
 		rts
 ; ---------------------------------------------------------------------------
 
-DynWater_SYZ4:				; DATA XREF: ROM:DynWater_Indexo
+DynWater_LZ4:				; DATA XREF: ROM:DynWater_Indexo
 		move.w	#$228,d1	; in fact, this	is a leftover from Sonic 1"s SBZ3
 		cmpi.w	#$F00,(v_screenposx).w
 		bcs.s	loc_42C0
@@ -6347,6 +6291,12 @@ loc_711E:				; CODE XREF: LoadTilesFromStart+10j
 		move.w	#$6000,d2
 		tst.b	(v_zone).w
 		beq.w	loc_71A0
+		cmpi.b	#2,(v_zone).w
+		beq.w	Draw_MZ_BG
+		cmpi.w	#$500,(v_zone).w
+		beq.w	Draw_SBZ_BG
+		cmpi.b	#6,(v_zone).w
+		beq.w	loc_71A0
 
 LoadTilesFromStart2:			; CODE XREF: LoadTilesFromStart+2Cp
 		moveq	#$FFFFFFF0,d4
@@ -6417,6 +6367,8 @@ loc_71A4:				; CODE XREF: LoadTilesFromStart+C6j
 byte_71CA:	dc.b   0,  0,  0,  0,  6,  6,  6,  4,  4,  4,  0,  0,  0,  0,  0,  0; 0
 					; DATA XREF: LoadTilesFromStart+AAo
 ; ---------------------------------------------------------------------------
+
+Draw_MZ_BG:
 		moveq	#$FFFFFFF0,d4
 		moveq	#$F,d6
 
@@ -6432,6 +6384,8 @@ loc_71DE:				; CODE XREF: ROM:000071FCj
 		dbf	d6,loc_71DE
 		rts
 ; ---------------------------------------------------------------------------
+
+Draw_SBZ_BG:
 		moveq	#$FFFFFFF0,d4
 		moveq	#$F,d6
 
@@ -7089,11 +7043,7 @@ DynResize_MZ_Index:dc.w DynResize_MZ1-DynResize_MZ_Index; 0
 		dc.w DynResize_MZ3-DynResize_MZ_Index; 2
 ; ---------------------------------------------------------------------------
 
-DynResize_MZ1:				; DATA XREF: ROM:DynResize_MZ_Indexo
-		rts
-; ---------------------------------------------------------------------------
-
-S1DynResize_MZ1:			; leftover from	Sonic 1
+DynResize_MZ1:
 		moveq	#0,d0
 		move.b	($FFFFEEDF).w,d0
 		move.w	off_7776(pc,d0.w),d0
@@ -7198,11 +7148,7 @@ locret_786A:				; CODE XREF: ROM:0000782Aj
 		rts
 ; ---------------------------------------------------------------------------
 
-DynResize_MZ2:				; DATA XREF: ROM:DynResize_MZ_Indexo
-		rts
-; ---------------------------------------------------------------------------
-
-S1DynResize_MZ2:			; leftover from	Sonic 1
+DynResize_MZ2:
 		move.w	#$520,($FFFFEEC6).w
 		cmpi.w	#$1700,(v_screenposx).w
 		bcs.s	locret_7882
@@ -7212,39 +7158,7 @@ locret_7882:				; CODE XREF: ROM:0000787Aj
 		rts
 ; ---------------------------------------------------------------------------
 
-DynResize_MZ3:				; DATA XREF: ROM:DynResize_MZ_Indexo
-		moveq	#0,d0
-		move.b	($FFFFEEDF).w,d0
-		move.w	off_7892(pc,d0.w),d0
-		jmp	off_7892(pc,d0.w)
-; ---------------------------------------------------------------------------
-off_7892:	dc.w DynResize_MZ3_BossCheck-off_7892;	0 ; DATA XREF: ROM:off_7892o
-					; ROM:off_7892+2o
-		dc.w DynResize_MZ3_Null-off_7892; 1
-; ---------------------------------------------------------------------------
-
-DynResize_MZ3_BossCheck:		; DATA XREF: ROM:off_7892o
-		cmpi.w	#$480,(v_screenposx).w
-		blt.s	DynResize_MZ3_Null
-		cmpi.w	#$740,(v_screenposx).w
-		bgt.s	DynResize_MZ3_Null
-		move.w	($FFFFEECE).w,d0
-		cmp.w	(v_screenposy).w,d0
-		bne.s	DynResize_MZ3_Null
-		move.w	#$740,($FFFFEECA).w
-		move.w	#$480,($FFFFEEC8).w
-		addq.b	#2,($FFFFEEDF).w
-		bsr.w	SingleObjectLoad
-		bne.s	DynResize_MZ3_Null
-		move.b	#$55,0(a1) ; "U"
-		move.w	#$680,8(a1)
-		move.w	#$540,$C(a1)
-		moveq	#$11,d0
-		bra.w	LoadPLC
-; ---------------------------------------------------------------------------
-
-DynResize_MZ3_Null:			; CODE XREF: ROM:0000789Cj
-					; ROM:000078A4j ...
+DynResize_MZ3:
 		rts
 ; ---------------------------------------------------------------------------
 
@@ -14202,7 +14116,7 @@ Obj_Index:	dc.l Obj01
                 dc.l Obj48
 		dc.l Obj49
                 dc.l Obj4A
-                dc.l Obj4B
+                dc.l S1Obj4B
                 dc.l Obj4C
 		dc.l Obj4D
                 dc.l Obj4E
@@ -14212,7 +14126,7 @@ Obj_Index:	dc.l Obj01
                 dc.l Obj52
                 dc.l Obj53
                 dc.l Obj54
-		dc.l Obj55
+		dc.l NullObject		; crashes game, need to replace with Bat badnik
                 dc.l Obj56
                 dc.l Obj57
                 dc.l Obj58
@@ -14251,7 +14165,7 @@ Obj_Index:	dc.l Obj01
 		dc.l Obj79
                 dc.l NullObject
                 dc.l NullObject
-                dc.l NullObject
+                dc.l Obj_S1Obj7C
 		dc.l Obj7D
                 dc.l NullObject
                 dc.l NullObject
@@ -36295,8 +36209,8 @@ RingPos_Index:
 		dc.w RingPos_LZ1-RingPos_Index
 		; MZ
 		dc.w RingPos_MZ1-RingPos_Index
-		dc.w RingPos_GHZ2-RingPos_Index
-		dc.w RingPos_GHZ3-RingPos_Index
+		dc.w RingPos_MZ2-RingPos_Index
+		dc.w RingPos_MZ3-RingPos_Index
 		dc.w RingPos_GHZ1-RingPos_Index
 		; SLZ
 		dc.w RingPos_SLZ1-RingPos_Index
@@ -36399,6 +36313,12 @@ RingPos_LZ2:	incbin "ringpos/lz2.bin"
 		even
 RingPos_LZ3:	incbin "ringpos/lz3.bin"
 		even
+RingPos_MZ1:	incbin "ringpos/mz1.bin"
+		even
+RingPos_MZ2:	incbin "ringpos/mz2.bin"
+		even
+RingPos_MZ3:	incbin "ringpos/mz3.bin"
+		even
 RingPos_SYZ1:	incbin	"ringpos\syz.bin"
 		even
 RingPos_SLZ1:	incbin	"ringpos\slz1.bin"
@@ -36425,23 +36345,6 @@ RingPos_SBZ1:	dc.w   $D0,$3340	; 0 ; DATA XREF: ROM:RingPos_Indexo
 		dc.w  $D10,$2420	; 30
 		dc.w $FFFF		; 32
 RingPos_SBZ2:	dc.w $FFFF		; DATA XREF: ROM:RingPos_Indexo
-RingPos_MZ1:	dc.w   $A8,$21B0	; 0 ; DATA XREF: ROM:RingPos_Indexo
-		dc.w  $1A8,$21B0	; 2
-		dc.w  $3A8,$21F0	; 4
-		dc.w  $D28,$2130	; 6
-		dc.w  $F80,  $B0	; 8
-		dc.w  $FD0, $110	; 10
-		dc.w  $F30, $110	; 12
-		dc.w  $F43,  $CD	; 14
-		dc.w  $FBD,  $CD	; 16
-		dc.w  $FBD, $153	; 18
-		dc.w  $F80, $170	; 20
-		dc.w  $F30, $210	; 22
-		dc.w  $F30, $1D0	; 24
-		dc.w  $F43, $253	; 26
-		dc.w  $F80, $270	; 28
-		dc.w $1270,$C1C0	; 30
-		dc.w $FFFF		; 32
 ;
 ; now this is a	bigass chunk of	leftovers
 ;

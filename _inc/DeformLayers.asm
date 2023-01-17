@@ -55,7 +55,7 @@ loc_5B2A:				; CODE XREF: DeformBGLayer+5Cj
 Deform_Index:	dc.w Deform_GHZ-Deform_Index; 0	; DATA XREF: ROM:Deform_Indexo
 					; ROM:Deform_Index+2o ...
 		dc.w Deform_LZ-Deform_Index; 1
-		dc.w Deform_CPZ-Deform_Index; 2
+		dc.w Deform_MZ-Deform_Index; 2
 		dc.w Deform_EHZ-Deform_Index; 3
 		dc.w Deform_HPZ-Deform_Index; 4
 		dc.w Deform_HTZ-Deform_Index; 5
@@ -451,69 +451,96 @@ Deform_LZ_Data1:dc.b   1,  1,  2,  2,  3,  3,  3,  3,  2,  2,  1,  1,  0,  0,  0
 		dc.b   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0; 240
 ; ---------------------------------------------------------------------------
 
-Deform_CPZ:				; DATA XREF: ROM:Deform_Indexo
+Deform_MZ:				; DATA XREF: ROM:Deform_Indexo
 		move.w	($FFFFEEB0).w,d4
 		ext.l	d4
-		asl.l	#5,d4
-		move.w	($FFFFEEB2).w,d5
-		ext.l	d5
-		asl.l	#6,d5
-		bsr.w	ScrollBlock1
-		move.w	(v_bgscreenposy).w,($FFFFF618).w
-		lea	(v_hscrolltablebuffer).w,a1
-		move.w	#$DF,d1	; "п"
-		move.w	(v_screenposx).w,d0
-		neg.w	d0
-		swap	d0
-		move.w	(v_bgscreenposx).w,d0
-		neg.w	d0
-
-loc_6026:				; CODE XREF: ROM:00006028j
-		move.l	d0,(a1)+
-		dbf	d1,loc_6026
-		rts
-; ---------------------------------------------------------------------------
-
-Deform_Unk:				; unknown BG deform
+		asl.l	#6,d4
+		move.l	d4,d1
+		asl.l	#1,d4
+		add.l	d1,d4
+		moveq	#2,d6
+		bsr.w	ScrollBlock4
 		move.w	($FFFFEEB0).w,d4
 		ext.l	d4
-		asl.l	#5,d4
-		move.w	($FFFFEEB2).w,d5
-		ext.l	d5
-		asl.l	#6,d5
-		bsr.w	ScrollBlock1
+		asl.l	#6,d4
+		moveq	#6,d6
+		bsr.w	ScrollBlock6
 		move.w	($FFFFEEB0).w,d4
 		ext.l	d4
 		asl.l	#7,d4
 		moveq	#4,d6
 		bsr.w	ScrollBlock5
+		move.w	#$200,d0
+		move.w	(v_screenposy).w,d1
+		subi.w	#$1C8,d1
+		bcs.s	loc_6590
+		move.w	d1,d2
+		add.w	d1,d1
+		add.w	d2,d1
+		asr.w	#2,d1
+		add.w	d1,d0
+loc_6590:
+		move.w	d0,(v_bg2screenposy).w
+		move.w	d0,(v_bg3screenposy).w
+		bsr.w	ScrollBlock3
 		move.w	(v_bgscreenposy).w,($FFFFF618).w
 		move.b	($FFFFEE52).w,d0
 		or.b	($FFFFEE54).w,d0
-		move.b	d0,($FFFFEE56).w
+		or.b	d0,($FFFFEE56).w
 		clr.b	($FFFFEE52).w
 		clr.b	($FFFFEE54).w
 		lea	(v_bgscroll_buffer).w,a1
-		move.w	(v_bgscreenposx).w,d0
+		move.w	(v_screenposx).w,d2
+		neg.w	d2
+		move.w	d2,d0
+		asr.w	#2,d0
+		sub.w	d2,d0
+		ext.l	d0
+		asl.l	#3,d0
+		divs.w	#5,d0
+		ext.l	d0
+		asl.l	#4,d0
+		asl.l	#8,d0
+		moveq	#0,d3
+		move.w	d2,d3
+		asr.w	#1,d3
+		move.w	#4,d1
+loc_65DE:		
+		move.w	d3,(a1)+
+		swap	d3
+		add.l	d0,d3
+		swap	d3
+		dbf	d1,loc_65DE
+		move.w	(v_bg3screenposx).w,d0
 		neg.w	d0
-		move.w	#$12,d1
-
-loc_6078:				; CODE XREF: ROM:0000607Aj
+		move.w	#1,d1
+loc_65F4:		
 		move.w	d0,(a1)+
-		dbf	d1,loc_6078
+		dbf	d1,loc_65F4
 		move.w	(v_bg2screenposx).w,d0
 		neg.w	d0
-		move.w	#$1C,d1
-
-loc_6088:				; CODE XREF: ROM:0000608Aj
+		move.w	#8,d1
+loc_6604:		
 		move.w	d0,(a1)+
-		dbf	d1,loc_6088
+		dbf	d1,loc_6604
+		move.w	(v_bgscreenposx).w,d0
+		neg.w	d0
+		move.w	#$F,d1
+locS1_6614:		
+		move.w	d0,(a1)+
+		dbf	d1,locS1_6614
 		lea	(v_bgscroll_buffer).w,a2
 		move.w	(v_bgscreenposy).w,d0
-		andi.w	#$3F0,d0
+		subi.w	#$200,d0
+		move.w	d0,d2
+		cmpi.w	#$100,d0
+		bcs.s	loc_6632
+		move.w	#$100,d0
+loc_6632:
+		andi.w	#$1F0,d0
 		lsr.w	#3,d0
-		lea	(a2,d0.w),a2
-		bra.w	loc_6306
+		lea	(a2,d0),a2
+		bra.w	Bg_Scroll_X
 ; ---------------------------------------------------------------------------
 
 Deform_EHZ:				; DATA XREF: ROM:Deform_Indexo
@@ -854,112 +881,110 @@ loc_63F2:				; CODE XREF: ROM:000063F4j
 ; ---------------------------------------------------------------------------
 
 Deform_HTZ:				; DATA XREF: ROM:Deform_Indexo
-		move.w	(v_bgscreenposy).w,($FFFFF618).w
-		lea	(v_hscrolltablebuffer).w,a1
-		move.w	(v_screenposx).w,d0
-		neg.w	d0
-		move.w	d0,d2
-		swap	d0
-		move.w	d2,d0
-		asr.w	#3,d0
-		move.w	#$7F,d1	; ""
-
-loc_642C:				; CODE XREF: ROM:0000642Ej
-		move.l	d0,(a1)+
-		dbf	d1,loc_642C
-		move.l	d0,d4
+Deform_SBZ:
+		tst.b	(v_act).w
+		bne.w	Bg_Scroll_SBz_2
+		move.w	($FFFFEEB0).w,d4
+		ext.l	d4
+		asl.l	#7,d4
+		moveq	#2,d6
+		bsr.w	ScrollBlock4
+		move.w	($FFFFEEB0).w,d4
+		ext.l	d4
+		asl.l	#6,d4
+		moveq	#6,d6
+		bsr.w	ScrollBlock6
+		move.w	($FFFFEEB0).w,d4
+		ext.l	d4
+		asl.l	#5,d4
+		move.l	d4,d1
+		asl.l	#1,d4
+		add.l	d1,d4
+		moveq	#4,d6
+		bsr.w	ScrollBlock5
+		moveq	#0,d4
+		move.w	($FFFFF73C).w,d5
+		ext.l	d5
+		asl.l	#5,d5
+		bsr.w	loc_66EA
+		move.w	(v_bgscreenposy).w,d0
+		move.w	d0,(v_bg2screenposy).w
+		move.w	d0,(v_bg3screenposy).w
+		move.w	d0,($FFFFF618).w
+		move.b	($FFFFEE52).w,d0
+		or.b	($FFFFEE56).w,d0
+		or.b	d0,($FFFFEE54).w
+		clr.b	($FFFFEE52).w
+		clr.b	($FFFFEE56).w
+		lea	($FFFFA800).w,a1
+		move.w	(v_screenposx).w,d2
+		neg.w	d2
+		asr.w	#2,d2
 		move.w	d2,d0
 		asr.w	#1,d0
-		move.w	d2,d1
-		asr.w	#3,d1
-		sub.w	d1,d0
+		sub.w	d2,d0
 		ext.l	d0
-		asl.l	#4,d0
-		divs.w	#$18,d0
+		asl.l	#3,d0
+		divs.w	#4,d0
 		ext.l	d0
 		asl.l	#4,d0
 		asl.l	#8,d0
 		moveq	#0,d3
 		move.w	d2,d3
-		asr.w	#3,d3
+		move.w	#3,d1
+loc_684E:		
+		move.w	d3,(a1)+
 		swap	d3
 		add.l	d0,d3
 		swap	d3
-		move.w	d3,d4
-		move.l	d4,(a1)+
-		move.l	d4,(a1)+
-		move.l	d4,(a1)+
-		swap	d3
-		add.l	d0,d3
-		swap	d3
-		move.w	d3,d4
-		move.l	d4,(a1)+
-		move.l	d4,(a1)+
-		move.l	d4,(a1)+
-		move.l	d4,(a1)+
-		move.l	d4,(a1)+
-		swap	d3
-		add.l	d0,d3
-		swap	d3
-		move.w	d3,d4
-		move.w	#6,d1
-
-loc_647E:				; CODE XREF: ROM:00006480j
-		move.l	d4,(a1)+
-		dbf	d1,loc_647E
-		swap	d3
-		add.l	d0,d3
-		add.l	d0,d3
-		swap	d3
-		move.w	d3,d4
-		move.w	#7,d1
-
-loc_6492:				; CODE XREF: ROM:00006494j
-		move.l	d4,(a1)+
-		dbf	d1,loc_6492
-		swap	d3
-		add.l	d0,d3
-		add.l	d0,d3
-		swap	d3
-		move.w	d3,d4
+		dbf	d1,loc_684E
+		move.w	(v_bg3screenposx).w,d0
+		neg.w	d0
 		move.w	#9,d1
-
-loc_64A6:				; CODE XREF: ROM:000064A8j
-		move.l	d4,(a1)+
-		dbf	d1,loc_64A6
-		swap	d3
-		add.l	d0,d3
-		add.l	d0,d3
-		add.l	d0,d3
-		swap	d3
-		move.w	d3,d4
-		move.w	#$E,d1
-
-loc_64BC:				; CODE XREF: ROM:000064BEj
-		move.l	d4,(a1)+
-		dbf	d1,loc_64BC
-		swap	d3
-		add.l	d0,d3
-		add.l	d0,d3
-		add.l	d0,d3
-		swap	d3
-		move.w	#2,d2
-
-loc_64D0:				; CODE XREF: ROM:000064E8j
-		move.w	d3,d4
-		move.w	#$F,d1
-
-loc_64D6:				; CODE XREF: ROM:000064D8j
-		move.l	d4,(a1)+
-		dbf	d1,loc_64D6
-		swap	d3
-		add.l	d0,d3
-		add.l	d0,d3
-		add.l	d0,d3
-		add.l	d0,d3
-		swap	d3
-		dbf	d2,loc_64D0
+loc_6864:		
+		move.w	d0,(a1)+
+		dbf	d1,loc_6864
+		move.w	(v_bg2screenposx).w,d0
+		neg.w	d0
+		move.w	#6,d1
+loc_6874:		
+		move.w	d0,(a1)+
+		dbf	d1,loc_6874
+		move.w	(v_bgscreenposx).w,d0
+		neg.w	d0
+		move.w	#$A,d1
+loc_6884:		
+		move.w	d0,(a1)+
+		dbf	d1,loc_6884
+		lea	($FFFFA800).w,a2
+		move.w	(v_bgscreenposy).w,d0
+		move.w	d0,d2
+		andi.w	#$1F0,d0
+		lsr.w	#3,d0
+		lea	(a2,d0),a2
+		bra.w	Bg_Scroll_X
+;-------------------------------------------------------------------------------
+Bg_Scroll_SBz_2:;loc_68A2:
+		move.w	($FFFFEEB0).w,d4
+		ext.l	d4		
+		asl.l	#6,d4
+		move.w	($FFFFF73C).w,d5
+		ext.l	d5
+		asl.l	#5,d5
+		bsr.w	ScrollBlock1
+		move.w	(v_bgscreenposy).w,($FFFFF618).w
+		lea	(v_hscrolltablebuffer).w,a1
+		move.w	#223,d1
+		move.w	(v_screenposx).w,d0
+		neg.w	d0
+		swap	d0
+		move.w	(v_bgscreenposx).w,d0
+		neg.w	d0
+loc_68D2:		
+		move.l	d0,(a1)+
+		dbf	d1,loc_68D2
 		rts
+; End of function Deform_SBZ
 
 ; ллллллллллллллл S U B	R O U T	I N E ллллллллллллллллллллллллллллллллллллллл
 
