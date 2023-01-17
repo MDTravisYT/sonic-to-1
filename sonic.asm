@@ -1,3 +1,10 @@
+; Changes from MDTravisYT's original:
+; * Fixed GHZ boss crashing the game (caused by the disassembly using the data location for its
+;   mappingts instead of the actual label)
+; * Restored backgrounds to other zones
+; * Partially restored SLZ scrolling (buggy), ring layouts. and palette cycle
+; * Restored LZ ring layouts, Act 1 water level and palette cycle
+
 ;  =========================================================================
 ; |   Sonic the Hedgehog 2 Early Prototype Disassembly for Sega Mega Drive  |
 ;  =========================================================================
@@ -1511,7 +1518,7 @@ PalCycle_Load:				; CODE XREF: ROM:00003F62p
 		rts
 ; ---------------------------------------------------------------------------
 PalCycle:	dc.w PalCycle_GHZ-PalCycle ; DATA XREF:	ROM:PalCycleo
-		dc.w PalCycle_MZ-PalCycle
+		dc.w PalCycle_LZ-PalCycle
 		dc.w PalCycle_MZ-PalCycle
 		dc.w PalCycle_SLZ-PalCycle
 		dc.w PalCycle_SYZ-PalCycle
@@ -1546,6 +1553,75 @@ loc_1E7C:				; CODE XREF: ROM:00001E74j
 
 locret_1EA2:				; CODE XREF: ROM:00001E80j
 		rts
+; ---------------------------------------------------------------------------
+
+PalCycle_LZ:
+; Waterfalls
+		subq.w	#1,($FFFFF634).w ; decrement timer
+		bpl.s	PCycLZ_Skip1	; if time remains, branch
+
+		move.w	#2,($FFFFF634).w ; reset timer to 2 frames
+		move.w	($FFFFF632).w,d0
+		addq.w	#1,($FFFFF632).w ; increment cycle number
+		andi.w	#3,d0		; if cycle > 3, reset to 0
+		lsl.w	#3,d0
+		lea	(Pal_LZCyc1).l,a0
+		cmpi.b	#3,($FFFFFE11).w	; check if level is SBZ3
+		bne.s	PCycLZ_NotSBZ3
+		lea	(Pal_SBZ3Cyc1).l,a0 ; load SBZ3	palette instead
+
+PCycLZ_NotSBZ3:
+		lea	($FFFFFB56).w,a1
+		move.l	(a0,d0.w),(a1)+
+		move.l	4(a0,d0.w),(a1)
+		lea	($FFFFFA56).w,a1
+		move.l	(a0,d0.w),(a1)+
+		move.l	4(a0,d0.w),(a1)
+
+PCycLZ_Skip1:
+; Conveyor belts
+		move.w	($FFFFFE04).w,d0
+		andi.w	#7,d0
+		move.b	PCycLZ_Seq(pc,d0.w),d0 ; get byte from palette sequence
+		beq.s	PCycLZ_Skip2	; if byte is 0, branch
+		moveq	#1,d1
+		tst.b	($FFFFF7C0).w	; have conveyor belts been reversed?
+		beq.s	PCycLZ_NoRev	; if not, branch
+		neg.w	d1
+
+PCycLZ_NoRev:
+		move.w	($FFFFF650).w,d0
+		andi.w	#3,d0
+		add.w	d1,d0
+		cmpi.w	#3,d0
+		bcs.s	loc_1A0A
+		move.w	d0,d1
+		moveq	#0,d0
+		tst.w	d1
+		bpl.s	loc_1A0A
+		moveq	#2,d0
+
+loc_1A0A:
+		move.w	d0,($FFFFF650).w
+		add.w	d0,d0
+		move.w	d0,d1
+		add.w	d0,d0
+		add.w	d1,d0
+		lea	(Pal_LZCyc2).l,a0
+		lea	($FFFFFB76).w,a1
+		move.l	(a0,d0.w),(a1)+
+		move.w	4(a0,d0.w),(a1)
+		lea	(Pal_LZCyc3).l,a0
+		lea	($FFFFFA76).w,a1
+		move.l	(a0,d0.w),(a1)+
+		move.w	4(a0,d0.w),(a1)
+
+PCycLZ_Skip2:
+		rts	
+; End of function PCycle_LZ
+
+; ===========================================================================
+PCycLZ_Seq:	dc.b 1,	0, 0, 1, 0, 0, 1, 0
 ; ---------------------------------------------------------------------------
 
 PalCycle_MZ:				; DATA XREF: ROM:00001E62o
@@ -1607,18 +1683,27 @@ locret_1F56:				; CODE XREF: ROM:00001F1Aj
 ; ---------------------------------------------------------------------------
 
 PalCycle_SLZ:				; DATA XREF: ROM:00001E66o
-		lea	(Pal_SLZCyc).l,a0
 		subq.w	#1,($FFFFF634).w
-		bpl.s	locret_1F84
+		bpl.s	locret_1A80
 		move.w	#7,($FFFFF634).w
 		move.w	($FFFFF632).w,d0
-		addq.w	#1,($FFFFF632).w
-		andi.w	#3,d0
-		lsl.w	#3,d0
-		move.l	(a0,d0.w),($FFFFFB26).w
-		move.l	4(a0,d0.w),($FFFFFB3C).w
+		addq.w	#1,d0
+		cmpi.w	#6,d0
+		bcs.s	loc_1A60
+		moveq	#0,d0
 
-locret_1F84:				; CODE XREF: ROM:00001F62j
+loc_1A60:
+		move.w	d0,($FFFFF632).w
+		move.w	d0,d1
+		add.w	d1,d1
+		add.w	d1,d0
+		add.w	d0,d0
+		lea	(Pal_SLZCyc).l,a0
+		lea	($FFFFFB56).w,a1
+		move.w	(a0,d0.w),(a1)
+		move.l	2(a0,d0.w),4(a1)
+
+locret_1A80:
 		rts
 ; ---------------------------------------------------------------------------
 
@@ -1643,8 +1728,11 @@ Pal_S1TitleCyc: dc.w  $C42, $E86, $ECA,	$EEC, $EEC, $C42, $E86,	$ECA, $ECA, $EEC
 					; DATA XREF: ROM:PalCycle_S1TitleScreeno
 Pal_GHZCyc:	dc.w  $A86, $E86, $EA8,	$ECA, $ECA, $A86, $E86,	$EA8, $EA8, $ECA, $A86,	$E86, $E86, $EA8, $ECA,	$A86; 0
 					; DATA XREF: ROM:PalCycle_GHZo
-Pal_SLZCyc:	dc.b  $A,$86, $E,$86, $E,$A8, $E,$CA, $E,$CA, $A,$86, $E,$86, $E,$A8; 0
-					; DATA XREF: ROM:PalCycle_SLZo
+Pal_LZCyc1:	incbin "palette/Cycle - LZ Waterfall.bin"
+Pal_LZCyc2:	incbin "palette/Cycle - LZ Conveyor Belt.bin"
+Pal_LZCyc3:	incbin "palette/Cycle - LZ Conveyor Belt Underwater.bin"
+Pal_SBZ3Cyc1:	incbin "palette/Cycle - SBZ3 Waterfall.bin"
+Pal_SLZCyc:	incbin	"palette/Cycle - SLZ.bin"
 		dc.b  $E,$A8, $E,$CA, $A,$86, $E,$86, $E,$86, $E,$A8, $E,$CA, $A,$86; 16
 Pal_SBZCyc1:	dc.w	$E,  $6E,  $AE,	 $EE,  $EE,   $E,  $6E,	 $AE, $2CE,  $EE,   $E,	 $6E,  $6E, $4EE, $8EE,	 $2E; 0
 					; DATA XREF: ROM:PalCycle_SBZo
@@ -2248,7 +2336,7 @@ PalPointers:	dc.l Pal_SegaBG		; DATA XREF: PalLoad1o	PalLoad2o ...
 		dc.l Pal_SpecialStage
 		dc.w $FB00
 		dc.w $1F
-		dc.l Pal_SYZWater
+		dc.l Pal_LZWater
 		dc.w $FB00
 		dc.w $1F
 		dc.l Pal_LZ
@@ -2287,12 +2375,9 @@ Pal_SonicTails:	incbin "palette\Sonic.bin"
                 even
 Pal_GHZ:	incbin "palette\Green Hill Zone.bin"
                 even
-Pal_SYZWater:	dc.w	 0, $402, $A20,	$B40, $B60, $B80, $ECA,	$CA8, $A84, $860, $AA8,	$884, $428, $424, $8AA,	$88A; 0
-					; DATA XREF: ROM:0000255Ao
-		dc.w	 0, $202, $242,	$464, $686, $442, $EAA,	$D88, $D66, $A22, $666,	$46A, $6CA, $484, $EEE,	  $E; 16
-		dc.w  $400, $A20, $C22,	$E26, $E28, $A22, $A40,	$C22, $A60, $E28, $E4A,	$E6A, $CAA, $E24, $E26,	$E8A; 32
-		dc.w  $400, $440, $660,	$880, $8A0, $8C0, $AE4,	$EEA, $A60, $E84, $EA6,	$EC6, $EE6, $E6A, $E8A,	$CAA; 48
-Pal_MZ:	incbin "palette\Marble Zone.bin"
+Pal_LZWater:	incbin "palette/Labyrinth Zone Underwater.bin"
+		even
+Pal_MZ:		incbin "palette\Marble Zone.bin"
                 even
 Pal_SLZ:	incbin "palette\Star Light Zone.bin"
 		dc.w  $C20, $800,    0,	$E86, $ECA, $20A, $EEE,	$E6E, $C4C, $A2A, $EEC,	 $80, $64E, $42C,  $A0,	 $E8; 32
@@ -3115,7 +3200,7 @@ LevelSelect_TextLoad:			; CODE XREF: ROM:000034DEp
 		lea	(LevelSelect_Text).l,a1
 		lea	(vdp_data_port).l,a6
 		move.l	#$62100003,d4
-		move.w	#$8680,d3
+		move.w	#$E680,d3
 		moveq	#$14,d1
 
 loc_3794:				; CODE XREF: LevelSelect_TextLoad+26j
@@ -3139,7 +3224,7 @@ loc_3794:				; CODE XREF: LevelSelect_TextLoad+26j
 		move.w	#$C680,d3
 		move.l	d4,4(a6)
 		bsr.w	sub_381C
-		move.w	#$8680,d3
+		move.w	#$E680,d3
 		cmpi.w	#$14,($FFFFFF82).w
 		bne.s	loc_37E6
 		move.w	#$C680,d3
@@ -3780,7 +3865,7 @@ locret_4094:				; CODE XREF: WaterEffects+4j
 ; End of function WaterEffects
 
 ; ---------------------------------------------------------------------------
-WaterHeight:	dc.w  $600, $328, $900,	$228; 0	; DATA XREF: ROM:00003C74o
+WaterHeight:	dc.w  $B8, $328, $900,	$228; 0	; DATA XREF: ROM:00003C74o
 
 ; =============== S U B	R O U T	I N E =======================================
 
@@ -32369,7 +32454,7 @@ loc_1912E:				; CODE XREF: ROM:00019190j
 		move.w	$C(a0),$C(a1)
 		move.b	#$48,0(a1) ; "H"
 		move.b	#6,$24(a1)
-		move.l	#$852E,4(a1)
+		move.l	#Map_Obj15,4(a1)
 		move.w	#$380,2(a1)
 		bsr.w	j_ModifyA1SpriteAttr_2P_1
 		move.b	#1,$1A(a1)
@@ -32389,7 +32474,7 @@ loc_1916A:				; CODE XREF: ROM:0001912Cj
 
 loc_19194:				; CODE XREF: ROM:00019134j
 		move.b	#8,$24(a1)
-		move.l	#$85CA,4(a1)
+		move.l	#Map_Obj48,4(a1)
 		move.w	#$43AA,2(a1)
 		bsr.w	j_ModifyA1SpriteAttr_2P_1
 		move.b	#1,$1A(a1)
@@ -35960,9 +36045,9 @@ LevelLayout_Index:
 		dc.w Level_SYZ3-LevelLayout_Index,Level_SYZBg-LevelLayout_Index,Level_Null-LevelLayout_Index; 54
 		dc.w Level_Null-LevelLayout_Index,Level_Null-LevelLayout_Index, Level_Null-LevelLayout_Index; 9
                 ; SBZ
-		dc.w Level_SBZ1-LevelLayout_Index,Level_SBZBg-LevelLayout_Index,Level_Null-LevelLayout_Index; 60
-		dc.w Level_SBZ2-LevelLayout_Index,Level_SBZBg-LevelLayout_Index,Level_Null-LevelLayout_Index; 63
-		dc.w Level_SBZ2-LevelLayout_Index,Level_SBZBg-LevelLayout_Index,Level_Null-LevelLayout_Index; 66
+		dc.w Level_SBZ1-LevelLayout_Index,Level_SBZ1Bg-LevelLayout_Index,Level_Null-LevelLayout_Index; 60
+		dc.w Level_SBZ2-LevelLayout_Index,Level_SBZ2Bg-LevelLayout_Index,Level_Null-LevelLayout_Index; 63
+		dc.w Level_SBZ2-LevelLayout_Index,Level_SBZ2Bg-LevelLayout_Index,Level_Null-LevelLayout_Index; 66
 		dc.w Level_Null-LevelLayout_Index,Level_Null-LevelLayout_Index, Level_Null-LevelLayout_Index; 9
                 ; Ending
 		dc.w Level_Null-LevelLayout_Index,Level_Null-LevelLayout_Index, Level_Null-LevelLayout_Index; 9
@@ -35985,7 +36070,7 @@ Level_LZ3:	incbin "levels\lz3.bin"
                 even
 Level_LZ4:	incbin "levels\lz4.bin"
                 even
-Level_LZBg:	;incbin "levels\LZbg.bin"
+Level_LZBg:	incbin "levels\LZbg.bin"
                 even
 Level_MZ1:	incbin "levels\MZ1.bin"
                 even
@@ -35993,7 +36078,7 @@ Level_MZ2:	incbin "levels\MZ2.bin"
                 even
 Level_MZ3:	incbin "levels\MZ3.bin"
                 even
-Level_MZBg:	;incbin "levels\MZbg.bin"
+Level_MZBg:	incbin "levels\MZbg.bin"
                 even
 Level_SLZ1:	incbin "levels\SLZ1.bin"
                 even
@@ -36001,7 +36086,7 @@ Level_SLZ2:	incbin "levels\SLZ2.bin"
                 even
 Level_SLZ3:	incbin "levels\SLZ3.bin"
                 even
-Level_SLZBg:	;incbin "levels\SLZbg.bin"
+Level_SLZBg:	incbin "levels\SLZbg.bin"
                 even
 Level_SYZ1:	incbin "levels\SYZ1.bin"
                 even
@@ -36009,13 +36094,15 @@ Level_SYZ2:	incbin "levels\SYZ2.bin"
                 even
 Level_SYZ3:	incbin "levels\SYZ3.bin"
                 even
-Level_SYZBg:	;incbin "levels\SYZbg.bin"
+Level_SYZBg:	incbin "levels\SYZbg.bin"
                 even
 Level_SBZ1:	incbin "levels\SBZ1.bin"
                 even
 Level_SBZ2:	incbin "levels\SBZ2.bin"
                 even
-Level_SBZBg:	;incbin "levels\SBZbg.bin"
+Level_SBZ1Bg:	incbin "levels\SBZ1bg.bin"
+                even
+Level_SBZ2Bg:	incbin "levels\SBZ2bg.bin"
                 even
 
 Level_Null:	dc.l 0
@@ -36214,8 +36301,8 @@ RingPos_Index:
 		; SLZ
 		dc.w RingPos_SLZ1-RingPos_Index
 		dc.w RingPos_SLZ2-RingPos_Index
-		dc.w RingPos_SBZ1-RingPos_Index
-		dc.w RingPos_SBZ2-RingPos_Index
+		dc.w RingPos_SLZ3-RingPos_Index
+		dc.w RingPos_GHZ1-RingPos_Index
 		; SYZ
 		dc.w RingPos_SYZ1-RingPos_Index
 		dc.w RingPos_GHZ2-RingPos_Index
@@ -36306,320 +36393,20 @@ RingPos_GHZ3:	dc.w  $350, $372	; 0 ; DATA XREF: ROM:RingPos_Indexo
 		dc.w $234C, $3A6	; 144
 		dc.w $2363, $385	; 146
 		dc.w $FFFF		; 148
-RingPos_LZ1:	dc.w   $98,$2248	; 0 ; DATA XREF: ROM:RingPos_Indexo
-		dc.w  $250, $238	; 2
-		dc.w  $268,$2228	; 4
-		dc.w  $2B0, $238	; 6
-		dc.w  $350, $238	; 8
-		dc.w  $368,$2228	; 10
-		dc.w  $3B0, $238	; 12
-		dc.w  $450, $238	; 14
-		dc.w  $468,$2228	; 16
-		dc.w  $4B0, $238	; 18
-		dc.w  $798,$1150	; 20
-		dc.w  $870,$81E8	; 22
-		dc.w  $888,$8200	; 24
-		dc.w  $8A0,$8218	; 26
-		dc.w  $8B8,$8230	; 28
-		dc.w  $8D7,$8248	; 30
-		dc.w  $958,$1240	; 32
-		dc.w  $998,$1258	; 34
-		dc.w  $C14,$13F0	; 36
-		dc.w  $C94,$13F0	; 38
-		dc.w  $D14,$13F0	; 40
-		dc.w  $D94,$13F0	; 42
-		dc.w  $E70,$82E8	; 44
-		dc.w  $E88,$8300	; 46
-		dc.w  $EA0,$8318	; 48
-		dc.w  $EB8,$8330	; 50
-		dc.w  $ED8,$8348	; 52
-		dc.w $1008,$3550	; 54
-		dc.w $1294,$1268	; 56
-		dc.w $12D4,$125C	; 58
-		dc.w $1310,$1250	; 60
-		dc.w $1468,$2258	; 62
-		dc.w $14D4,$1220	; 64
-		dc.w $1554,$1260	; 66
-		dc.w $16A8,$2298	; 68
-		dc.w $FFFF		; 70
-RingPos_LZ2:	dc.w  $154,$1258	; 0 ; DATA XREF: ROM:RingPos_Indexo
-		dc.w  $388,$25D4	; 2
-		dc.w  $488,$25D4	; 4
-		dc.w  $550,$430C	; 6
-		dc.w  $618,$2590	; 8
-		dc.w  $634,$1354	; 10
-		dc.w  $7C8,$24F4	; 12
-		dc.w  $A14,$126C	; 14
-		dc.w  $A68,$2358	; 16
-		dc.w  $AD4,$126C	; 18
-		dc.w  $B54,$11FC	; 20
-		dc.w  $BD4,$11AC	; 22
-		dc.w  $C08,$2414	; 24
-		dc.w  $C54,$116C	; 26
-		dc.w  $D08,$2414	; 28
-		dc.w $1108,$3490	; 30
-		dc.w $1110, $2B4	; 32
-		dc.w $1130, $2BB	; 34
-		dc.w $114D, $2C9	; 36
-		dc.w $1162, $2E0	; 38
-		dc.w $1178,$25A0	; 40
-		dc.w $1179, $2F8	; 42
-		dc.w $11F8,$25A0	; 44
-		dc.w $FFFF		; 46
-RingPos_LZ3:	dc.w  $154,$1130	; 0 ; DATA XREF: ROM:RingPos_Indexo
-		dc.w  $338,$36A8	; 2
-		dc.w  $3F0,$46A8	; 4
-		dc.w  $4C8,$46A8	; 6
-		dc.w  $530, $1B8	; 8
-		dc.w  $554, $1CE	; 10
-		dc.w  $570, $1EC	; 12
-		dc.w  $58C, $208	; 14
-		dc.w  $5AB, $225	; 16
-		dc.w  $5CA, $243	; 18
-		dc.w  $5F4, $253	; 20
-		dc.w  $618,$2454	; 22
-		dc.w  $670, $414	; 24
-		dc.w  $690, $3D4	; 26
-		dc.w  $6B0, $3B4	; 28
-		dc.w  $6D4,$1394	; 30
-		dc.w  $754,$15D4	; 32
-		dc.w  $7E8,$25D4	; 34
-		dc.w  $F94,$16F2	; 36
-		dc.w  $FD4,$16A0	; 38
-		dc.w $1008,$2514	; 40
-		dc.w $1014,$16F2	; 42
-		dc.w $1094,$16F2	; 44
-		dc.w $10D4,$16A0	; 46
-		dc.w $1108,$2514	; 48
-		dc.w $1208,$2514	; 50
-		dc.w $13E8,$22A8	; 52
-		dc.w $1450,$4710	; 54
-		dc.w $1468,$2670	; 56
-		dc.w $14B8,$24F4	; 58
-		dc.w $1518,$2752	; 60
-		dc.w $FFFF		; 62
+RingPos_LZ1:	incbin "ringpos/lz1.bin"
+		even
+RingPos_LZ2:	incbin "ringpos/lz2.bin"
+		even
+RingPos_LZ3:	incbin "ringpos/lz3.bin"
+		even
 RingPos_SYZ1:	incbin	"ringpos\syz.bin"
-				even
-RingPos_SLZ1:	dc.w  $4C8, $286	; 0 ; DATA XREF: ROM:RingPos_Indexo
-		dc.w  $4B1, $2A2	; 2
-		dc.w  $48F, $2B3	; 4
-		dc.w  $1E8,$2230	; 6
-		dc.w  $3E8,$21E0	; 8
-		dc.w  $570,$4238	; 10
-		dc.w  $828,$2368	; 12
-		dc.w  $928,$2348	; 14
-		dc.w  $A25, $243	; 16
-		dc.w  $A3C, $261	; 18
-		dc.w  $A5D, $272	; 20
-		dc.w  $A84, $275	; 22
-		dc.w  $B94,$1220	; 24
-		dc.w  $C14,$1200	; 26
-		dc.w  $C94,$11E8	; 28
-		dc.w  $D14,$11C0	; 30
-		dc.w  $D5C,$215C	; 32
-		dc.w  $EA8,$2340	; 34
-		dc.w $1088, $3B0	; 36
-		dc.w $10AC, $3A4	; 38
-		dc.w $10C4, $388	; 40
-		dc.w $1288,$2328	; 42
-		dc.w $1430,$2378	; 44
-		dc.w $15C0,$C150	; 46
-		dc.w $17D0, $2EC	; 48
-		dc.w $17D0, $30C	; 50
-		dc.w $17D0, $32C	; 52
-		dc.w $17D0, $34C	; 54
-		dc.w $1930, $250	; 56
-		dc.w $1930, $278	; 58
-		dc.w $1936, $2A0	; 60
-		dc.w $1950, $2C0	; 62
-		dc.w $1978, $2D0	; 64
-		dc.w $1A80, $220	; 66
-		dc.w $1AD0, $268	; 68
-		dc.w $1A30, $268	; 70
-		dc.w $1AB6, $233	; 72
-		dc.w $1A4A, $233	; 74
-		dc.w $1C00, $2A0	; 76
-		dc.w $1C50, $2E8	; 78
-		dc.w $1BB0, $2E8	; 80
-		dc.w $1C36, $2B3	; 82
-		dc.w $1BCA, $2B3	; 84
-		dc.w $1DB4,$12C0	; 86
-		dc.w $1E20, $2C0	; 88
-		dc.w $1E4C,$12C0	; 90
-		dc.w $1EA0, $2C0	; 92
-		dc.w $1ECC,$12C0	; 94
-		dc.w $1F1C,$12C0	; 96
-		dc.w $1F60,$12C0	; 98
-		dc.w $1E68,$2370	; 100
-		dc.w $2850, $2C2	; 102
-		dc.w $2850, $2ED	; 104
-		dc.w $284C, $319	; 106
-		dc.w $2834, $33E	; 108
-		dc.w $280D, $351	; 110
-		dc.w $2798,$2248	; 112
-		dc.w $2548,$22E0	; 114
-		dc.w $2150,$9358	; 116
-		dc.w $21C0,$9358	; 118
-		dc.w $1080, $1A0	; 120
-		dc.w $10D0, $1E8	; 122
-		dc.w $1030, $1E8	; 124
-		dc.w $10B6, $1B3	; 126
-		dc.w $104A, $1B3	; 128
-		dc.w $2010,$4368	; 130
-		dc.w $2280, $1A0	; 132
-		dc.w $22D0, $1E8	; 134
-		dc.w $2230, $1E8	; 136
-		dc.w $22B6, $1B3	; 138
-		dc.w $224A, $1B3	; 140
-		dc.w $1E30, $1C8	; 142
-		dc.w $1E30, $1E8	; 144
-		dc.w $1E30, $208	; 146
-		dc.w  $6A0, $2C0	; 148
-		dc.w  $6CC,$12C0	; 150
-		dc.w  $71C,$12C0	; 152
-		dc.w  $760, $2C0	; 154
-		dc.w $1200, $2A0	; 156
-		dc.w $1230, $297	; 158
-		dc.w $1260, $280	; 160
-		dc.w $1290, $269	; 162
-		dc.w $12C0, $260	; 164
-		dc.w $12F0, $269	; 166
-		dc.w $1320, $280	; 168
-		dc.w $1350, $297	; 170
-		dc.w $1380, $2A0	; 172
-		dc.w $2400, $2A0	; 174
-		dc.w $2430, $297	; 176
-		dc.w $2460, $280	; 178
-		dc.w $2490, $269	; 180
-		dc.w $24C0, $260	; 182
-		dc.w $24F0, $269	; 184
-		dc.w $2520, $280	; 186
-		dc.w $2550, $297	; 188
-		dc.w $2580, $2A0	; 190
-		dc.w $25B0, $297	; 192
-		dc.w $25E0, $280	; 194
-		dc.w $2610, $269	; 196
-		dc.w $2640, $260	; 198
-		dc.w $2670, $269	; 200
-		dc.w $26A0, $280	; 202
-		dc.w $26D0, $297	; 204
-		dc.w $2700, $2A0	; 206
-		dc.w $2610,$41B0	; 208
-		dc.w $261C,$3198	; 210
-		dc.w $FFFF		; 212
-RingPos_SLZ2:	dc.w  $120,$21AD	; 0 ; DATA XREF: ROM:RingPos_Indexo
-		dc.w  $198,$3288	; 2
-		dc.w  $2A8,$2258	; 4
-		dc.w  $468,$22C8	; 6
-		dc.w  $6B0,$31B0	; 8
-		dc.w  $708,$2320	; 10
-		dc.w  $950, $2C8	; 12
-		dc.w  $950, $2F0	; 14
-		dc.w  $94C, $318	; 16
-		dc.w  $937, $33B	; 18
-		dc.w  $913, $34F	; 20
-		dc.w  $83C,$9240	; 22
-		dc.w  $B08,$22B8	; 24
-		dc.w  $C68, $228	; 26
-		dc.w  $C68, $250	; 28
-		dc.w  $C68, $278	; 30
-		dc.w  $C68, $200	; 32
-		dc.w  $F08, $270	; 34
-		dc.w  $CA8,$2330	; 36
-		dc.w  $EE8, $260	; 38
-		dc.w  $EC8, $250	; 40
-		dc.w  $F28, $280	; 42
-		dc.w  $F48, $290	; 44
-		dc.w $1554,$1218	; 46
-		dc.w $1100, $320	; 48
-		dc.w $1150, $368	; 50
-		dc.w $10B0, $368	; 52
-		dc.w $10CA, $333	; 54
-		dc.w $1136, $333	; 56
-		dc.w $1280, $3A0	; 58
-		dc.w $12D0, $3E8	; 60
-		dc.w $1230, $3E8	; 62
-		dc.w $124A, $3B3	; 64
-		dc.w $12B6, $3B3	; 66
-		dc.w $1880, $120	; 68
-		dc.w $18D0, $168	; 70
-		dc.w $1830, $168	; 72
-		dc.w $184A, $133	; 74
-		dc.w $18B6, $133	; 76
-		dc.w $1A00, $1A0	; 78
-		dc.w $1A50, $1E8	; 80
-		dc.w $19B0, $1E8	; 82
-		dc.w $19CA, $1B3	; 84
-		dc.w $1A36, $1B3	; 86
-		dc.w $1620, $2C0	; 88
-		dc.w $164C,$12C0	; 90
-		dc.w $169C,$12C0	; 92
-		dc.w $16E0, $2C0	; 94
-		dc.w $1A60,$C308	; 96
-		dc.w $1BB0,$3348	; 98
-		dc.w $1B80, $2A0	; 100
-		dc.w $1BB0, $297	; 102
-		dc.w $1BE0, $280	; 104
-		dc.w $1C10, $269	; 106
-		dc.w $1C40, $260	; 108
-		dc.w $1C70, $269	; 110
-		dc.w $1CA0, $290	; 112
-		dc.w $1CD0, $297	; 114
-		dc.w $1D00, $2A0	; 116
-		dc.w $1D30, $297	; 118
-		dc.w $1D60, $280	; 120
-		dc.w $1D90, $269	; 122
-		dc.w $1DC0, $260	; 124
-		dc.w $1DF0, $269	; 126
-		dc.w $1E20, $280	; 128
-		dc.w $1E50, $297	; 130
-		dc.w $1E80, $2A0	; 132
-		dc.w $1EB0, $297	; 134
-		dc.w $1EE0, $280	; 136
-		dc.w $1F10, $269	; 138
-		dc.w $1F40, $260	; 140
-		dc.w $1F70, $269	; 142
-		dc.w $1FA0, $280	; 144
-		dc.w $1FD0, $297	; 146
-		dc.w $2000, $2A0	; 148
-		dc.w $1D94,$14A0	; 150
-		dc.w $1E14,$14A0	; 152
-		dc.w $1E94,$14A0	; 154
-		dc.w $20A0, $440	; 156
-		dc.w $20CC,$1440	; 158
-		dc.w $2120, $440	; 160
-		dc.w $214C,$1440	; 162
-		dc.w $219C,$1440	; 164
-		dc.w $21E0, $440	; 166
-		dc.w $18A0, $440	; 168
-		dc.w $18CC,$1440	; 170
-		dc.w $191C,$1440	; 172
-		dc.w $2380, $3A0	; 174
-		dc.w $23B0, $397	; 176
-		dc.w $23E0, $380	; 178
-		dc.w $2410, $369	; 180
-		dc.w $2440, $360	; 182
-		dc.w $2470, $369	; 184
-		dc.w $24A0, $380	; 186
-		dc.w $24D0, $397	; 188
-		dc.w $2500, $3A0	; 190
-		dc.w $2200, $2A0	; 192
-		dc.w $2250, $2E8	; 194
-		dc.w $21B0, $2E8	; 196
-		dc.w $21CA, $2B3	; 198
-		dc.w $2236, $2B3	; 200
-		dc.w $2288,$2458	; 202
-		dc.w $1F60,$2988	; 204
-		dc.w $1788,$23A0	; 206
-		dc.w $166C, $3C8	; 208
-		dc.w $166C, $3F0	; 210
-		dc.w $166C, $418	; 212
-		dc.w $166C, $440	; 214
-		dc.w $166C, $468	; 216
-		dc.w  $F50, $3D0	; 218
-		dc.w  $F30, $3C0	; 220
-		dc.w  $F70, $3E0	; 222
-		dc.w $FFFF		; 224
+		even
+RingPos_SLZ1:	incbin	"ringpos\slz1.bin"
+		even
+RingPos_SLZ2:	incbin	"ringpos\slz2.bin"
+		even
+RingPos_SLZ3:	incbin	"ringpos\slz3.bin"
+		even
 RingPos_SBZ1:	dc.w   $D0,$3340	; 0 ; DATA XREF: ROM:RingPos_Indexo
 		dc.w  $1E0, $3F0	; 2
 		dc.w  $200, $400	; 4
