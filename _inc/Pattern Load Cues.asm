@@ -141,7 +141,16 @@ PLC_SBZ2:	dc.w ((PLC_SYZ-PLC_S1TitleCard-2)/6)-1
 PLC_S1TitleCard:dc.w 0			
 		dc.l Nem_S1TitleCard
 		dc.w $B000
-PLC_Boss:	
+PLC_Boss:	dc.w ((PLC_Signpost-PLC_Boss-2)/6)-1
+		dc.l Nem_BossShip
+		dc.w $8000
+		dc.l Nem_Weapons
+		dc.w $8D80
+		dc.l Nem_Prison
+		dc.w $93A0
+		dc.l Nem_BossShipBoost
+		dc.w $A540
+
 PLC_Signpost:	dc.w 2			
 		dc.l Nem_Signpost
 		dc.w $D000
