@@ -76,8 +76,18 @@ PLC_GHZ2:	dc.w ((PLC_LZ-PLC_GHZ2-2)/6)-1
 PLC_LZ:	dc.w ((PLC_LZ2-PLC_LZ-2)/6)-1			
 		dc.l Nem_LZ
 		dc.w 0
+		dc.l Nem_LzBlock1
+		dc.w $3C00
+		dc.l Nem_LzBlock2
+		dc.w $3E00
+		dc.l Nem_Splash
+		dc.w $4B20
 		dc.l Nem_SYZ_WaterSurface
 		dc.w $8000
+		dc.l Nem_Bubbles
+		dc.w $6900
+		dc.l Nem_LzBlock3
+		dc.w $7780
 		dc.l S1Nem_LZBurrobot
 		dc.w $94C0
 

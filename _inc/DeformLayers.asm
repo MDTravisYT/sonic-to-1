@@ -903,7 +903,7 @@ Deform_SBZ:
 		moveq	#4,d6
 		bsr.w	ScrollBlock5
 		moveq	#0,d4
-		move.w	($FFFFF73C).w,d5
+		move.w	($FFFFEEB2).w,d5
 		ext.l	d5
 		asl.l	#5,d5
 		bsr.w	loc_66EA

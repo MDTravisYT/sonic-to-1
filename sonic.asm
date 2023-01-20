@@ -19,6 +19,11 @@
 ; * Fixed GHZ debug list with incorrect graphics
 ; * Restored invincibility stars and fixed infinite invincibilty "bug"
 
+; * Fixed SBZ backgrounds
+; * Restored LZ blocks and waterfalls, as well as bubble, countdown and splash graphics
+; * Restored LZ Act 2 and SBZ Act 3 object layouts
+; * Restored correct palettes for SBZ2 and SBZ3
+
 ;  =========================================================================
 ; |   Sonic the Hedgehog 2 Early Prototype Disassembly for Sega Mega Drive  |
 ;  =========================================================================
@@ -2314,13 +2319,13 @@ PalPointers:	dc.l Pal_SegaBG		; DATA XREF: PalLoad1o	PalLoad2o ...
 		dc.l Pal_LZWater
 		dc.w $FB00
 		dc.w $1F
-		dc.l Pal_LZ
+		dc.l Pal_SBZ3
 		dc.w $FB20
 		dc.w $17
 		dc.l Pal_LZ4
 		dc.w $FB00
 		dc.w $1F
-		dc.l Pal_SBZ
+		dc.l Pal_SBZ2
 		dc.w $FB20
 		dc.w $17
 		dc.l Pal_LZSonicWater
@@ -2345,20 +2350,16 @@ Pal_SegaBG:	dc.w  $EEE, $EEE, $EEE,	$EEE, $EEE, $EEE, $EEE,	$EEE, $EEE, $EEE, $E
 		dc.w  $EEE, $EEE, $EEE,	$EEE, $EEE, $EEE, $EEE,	$EEE, $EEE, $EEE, $EEE,	$EEE, $EEE, $EEE, $EEE,	$EEE; 48
 Pal_Title:	incbin "palette\Title Screen.bin"
 Pal_LevelSelect:incbin "palette\Level Select.bin"
-                even
 Pal_SonicTails:	incbin "palette\Sonic.bin"
-                even
 Pal_GHZ:	incbin "palette\Green Hill Zone.bin"
-                even
 Pal_LZWater:	incbin "palette/Labyrinth Zone Underwater.bin"
-		even
 Pal_MZ:		incbin "palette\Marble Zone.bin"
-                even
 Pal_SLZ:	incbin "palette\Star Light Zone.bin"
 		dc.w  $C20, $800,    0,	$E86, $ECA, $20A, $EEE,	$E6E, $C4C, $A2A, $EEC,	 $80, $64E, $42C,  $A0,	 $E8; 32
 Pal_SYZ:	incbin "palette\Spring Yard Zone.bin"
 Pal_SBZ:	incbin "palette\SBZ Act 1.bin"
-                even
+Pal_SBZ2:	incbin "palette\SBZ Act 2.bin"
+Pal_SBZ3:	incbin "palette\SBZ Act 3.bin"
 Pal_SpecialStage:dc.w  $400,	0, $822, $A44, $C66, $E88, $EEE, $AAA, $888, $444, $8AE, $46A,	 $E,	8,    4,  $EE; 0
 					; DATA XREF: ROM:00002552o
 		dc.w  $400,    0,  $24,	 $68,  $AC, $2EE, $EEE,	$AAA, $888, $444, $AE4,	$6A2,  $EE,  $88,  $44,	   0; 16
@@ -6453,20 +6454,6 @@ MainLevelLoadBlock:			; CODE XREF: ROM:00003D3Ep
 		move.l	a2,-(sp)
 		addq.l	#4,a2
 		movea.l	(a2)+,a0
-		tst.b	(v_zone).w
-		beq.s	MainLevelLoadBlock_Convert16
-		bra.s	MainLevelLoadBlock_Convert16
-; ---------------------------------------------------------------------------
-
-MainLevelLoadBlock_Skip16Convert:	; leftover from	a previous build
-		lea	(v_16x16).w,a1
-		move.w	#0,d0
-		bsr.w	EniDec
-		bra.s	loc_72C2
-; ---------------------------------------------------------------------------
-
-MainLevelLoadBlock_Convert16:		; CODE XREF: MainLevelLoadBlock+1Cj
-					; MainLevelLoadBlock+1Ej
 		lea	(v_16x16).w,a1
 		move.w	#$BFF,d2
 
@@ -6485,58 +6472,7 @@ MainLevelLoadBlock_Not2p:		; CODE XREF: MainLevelLoadBlock+3Cj
 		dbf	d2,MainLevelLoadBlock_ConvertLoop
 
 loc_72C2:				; CODE XREF: MainLevelLoadBlock+2Cj
-		cmpi.b	#5,(v_zone).w
-		bne.s	loc_72F4
-		lea	(v_16x16+$980).w,a1
-		lea	(Map16_SBZ).l,a0
-		move.w	#$3FF,d2
-
-loc_72D8:				; CODE XREF: MainLevelLoadBlock+80j
-		move.w	(a0)+,d0
-		tst.w	(f_2player).w
-		beq.s	loc_72EE
-		move.w	d0,d1
-		andi.w	#$F800,d0
-		andi.w	#$7FF,d1
-		lsr.w	#1,d1
-		or.w	d1,d0
-
-loc_72EE:				; CODE XREF: MainLevelLoadBlock+6Ej
-		move.w	d0,(a1)+
-		dbf	d2,loc_72D8
-
-loc_72F4:				; CODE XREF: MainLevelLoadBlock+58j
 		movea.l	(a2)+,a0
-		cmpi.b	#0,(v_zone).w
-		beq.s	loc_7338
-		cmpi.b	#1,(v_zone).w
-		beq.s	loc_7338
-		cmpi.b	#2,(v_zone).w
-		beq.s	loc_7338
-		cmpi.b	#3,(v_zone).w
-		beq.s	loc_7338
-		cmpi.b	#4,(v_zone).w
-		beq.s	loc_7338
-		cmpi.b	#5,(v_zone).w
-		beq.s	loc_7338
-		move.l	a2,-(sp)
-		moveq	#0,d1
-		moveq	#0,d2
-		move.w	(a0)+,d0
-		lea	(a0,d0.w),a1
-		lea	(v_128x128).l,a2
-		lea	($FFFF8000).w,a3
-
-loc_732C:				; CODE XREF: MainLevelLoadBlock+C2j
-		bsr.w	UnknownDec
-		tst.w	d0
-		bmi.s	loc_732C
-		movea.l	(sp)+,a2
-		bra.s	loc_7348
-; ---------------------------------------------------------------------------
-
-loc_7338:				; CODE XREF: MainLevelLoadBlock+8Cj
-					; MainLevelLoadBlock+94j ...
 		lea	(v_128x128).l,a1
 		move.w	#$3FFF,d0
 
@@ -6599,8 +6535,6 @@ loc_738E:				; CODE XREF: LevelLayoutLoad+Cj
 
 
 LevelLayoutLoad2:			; CODE XREF: LevelLayoutLoad+16p
-	;	tst.b	(v_zone).w
-	;	beq.s	LevelLayoutLoad_GHZ
 		move.w	(v_zone).w,d0
 		lsl.b	#6,d0
 		lsr.w	#5,d0
@@ -6639,151 +6573,6 @@ loc_73E6:				; CODE XREF: LevelLayoutLoad2+44j
 		lea	$100(a3),a3
 		dbf	d2,loc_73DE
 		rts
-; ---------------------------------------------------------------------------
-
-LevelLayoutLoad_GHZ:			; CODE XREF: LevelLayoutLoad2+4j
-		move.w	(v_zone).w,d0
-		lsl.b	#6,d0
-		lsr.w	#5,d0
-		move.w	d0,d2
-		add.w	d0,d0
-		add.w	d2,d0
-		add.w	d1,d0
-		lea	(LevelLayout_Index).l,a1
-		move.w	(a1,d0.w),d0
-		lea	(a1,d0.w),a1
-		moveq	#0,d1
-		move.w	d1,d2
-		move.b	(a1)+,d1
-		move.b	(a1)+,d2
-
-loc_7426:				; CODE XREF: LevelLayoutLoad2+BAj
-		move.w	d1,d0
-		movea.l	a3,a0
-
-loc_742A:				; CODE XREF: LevelLayoutLoad2:loc_7456j
-		move.b	(a1)+,d3
-		subq.b	#1,d3
-		bcc.s	loc_7440
-		moveq	#0,d3
-		move.b	d3,(a0)+
-		move.b	d3,(a0)+
-		move.b	d3,$FE(a0)
-		move.b	d3,$FF(a0)
-		bra.s	loc_7456
-; ---------------------------------------------------------------------------
-
-loc_7440:				; CODE XREF: LevelLayoutLoad2+8Aj
-		lsl.b	#2,d3
-		addq.b	#1,d3
-		move.b	d3,(a0)+
-		addq.b	#1,d3
-		move.b	d3,(a0)+
-		addq.b	#1,d3
-		move.b	d3,$FE(a0)
-		addq.b	#1,d3
-		move.b	d3,$FF(a0)
-
-loc_7456:				; CODE XREF: LevelLayoutLoad2+9Aj
-		dbf	d0,loc_742A
-		lea	$200(a3),a3
-		dbf	d2,loc_7426
-		rts
-; End of function LevelLayoutLoad2
-
-; ---------------------------------------------------------------------------
-
-LevelLayout_Convert:			; leftover level layout	converting function (from raw to the way it"s stored in the game)
-		lea	($FE0000).l,a1
-		lea	($FE0080).l,a2
-		lea	($FFFF0000).l,a3
-		move.w	#$3F,d1
-
-loc_747A:				; CODE XREF: ROM:00007482j
-		bsr.w	sub_750C
-		bsr.w	sub_750C
-		dbf	d1,loc_747A
-		lea	($FE0000).l,a1
-		lea	($FF0000).l,a2
-		move.w	#$3F,d1
-
-loc_7496:				; CODE XREF: ROM:0000749Aj
-		move.w	#0,(a2)+
-		dbf	d1,loc_7496
-		move.w	#$3FBF,d1
-
-loc_74A2:				; CODE XREF: ROM:000074A4j
-		move.w	(a1)+,(a2)+
-		dbf	d1,loc_74A2
-		rts
-; ---------------------------------------------------------------------------
-		lea	($FE0000).l,a1
-		lea	($FFFF0000).l,a3
-		moveq	#$1F,d0
-
-loc_74B8:				; CODE XREF: ROM:000074BAj
-		move.l	(a1)+,(a3)+
-		dbf	d0,loc_74B8
-		moveq	#0,d7
-		lea	($FE0000).l,a1
-		move.w	#$FF,d5
-
-loc_74CA:				; CODE XREF: ROM:000074EAj
-					; ROM:00007506j
-		lea	($FFFF0000).l,a3
-		move.w	d7,d6
-
-loc_74D2:				; CODE XREF: ROM:000074F8j
-		movem.l	a1-a3,-(sp)
-		move.w	#$3F,d0	
-
-loc_74DA:				; CODE XREF: ROM:000074DEj
-		cmpm.w	(a1)+,(a3)+
-		bne.s	loc_74F0
-		dbf	d0,loc_74DA
-		movem.l	(sp)+,a1-a3
-		adda.w	#$80,a1	
-		dbf	d5,loc_74CA
-		bra.s	loc_750A
-; ---------------------------------------------------------------------------
-
-loc_74F0:				; CODE XREF: ROM:000074DCj
-		movem.l	(sp)+,a1-a3
-		adda.w	#$80,a3	
-		dbf	d6,loc_74D2
-		moveq	#$1F,d0
-
-loc_74FE:				; CODE XREF: ROM:00007500j
-		move.l	(a1)+,(a3)+
-		dbf	d0,loc_74FE
-		addq.l	#1,d7
-		dbf	d5,loc_74CA
-
-loc_750A:				; CODE XREF: ROM:000074EEj
-					; ROM:loc_750Aj
-		bra.s	loc_750A
-
-; =============== S U B	R O U T	I N E =======================================
-
-
-sub_750C:				; CODE XREF: ROM:loc_747Ap
-					; ROM:0000747Ep
-		moveq	#7,d0
-
-loc_750E:				; CODE XREF: sub_750C+12j
-		move.l	(a3)+,(a1)+
-		move.l	(a3)+,(a1)+
-		move.l	(a3)+,(a1)+
-		move.l	(a3)+,(a1)+
-		move.l	(a3)+,(a2)+
-		move.l	(a3)+,(a2)+
-		move.l	(a3)+,(a2)+
-		move.l	(a3)+,(a2)+
-		dbf	d0,loc_750E
-		adda.w	#$80,a1	
-		adda.w	#$80,a2	
-		rts
-; End of function sub_750C
 
 
 ; =============== S U B	R O U T	I N E =======================================
@@ -14354,11 +14143,11 @@ Obj_Index:	dc.l Obj01
                 dc.l NullObject
                 dc.l NullObject
                 dc.l NullObject
-		dc.l NullObject
+		dc.l Obj61
                 dc.l NullObject
                 dc.l NullObject
                 dc.l NullObject
-		dc.l NullObject
+		dc.l Obj65
                 dc.l NullObject
                 dc.l NullObject
                 dc.l NullObject
@@ -19164,6 +18953,355 @@ loc_F9E8:				; CODE XREF: sub_F9C8+Ej sub_F9C8+1Aj
 locret_F9FA:				; CODE XREF: sub_F9C8+1Ej
 		rts
 ; End of function sub_F9C8
+
+; ===========================================================================
+; ---------------------------------------------------------------------------
+; Object 61 - blocks (LZ)
+; ---------------------------------------------------------------------------
+
+Obj61:					; XREF: Obj_Index
+		moveq	#0,d0
+		move.b	$24(a0),d0
+		move.w	Obj61_Index(pc,d0.w),d1
+		jmp	Obj61_Index(pc,d1.w)
+; ===========================================================================
+Obj61_Index:	dc.w Obj61_Main-Obj61_Index
+		dc.w Obj61_Action-Obj61_Index
+
+Obj61_Var:	dc.b $10, $10		; width, height
+		dc.b $20, $C
+		dc.b $10, $10
+		dc.b $10, $10
+; ===========================================================================
+
+Obj61_Main:				; XREF: Obj61_Index
+		addq.b	#2,$24(a0)
+		move.l	#Map_obj61,4(a0)
+		move.w	#$43E6,2(a0)
+		move.b	#4,1(a0)
+		move.b	#3,$18(a0)
+		moveq	#0,d0
+		move.b	$28(a0),d0
+		lsr.w	#3,d0
+		andi.w	#$E,d0
+		lea	Obj61_Var(pc,d0.w),a2
+		move.b	(a2)+,$19(a0)
+		move.b	(a2),$16(a0)
+		lsr.w	#1,d0
+		move.b	d0,$1A(a0)
+		move.w	8(a0),$34(a0)
+		move.w	$C(a0),$30(a0)
+		move.b	$28(a0),d0
+		andi.b	#$F,d0
+		beq.s	Obj61_Action
+		cmpi.b	#7,d0
+		beq.s	Obj61_Action
+		move.b	#1,$38(a0)
+
+Obj61_Action:				; XREF: Obj61_Index
+		move.w	8(a0),-(sp)
+		moveq	#0,d0
+		move.b	$28(a0),d0
+		andi.w	#$F,d0
+		add.w	d0,d0
+		move.w	Obj61_TypeIndex(pc,d0.w),d1
+		jsr	Obj61_TypeIndex(pc,d1.w)
+		move.w	(sp)+,d4
+		tst.b	1(a0)
+		bpl.s	Obj61_ChkDel
+		moveq	#0,d1
+		move.b	$19(a0),d1
+		addi.w	#$B,d1
+		moveq	#0,d2
+		move.b	$16(a0),d2
+		move.w	d2,d3
+		addq.w	#1,d3
+		bsr.w	SolidObject
+		move.b	d4,$3F(a0)
+		bsr.w	loc_12180
+
+Obj61_ChkDel:
+		move.w	$34(a0),d0
+		andi.w	#$FF80,d0
+		move.w	($FFFFF700).w,d1
+		subi.w	#$80,d1
+		andi.w	#$FF80,d1
+		sub.w	d1,d0
+		cmpi.w	#$280,d0
+		bhi.w	DeleteObject
+		bra.w	DisplaySprite
+; ===========================================================================
+Obj61_TypeIndex:dc.w Obj61_Type00-Obj61_TypeIndex, Obj61_Type01-Obj61_TypeIndex
+		dc.w Obj61_Type02-Obj61_TypeIndex, Obj61_Type01-Obj61_TypeIndex
+		dc.w Obj61_Type04-Obj61_TypeIndex, Obj61_Type05-Obj61_TypeIndex
+		dc.w Obj61_Type02-Obj61_TypeIndex, Obj61_Type07-Obj61_TypeIndex
+; ===========================================================================
+
+Obj61_Type00:				; XREF: Obj61_TypeIndex
+		rts	
+; ===========================================================================
+
+Obj61_Type01:				; XREF: Obj61_TypeIndex
+		tst.w	$36(a0)		; is Sonic standing on the object?
+		bne.s	loc_120D6	; if yes, branch
+		btst	#3,$22(a0)
+		beq.s	locret_120D4
+		move.w	#30,$36(a0)	; wait for « second
+
+locret_120D4:
+		rts	
+; ===========================================================================
+
+loc_120D6:
+		subq.w	#1,$36(a0)	; subtract 1 from waiting time
+		bne.s	locret_120D4	; if time remains, branch
+		addq.b	#1,$28(a0)	; add 1	to type
+		clr.b	$38(a0)
+		rts	
+; ===========================================================================
+
+Obj61_Type02:				; XREF: Obj61_TypeIndex
+		bsr.w	SpeedToPos
+		addq.w	#8,$12(a0)	; make object fall
+		bsr.w	ObjHitFloor
+		tst.w	d1
+		bpl.w	locret_12106
+		addq.w	#1,d1
+		add.w	d1,$C(a0)
+		clr.w	$12(a0)		; stop when it touches the floor
+		clr.b	$28(a0)		; set type to 00 (non-moving type)
+
+locret_12106:
+		rts	
+; ===========================================================================
+
+Obj61_Type04:				; XREF: Obj61_TypeIndex
+		bsr.w	SpeedToPos
+		subq.w	#8,$12(a0)	; make object rise
+		bsr.w	ObjHitCeiling
+		tst.w	d1
+		bpl.w	locret_12126
+		sub.w	d1,$C(a0)
+		clr.w	$12(a0)		; stop when it touches the ceiling
+		clr.b	$28(a0)		; set type to 00 (non-moving type)
+
+locret_12126:
+		rts	
+; ===========================================================================
+
+Obj61_Type05:				; XREF: Obj61_TypeIndex
+		cmpi.b	#1,$3F(a0)	; is Sonic touching the	object?
+		bne.s	locret_12138	; if not, branch
+		addq.b	#1,$28(a0)	; if yes, add 1	to type
+		clr.b	$38(a0)
+
+locret_12138:
+		rts	
+; ===========================================================================
+
+Obj61_Type07:				; XREF: Obj61_TypeIndex
+		move.w	($FFFFF646).w,d0
+		sub.w	$C(a0),d0
+		beq.s	locret_1217E
+		bcc.s	loc_12162
+		cmpi.w	#-2,d0
+		bge.s	loc_1214E
+		moveq	#-2,d0
+
+loc_1214E:
+		add.w	d0,$C(a0)	; make the block rise with water level
+		bsr.w	ObjHitCeiling
+		tst.w	d1
+		bpl.w	locret_12160
+		sub.w	d1,$C(a0)
+
+locret_12160:
+		rts	
+; ===========================================================================
+
+loc_12162:				; XREF: Obj61_Type07
+		cmpi.w	#2,d0
+		ble.s	loc_1216A
+		moveq	#2,d0
+
+loc_1216A:
+		add.w	d0,$C(a0)	; make the block sink with water level
+		bsr.w	ObjHitFloor
+		tst.w	d1
+		bpl.w	locret_1217E
+		addq.w	#1,d1
+		add.w	d1,$C(a0)
+
+locret_1217E:
+		rts	
+; ===========================================================================
+
+loc_12180:				; XREF: Obj61_Action
+		tst.b	$38(a0)
+		beq.s	locret_121C0
+		btst	#3,$22(a0)
+		bne.s	loc_1219A
+		tst.b	$3E(a0)
+		beq.s	locret_121C0
+		subq.b	#4,$3E(a0)
+		bra.s	loc_121A6
+; ===========================================================================
+
+loc_1219A:
+		cmpi.b	#$40,$3E(a0)
+		beq.s	locret_121C0
+		addq.b	#4,$3E(a0)
+
+loc_121A6:
+		move.b	$3E(a0),d0
+		jsr	(CalcSine).l
+		move.w	#$400,d1
+		muls.w	d1,d0
+		swap	d0
+		add.w	$30(a0),d0
+		move.w	d0,$C(a0)
+
+locret_121C0:
+		rts	
+; ===========================================================================
+; ---------------------------------------------------------------------------
+; Sprite mappings - blocks (LZ)
+; ---------------------------------------------------------------------------
+Map_obj61:	dc.w	byte_121CA-Map_obj61
+		dc.w	byte_121D0-Map_obj61
+		dc.w	byte_121DB-Map_obj61
+		dc.w	byte_121E1-Map_obj61
+byte_121CA:	dc.w 1
+		dc.w $F00F, 0, 0, $FFF0
+byte_121D0:	dc.w 2
+		dc.w $F40E, $69, $34, $FFE0
+		dc.w $F40E, $75, $3A, 0
+byte_121DB:	dc.w 1
+		dc.w $F00F, $11A, $8D, $FFF0
+byte_121E1:	dc.w 1
+		dc.w $F00F, $FDFA, $FAFD, $FFF0
+		even
+
+; ===========================================================================
+; ---------------------------------------------------------------------------
+; Object 65 - waterfalls (LZ)
+; ---------------------------------------------------------------------------
+
+Obj65:					; XREF: Obj_Index
+		moveq	#0,d0
+		move.b	$24(a0),d0
+		move.w	Obj65_Index(pc,d0.w),d1
+		jmp	Obj65_Index(pc,d1.w)
+; ===========================================================================
+Obj65_Index:	dc.w Obj65_Main-Obj65_Index
+		dc.w Obj65_Animate-Obj65_Index
+		dc.w Obj65_ChkDel-Obj65_Index
+		dc.w Obj65_FixHeight-Obj65_Index
+		dc.w loc_12B36-Obj65_Index
+; ===========================================================================
+
+Obj65_Main:				; XREF: Obj65_Index
+		addq.b	#4,$24(a0)
+		move.l	#Map_obj65,4(a0)
+		move.w	#$4259,2(a0)
+		ori.b	#4,1(a0)
+		move.b	#$18,$19(a0)
+		move.b	#1,$18(a0)
+		move.b	$28(a0),d0	; get object type
+		bpl.s	loc_12AE6
+		bset	#7,2(a0)
+
+loc_12AE6:
+		andi.b	#$F,d0		; read only the	2nd byte
+		move.b	d0,$1A(a0)	; set frame number
+		cmpi.b	#9,d0		; is object type $x9 ?
+		bne.s	Obj65_ChkDel	; if not, branch
+		clr.b	$18(a0)
+		subq.b	#2,$24(a0)
+		btst	#6,$28(a0)	; is object type $4x ?
+		beq.s	loc_12B0A	; if not, branch
+		move.b	#6,$24(a0)
+
+loc_12B0A:
+		btst	#5,$28(a0)	; is object type $Ax ?
+		beq.s	Obj65_Animate	; if not, branch
+		move.b	#8,$24(a0)
+
+Obj65_Animate:				; XREF: Obj65_Index
+		lea	(Ani_obj65).l,a1
+		jsr	(AnimateSprite).l
+
+Obj65_ChkDel:				; XREF: Obj65_Index
+		bra.w	MarkObjGone
+; ===========================================================================
+
+Obj65_FixHeight:			; XREF: Obj65_Index
+		move.w	($FFFFF646).w,d0
+		subi.w	#$10,d0
+		move.w	d0,$C(a0)	; match	object position	to water height
+		bra.s	Obj65_Animate
+; ===========================================================================
+
+loc_12B36:				; XREF: Obj65_Index
+		bclr	#7,2(a0)
+;		cmpi.b	#7,($FFFFA506).w
+;		bne.s	Obj65_Animate2
+;		bset	#7,2(a0)
+
+Obj65_Animate2:
+		bra.s	Obj65_Animate
+; ===========================================================================
+Ani_obj65:	dc.w byte_12B4E-Ani_obj65
+byte_12B4E:	dc.b 5,	9, $A, $B, $FF
+		even
+
+; ---------------------------------------------------------------------------
+; Sprite mappings - waterfalls (LZ)
+; ---------------------------------------------------------------------------
+Map_obj65:	dc.w	byte_12B6C-Map_obj65
+		dc.w	byte_12B72-Map_obj65
+		dc.w	byte_12B7D-Map_obj65
+		dc.w	byte_12B88-Map_obj65
+		dc.w	byte_12B8E-Map_obj65
+		dc.w	byte_12B99-Map_obj65
+		dc.w	byte_12B9F-Map_obj65
+		dc.w	byte_12BA5-Map_obj65
+		dc.w	byte_12BAB-Map_obj65
+		dc.w	byte_12BB6-Map_obj65
+		dc.w	byte_12BC1-Map_obj65
+		dc.w	byte_12BCC-Map_obj65
+byte_12B6C:	dc.w 1
+		dc.w $F007, 0, 0, $FFF8
+byte_12B72:	dc.w 2
+		dc.w $F804, 8, 4, $FFFC
+		dc.w 8, $A, 5, $FFF4
+byte_12B7D:	dc.w 2
+		dc.w $F800, 8, 4, 0
+		dc.w 4, $D, 6, $FFF8
+byte_12B88:	dc.w 1
+		dc.w $F801, $F, 7, 0
+byte_12B8E:	dc.w 2
+		dc.w $F800, 8, 4, 0
+		dc.w 4, $D, 6, $FFF8
+byte_12B99:	dc.w 1
+		dc.w $F801, $11, 8, 0
+byte_12B9F:	dc.w 1
+		dc.w $F801, $13, 9, 0
+byte_12BA5:	dc.w 1
+		dc.w $F007, $15, $A, $FFF8
+byte_12BAB:	dc.w 2
+		dc.w $F80C, $1D, $E, $FFF6
+		dc.w $C, $21, $10, $FFE8
+byte_12BB6:	dc.w 2
+		dc.w $F00B, $25, $12, $FFE8
+		dc.w $F00B, $31, $18, 0
+byte_12BC1:	dc.w 2
+		dc.w $F00B, $3D, $1E, $FFE8
+		dc.w $F00B, $49, $24, 0
+byte_12BCC:	dc.w 2
+		dc.w $F00B, $55, $2A, $FFE8
+		dc.w $F00B, $61, $30, 0
+		even
 
 ; ---------------------------------------------------------------------------
 ;----------------------------------------------------
@@ -24007,7 +24145,7 @@ loc_12A5A:				; CODE XREF: Sonic_AnglePos+50j
 		bsr.w	Sonic_Angle
 		tst.w	d1
 		beq.s	locret_12AE4
-		bpl.s	loc_12AE6
+		bpl.s	loc2_12AE6
 		cmpi.w	#$FFF2,d1
 		blt.s	locret_12B0C
 		add.w	d1,$C(a0)
@@ -24016,7 +24154,7 @@ locret_12AE4:				; CODE XREF: Sonic_AnglePos+DAj
 		rts
 ; ---------------------------------------------------------------------------
 
-loc_12AE6:				; CODE XREF: Sonic_AnglePos+DCj
+loc2_12AE6:				; CODE XREF: Sonic_AnglePos+DCj
 		cmpi.w	#$E,d1
 		bgt.s	loc_12AF2
 
@@ -27016,8 +27154,11 @@ Obj14:					; DATA XREF: ROM:Obj_Indexo
 		andi.w	#$FF80,d0
 		sub.w	($FFFFF7DA).w,d0
 		cmpi.w	#$280,d0
-		bhi.w	DeleteObject
-		bra.w	DisplaySprite
+		bhi.s	@jmp
+		jmp	(DisplaySprite).l
+
+@jmp:
+		jmp	(DeleteObject).l
 ; ---------------------------------------------------------------------------
 Obj14_Index:	dc.w loc_14CD2-Obj14_Index ; DATA XREF:	ROM:Obj14_Indexo
 					; ROM:00014CC8o ...
@@ -36218,7 +36359,7 @@ ObjPos_Index:
 		dc.w ObjPos_LZ1-ObjPos_Index,ObjPos_Null-ObjPos_Index
 		dc.w ObjPos_LZ2-ObjPos_Index,ObjPos_Null-ObjPos_Index
 		dc.w ObjPos_LZ3-ObjPos_Index,ObjPos_Null-ObjPos_Index
-		dc.w ObjPos_LZ3-ObjPos_Index,ObjPos_Null-ObjPos_Index
+		dc.w ObjPos_SBZ3-ObjPos_Index,ObjPos_Null-ObjPos_Index
 		; MZ
 		dc.w ObjPos_MZ1-ObjPos_Index,ObjPos_Null-ObjPos_Index
 		dc.w ObjPos_MZ2-ObjPos_Index,ObjPos_Null-ObjPos_Index
@@ -36262,7 +36403,7 @@ ObjPos_GHZ3:	incbin "objpos\ghz3.bin"
                 even
 ObjPos_LZ1:	incbin "objpos\lz1.bin"
                 even
-ObjPos_LZ2:	incbin "objpos\lz1.bin"
+ObjPos_LZ2:	incbin "objpos\lz2.bin"
                 even
 ObjPos_LZ3:	incbin "objpos\lz3.bin"
                 even
@@ -36563,6 +36704,20 @@ S1Nem_GHZBreakableWall:incbin "artnem\GHZ Breakable Wall.bin"
                 even
 S1Nem_GHZWall:	incbin "artnem\GHZ Edge Wall.bin"
                 even
+; ---------------------------------------------------------------------------
+; Compressed graphics - LZ stuff
+; ---------------------------------------------------------------------------
+Nem_Splash:	incbin "artnem/LZ Water & Splashes.bin"
+		even
+Nem_Bubbles:	incbin "artnem/LZ Bubbles & Countdown.bin"
+		even
+Nem_LzBlock3:	incbin "artnem/LZ 32x16 Block.bin"
+		even
+Nem_LzBlock2:	incbin "artnem/LZ Blocks.bin"
+		even
+Nem_LzBlock1:	incbin "artnem/LZ 32x32 Block.bin"
+		even
+
 Nem_SLZ_Fireball:dc.b $80,$10,$80,  3,	2,$13,	3,$24,	8,$35,$1A,$46,$39,$56,$38,$65,$1B,$75,$19,$81,	3,  0,$16,$3C,$28,$F9,$83,  5,$18,$84,	4, $B,$16,$3D,$87,  4,	9,$18,$F8,$8C,	4, $A,$18,$FA,$8D,  3,	1,$15,$1D,$28,$FB,$FF,$CF,  6, $E,$60,$1D,$84,$46,$87,	2,  2,$A4,$59; 0
 					; DATA XREF: ROM:0001C156o
 					; ROM:0001C21Eo
