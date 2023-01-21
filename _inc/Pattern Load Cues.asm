@@ -11,7 +11,7 @@ ArtLoadCues:	dc.w PLC_Main-ArtLoadCues,PLC_Main2-ArtLoadCues; 0
 		dc.w PLC_Invalid-ArtLoadCues,PLC_GHZAnimals-ArtLoadCues; 20
 		dc.w PLC_LZAnimals-ArtLoadCues,PLC_MZAnimals-ArtLoadCues; 22
 		dc.w PLC_SLZAnimals-ArtLoadCues,PLC_SYZAnimals-ArtLoadCues; 24
-		dc.w PLC_SBZAnimals-ArtLoadCues
+		dc.w PLC_SBZAnimals-ArtLoadCues,PLC_SSResults-ArtLoadCues
 PLC_Main:	dc.w 4			
 		dc.l Nem_Lamppost
 		dc.w $F400
@@ -20,7 +20,7 @@ PLC_Main:	dc.w 4
 		dc.l Nem_Lives
 		dc.w $FA80
 		dc.l Nem_Ring
-		dc.w $D780
+		dc.w $F640
 		dc.l Nem_Points
 		dc.w $F2E0
 PLC_Main2:	dc.w 2			
@@ -168,7 +168,13 @@ PLC_Signpost:	dc.w 2
 		dc.w $96C0
 		dc.l Nem_BigFlash
 		dc.w $8C40
-PLC_Invalid:	dc.w $10		
+PLC_Invalid:	dc.w 2
+		dc.l Nem_SSBgCloud
+		dc.w 0
+		dc.l Nem_SSBgFish
+		dc.w $A20
+		dc.l Nem_SSWalls
+		dc.w $2840		
 PLC_GHZAnimals:	dc.w 1			
 		dc.l Nem_Bunny
 		dc.w $B000
@@ -199,3 +205,8 @@ PLC_SBZAnimals:	dc.w 1
 		dc.w $B000
 		dc.l Nem_Chicken
 		dc.w $B240
+PLC_SSResults:	dc.w 1
+		dc.l Nem_ResultEm
+		dc.w $A820
+		dc.l S1Nem_MiniSonic
+		dc.w $AA20

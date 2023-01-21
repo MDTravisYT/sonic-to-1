@@ -24,6 +24,9 @@
 ; * Restored LZ Act 2 and SBZ Act 3 object layouts
 ; * Restored correct palettes for SBZ2 and SBZ3
 
+; * Partially restored Special Stages (missing many graphics, but runs and shouldn't crash)
+; * Re-arranged ring graphics' RAM placement
+
 ;  =========================================================================
 ; |   Sonic the Hedgehog 2 Early Prototype Disassembly for Sega Mega Drive  |
 ;  =========================================================================
@@ -4758,7 +4761,7 @@ loc_507C:				; CODE XREF: ROM:00005082j
 		bsr.w	S1_SSBGLoad
 		moveq	#$14,d0
 		bsr.w	RunPLC_ROM
-		lea	(v_objspace+$2000).w,a1
+		lea	(v_objspace).w,a1
 		moveq	#0,d0
 		move.w	#$7FF,d1
 
@@ -4937,6 +4940,7 @@ loc_52DC:				; CODE XREF: ROM:000051B4j
 
 S1_SSBGLoad:				; CODE XREF: ROM:00005088p
 		lea	($FFFF0000).l,a1
+		lea	(Eni_SSBg1).l,a0 ; load	mappings for the birds and fish
 		move.w	#$4051,d0
 		bsr.w	EniDec
 		move.l	#$50000001,d3
@@ -4986,6 +4990,7 @@ loc_5360:				; CODE XREF: S1_SSBGLoad+6Ej
 		adda.w	#$80,a2	
 		dbf	d7,loc_5302
 		lea	($FFFF0000).l,a1
+		lea	(Eni_SSBg2).l,a0 ; load	mappings for the clouds
 		move.w	#$4000,d0
 		bsr.w	EniDec
 		lea	($FFFF0000).l,a1
@@ -10966,7 +10971,7 @@ loc_A832:				; CODE XREF: ROM:0000A828j
 		move.w	8(a0),$32(a1)
 		move.w	d3,$C(a1)
 		move.l	#Map_Obj25,4(a1)
-		move.w	#$26BC,2(a1)
+		move.w	#$27B2,2(a1)
 		bsr.w	ModifyA1SpriteAttr_2P
 		move.b	#4,1(a1)
 		move.b	#2,$18(a1)
@@ -11084,7 +11089,7 @@ loc_A956:				; CODE XREF: ROM:0000A94Cj
 		move.w	8(a0),8(a1)
 		move.w	$C(a0),$C(a1)
 		move.l	#Map_Obj25,4(a1)
-		move.w	#$26BC,2(a1)
+		move.w	#$27B2,2(a1)
 		bsr.w	ModifyA1SpriteAttr_2P
 		move.b	#4,1(a1)
 		move.b	#3,$18(a1)
@@ -13446,10 +13451,12 @@ word_C3BA:	dc.w 7			; DATA XREF: ROM:0000C2D0o
 		dc.w $FF04,$186E,$1837,$FFF6; 16
 		dc.w $F80D,$FFF8,$FBFC,	 $28; 20
 		dc.w $F801, $170,  $B8,	 $48; 24
+
 Map_S1Obj7E:	dc.w word_C406-Map_S1Obj7E ; DATA XREF:	ROM:0000BDDCo
 					; ROM:Map_S1Obj7Eo ...
 		dc.w word_C470-Map_S1Obj7E
 		dc.w word_C4A2-Map_S1Obj7E
+		dc.w word_C1E4-Map_S1Obj7E
 		dc.w word_C4DC-Map_S1Obj7E
 		dc.w word_C4FE-Map_S1Obj7E
 		dc.w word_C520-Map_S1Obj7E
@@ -14172,8 +14179,8 @@ Obj_Index:	dc.l Obj01
                 dc.l NullObject
                 dc.l Obj_S1Obj7C
 		dc.l Obj7D
-                dc.l NullObject
-                dc.l NullObject
+                dc.l S1Obj7E
+                dc.l S1Obj7F
                 dc.l NullObject
 		dc.l NullObject
                 dc.l NullObject
@@ -15822,7 +15829,7 @@ loc_DA84:				; CODE XREF: BuildSprites2+46j
 		addq.b	#1,d5
 		move.b	d5,(a2)+
 		move.w	(a1)+,d0
-		addi.w	#$26BC,d0
+		addi.w	#$27B2,d0
 		move.w	d0,(a2)+
 		addq.w	#2,a1
 		move.w	(a1)+,d0
@@ -26119,7 +26126,7 @@ Obj03_Index:	dc.w Obj03_Init-Obj03_Index ; DATA XREF: ROM:Obj03_Indexo
 Obj03_Init:				; DATA XREF: ROM:Obj03_Indexo
 		addq.b	#2,$24(a0)
 		move.l	#Map_Obj03,4(a0)
-		move.w	#$26BC,2(a0)
+		move.w	#$27B2,2(a0)
 		bsr.w	ModifySpriteAttr_2P
 		move.b	#4,1(a0)
 		move.b	#$10,$19(a0)
@@ -33813,7 +33820,7 @@ loc_19C42:				; CODE XREF: S1SS_ShowLayout+11Cj
 		moveq	#0,d0
 		move.b	(a0)+,d0
 		beq.s	loc_19C9A
-		cmpi.b	#$4E,d0	; "N"
+		cmpi.w	#$4E,d0	; "N"
 		bhi.s	loc_19C9A
 		move.w	(a4),d3
 		addi.w	#$120,d3
@@ -33836,8 +33843,8 @@ loc_19C42:				; CODE XREF: S1SS_ShowLayout+11Cj
 		adda.w	(a1,d1.w),a1
 		movea.w	(a5)+,a3
 		moveq	#0,d1
-		move.b	(a1)+,d1
-		subq.b	#1,d1
+		move.w	(a1)+,d1
+		subq.w	#1,d1
 		bmi.s	loc_19C9A
 		jsr	loc_D1CE
 
@@ -34259,77 +34266,77 @@ loc_1A162:				; CODE XREF: S1SS_Load+B6j
 ; End of function S1SS_Load
 
 ; ---------------------------------------------------------------------------
-S1SS_MapIndex:	dc.l S1Map_SS_R		; DATA XREF: S1SS_Load+90o
+S1SS_MapIndex:	dc.l Map_SSWalls		; DATA XREF: S1SS_Load+90o
 		dc.w $142
-		dc.l S1Map_SS_R
+		dc.l Map_SSWalls
 		dc.w $142
-		dc.l S1Map_SS_R
+		dc.l Map_SSWalls
 		dc.w $142
-		dc.l S1Map_SS_R
+		dc.l Map_SSWalls
 		dc.w $142
-		dc.l S1Map_SS_R
+		dc.l Map_SSWalls
 		dc.w $142
-		dc.l S1Map_SS_R
+		dc.l Map_SSWalls
 		dc.w $142
-		dc.l S1Map_SS_R
+		dc.l Map_SSWalls
 		dc.w $142
-		dc.l S1Map_SS_R
+		dc.l Map_SSWalls
 		dc.w $142
-		dc.l S1Map_SS_R
+		dc.l Map_SSWalls
 		dc.w $142
-		dc.l S1Map_SS_R
+		dc.l Map_SSWalls
 		dc.w $2142
-		dc.l S1Map_SS_R
+		dc.l Map_SSWalls
 		dc.w $2142
-		dc.l S1Map_SS_R
+		dc.l Map_SSWalls
 		dc.w $2142
-		dc.l S1Map_SS_R
+		dc.l Map_SSWalls
 		dc.w $2142
-		dc.l S1Map_SS_R
+		dc.l Map_SSWalls
 		dc.w $2142
-		dc.l S1Map_SS_R
+		dc.l Map_SSWalls
 		dc.w $2142
-		dc.l S1Map_SS_R
+		dc.l Map_SSWalls
 		dc.w $2142
-		dc.l S1Map_SS_R
+		dc.l Map_SSWalls
 		dc.w $2142
-		dc.l S1Map_SS_R
+		dc.l Map_SSWalls
 		dc.w $2142
-		dc.l S1Map_SS_R
+		dc.l Map_SSWalls
 		dc.w $4142
-		dc.l S1Map_SS_R
+		dc.l Map_SSWalls
 		dc.w $4142
-		dc.l S1Map_SS_R
+		dc.l Map_SSWalls
 		dc.w $4142
-		dc.l S1Map_SS_R
+		dc.l Map_SSWalls
 		dc.w $4142
-		dc.l S1Map_SS_R
+		dc.l Map_SSWalls
 		dc.w $4142
-		dc.l S1Map_SS_R
+		dc.l Map_SSWalls
 		dc.w $4142
-		dc.l S1Map_SS_R
+		dc.l Map_SSWalls
 		dc.w $4142
-		dc.l S1Map_SS_R
+		dc.l Map_SSWalls
 		dc.w $4142
-		dc.l S1Map_SS_R
+		dc.l Map_SSWalls
 		dc.w $4142
-		dc.l S1Map_SS_R
+		dc.l Map_SSWalls
 		dc.w $6142
-		dc.l S1Map_SS_R
+		dc.l Map_SSWalls
 		dc.w $6142
-		dc.l S1Map_SS_R
+		dc.l Map_SSWalls
 		dc.w $6142
-		dc.l S1Map_SS_R
+		dc.l Map_SSWalls
 		dc.w $6142
-		dc.l S1Map_SS_R
+		dc.l Map_SSWalls
 		dc.w $6142
-		dc.l S1Map_SS_R
+		dc.l Map_SSWalls
 		dc.w $6142
-		dc.l S1Map_SS_R
+		dc.l Map_SSWalls
 		dc.w $6142
-		dc.l S1Map_SS_R
+		dc.l Map_SSWalls
 		dc.w $6142
-		dc.l S1Map_SS_R
+		dc.l Map_SSWalls
 		dc.w $6142
 		dc.l Map_S1Obj47
 		dc.w $23B
@@ -34420,60 +34427,177 @@ S1SS_MapIndex:	dc.l S1Map_SS_R		; DATA XREF: S1SS_Load+90o
 ;
 ; ps. sonic 1 special stages code sucks	and i always hated it
 ;
-S1Map_SS_R:	dc.w byte_1A344-S1Map_SS_R ; DATA XREF:	ROM:S1SS_MapIndexo
-					; ROM:0001A170o ...
-		dc.w byte_1A34A-S1Map_SS_R
-		dc.w word_1A350-S1Map_SS_R
-byte_1A344:	dc.b 1			; DATA XREF: ROM:S1Map_SS_Ro
-		dc.b $F4, $A,  0,  0,$F4; 0
-byte_1A34A:	dc.b 1			; DATA XREF: ROM:0001A340o
-		dc.b $F4, $A,  0,  9,$F4; 0
-word_1A350:	dc.w 0			; DATA XREF: ROM:0001A342o
-S1Map_SS_Glass:	dc.w byte_1A35A-S1Map_SS_Glass ; DATA XREF: ROM:0001A26Co
-					; ROM:0001A272o ...
-		dc.w byte_1A360-S1Map_SS_Glass
-		dc.w byte_1A366-S1Map_SS_Glass
-		dc.w byte_1A36C-S1Map_SS_Glass
-byte_1A35A:	dc.b 1			; DATA XREF: ROM:S1Map_SS_Glasso
-		dc.b $F4, $A,  0,  0,$F4; 0
-byte_1A360:	dc.b 1			; DATA XREF: ROM:0001A354o
-		dc.b $F4, $A,  8,  0,$F4; 0
-byte_1A366:	dc.b 1			; DATA XREF: ROM:0001A356o
-		dc.b $F4, $A,$18,  0,$F4; 0
-byte_1A36C:	dc.b 1			; DATA XREF: ROM:0001A358o
-		dc.b $F4, $A,$10,  0,$F4; 0
-S1Map_SS_Up:	dc.w byte_1A376-S1Map_SS_Up ; DATA XREF: ROM:0001A25Ao
-					; ROM:S1Map_SS_Upo ...
-		dc.w byte_1A37C-S1Map_SS_Up
-byte_1A376:	dc.b 1			; DATA XREF: ROM:S1Map_SS_Upo
-		dc.b $F4, $A,  0,  0,$F4; 0
-byte_1A37C:	dc.b 1			; DATA XREF: ROM:0001A374o
-		dc.b $F4, $A,  0,$12,$F4; 0
-S1Map_SS_Down:	dc.w byte_1A386-S1Map_SS_Down ;	DATA XREF: ROM:0001A260o
-					; ROM:S1Map_SS_Downo ...
-		dc.w byte_1A38C-S1Map_SS_Down
-byte_1A386:	dc.b 1			; DATA XREF: ROM:S1Map_SS_Downo
-		dc.b $F4, $A,  0,  9,$F4; 0
-byte_1A38C:	dc.b 1			; DATA XREF: ROM:0001A384o
-		dc.b $F4, $A,  0,$12,$F4; 0
-S1Map_SS_Chaos1:dc.w byte_1A39E-S1Map_SS_Chaos1	; DATA XREF: ROM:0001A2DEo
-					; ROM:S1Map_SS_Chaos1o	...
-		dc.w byte_1A3B0-S1Map_SS_Chaos1
-S1Map_SS_Chaos2:dc.w byte_1A3A4-S1Map_SS_Chaos2	; DATA XREF: ROM:0001A2E4o
-					; ROM:S1Map_SS_Chaos2o	...
-		dc.w byte_1A3B0-S1Map_SS_Chaos2
-S1Map_SS_Chaos3:dc.w byte_1A3AA-S1Map_SS_Chaos3	; DATA XREF: ROM:0001A2C6o
-					; ROM:0001A2CCo ...
-		dc.w byte_1A3B0-S1Map_SS_Chaos3
-byte_1A39E:	dc.b 1			; DATA XREF: ROM:S1Map_SS_Chaos1o
-		dc.b $F8,  5,  0,  0,$F8; 0
-byte_1A3A4:	dc.b 1			; DATA XREF: ROM:S1Map_SS_Chaos2o
-		dc.b $F8,  5,  0,  4,$F8; 0
-byte_1A3AA:	dc.b 1			; DATA XREF: ROM:S1Map_SS_Chaos3o
-		dc.b $F8,  5,  0,  8,$F8; 0
-byte_1A3B0:	dc.b 1			; DATA XREF: ROM:0001A394o
-					; ROM:0001A398o ...
-		dc.b $F8,  5,  0, $C,$F8; 0
+Map_SSWalls:
+Map_SSWalls_internal:
+	dc.w	byte_2C584-Map_SSWalls_internal
+	dc.w	byte_2C58A-Map_SSWalls_internal
+	dc.w	byte_2C590-Map_SSWalls_internal
+	dc.w	byte_2C596-Map_SSWalls_internal
+	dc.w	byte_2C59C-Map_SSWalls_internal
+	dc.w	byte_2C5A2-Map_SSWalls_internal
+	dc.w	byte_2C5A8-Map_SSWalls_internal
+	dc.w	byte_2C5AE-Map_SSWalls_internal
+	dc.w	byte_2C5B4-Map_SSWalls_internal
+	dc.w	byte_2C5BA-Map_SSWalls_internal
+	dc.w	byte_2C5C0-Map_SSWalls_internal
+	dc.w	byte_2C5C6-Map_SSWalls_internal
+	dc.w	byte_2C5CC-Map_SSWalls_internal
+	dc.w	byte_2C5D2-Map_SSWalls_internal
+	dc.w	byte_2C5D8-Map_SSWalls_internal
+	dc.w	byte_2C5DE-Map_SSWalls_internal
+
+byte_2C584:	dc.w 1
+	dc.w $F40A, 0, 0, $FFF4
+
+byte_2C58A:	dc.w 1
+	dc.w $F00F, 9, 4, $FFF0
+
+byte_2C590:	dc.w 1
+	dc.w $F00F, $19, $C, $FFF0
+
+byte_2C596:	dc.w 1
+	dc.w $F00F, $29, $14, $FFF0
+
+byte_2C59C:	dc.w 1
+	dc.w $F00F, $39, $1C, $FFF0
+
+byte_2C5A2:	dc.w 1
+	dc.w $F00F, $49, $24, $FFF0
+
+byte_2C5A8:	dc.w 1
+	dc.w $F00F, $59, $2C, $FFF0
+
+byte_2C5AE:	dc.w 1
+	dc.w $F00F, $69, $34, $FFF0
+
+byte_2C5B4:	dc.w 1
+	dc.w $F00F, $79, $3C, $FFF0
+
+byte_2C5BA:	dc.w 1
+	dc.w $F00F, $89, $44, $FFF0
+
+byte_2C5C0:	dc.w 1
+	dc.w $F00F, $99, $4C, $FFF0
+
+byte_2C5C6:	dc.w 1
+	dc.w $F00F, $A9, $54, $FFF0
+
+byte_2C5CC:	dc.w 1
+	dc.w $F00F, $B9, $5C, $FFF0
+
+byte_2C5D2:	dc.w 1
+	dc.w $F00F, $C9, $64, $FFF0
+
+byte_2C5D8:	dc.w 1
+	dc.w $F00F, $D9, $6C, $FFF0
+
+byte_2C5DE:	dc.w 1
+	dc.w $F00F, $E9, $74, $FFF0
+
+	even
+
+
+S1Map_SS_R:
+	dc.w	byte_1A344-S1Map_SS_R
+	dc.w	byte_1A34A-S1Map_SS_R
+	dc.w	word_1A350-S1Map_SS_R
+
+byte_1A344:	dc.w 1
+	dc.w $F40A, 0, 0, $FFF4
+
+byte_1A34A:	dc.w 1
+	dc.w $F40A, 9, 4, $FFF4
+
+word_1A350:	dc.w 0
+
+	even
+
+
+
+S1Map_SS_Glass:
+	dc.w	byte_1A35A-S1Map_SS_Glass
+	dc.w	byte_1A360-S1Map_SS_Glass
+	dc.w	byte_1A366-S1Map_SS_Glass
+	dc.w	byte_1A36C-S1Map_SS_Glass
+
+byte_1A35A:	dc.w 1
+	dc.w $F40A, 0, 0, $FFF4
+
+byte_1A360:	dc.w 1
+	dc.w $F40A, $800, $800, $FFF4
+
+byte_1A366:	dc.w 1
+	dc.w $F40A, $1800, $1800, $FFF4
+
+byte_1A36C:	dc.w 1
+	dc.w $F40A, $1000, $1000, $FFF4
+
+	even
+
+S1Map_SS_Up:
+	dc.w	byte_1A376-S1Map_SS_Up
+	dc.w	byte_1A37C-S1Map_SS_Up
+
+byte_1A376:	dc.w 1
+	dc.w $F40A, 0, 0, $FFF4
+
+byte_1A37C:	dc.w 1
+	dc.w $F40A, $12, 9, $FFF4
+
+	even
+
+S1Map_SS_Down:
+	dc.w	byte_1A386-S1Map_SS_Down
+	dc.w	byte_1A38C-S1Map_SS_Down
+
+byte_1A386:	dc.w 1
+	dc.w $F40A, 9, 4, $FFF4
+
+byte_1A38C:	dc.w 1
+	dc.w $F40A, $12, 9, $FFF4
+
+	even
+
+
+S1Map_SS_Chaos1:
+	dc.w	byte_1A39E-S1Map_SS_Chaos1
+	dc.w	byte_1A3B0-S1Map_SS_Chaos1
+
+byte_1A39E:	dc.w 1
+	dc.w $F805, 0, 0, $FFF8
+
+byte_1A3B0:	dc.w 1
+	dc.w $F805, $C, 6, $FFF8
+
+	even
+
+
+S1Map_SS_Chaos2:
+	dc.w	byte_1A3A4-S1Map_SS_Chaos2
+	dc.w	byte2_1A3B0-S1Map_SS_Chaos2
+
+byte_1A3A4:	dc.w 1
+	dc.w $F805, 4, 2, $FFF8
+
+byte2_1A3B0:	dc.w 1
+	dc.w $F805, $C, 6, $FFF8
+
+	even
+
+
+S1Map_SS_Chaos3:
+	dc.w	byte_1A3AA-S1Map_SS_Chaos3
+	dc.w	byte3_1A3B0-S1Map_SS_Chaos3
+
+byte_1A3AA:	dc.w 1
+	dc.w $F805, 8, 4, $FFF8
+
+byte3_1A3B0:	dc.w 1
+	dc.w $F805, $C, 6, $FFF8
+
+	even
+
+
 ; ---------------------------------------------------------------------------
 		nop
 ;----------------------------------------------------
@@ -36670,6 +36794,22 @@ Nem_SegaLogo:	incbin "artnem\Sega Logo.bin"
                 even
 Eni_SegaLogo:	incbin "tilemaps\Sega Logo.bin"
                 even
+; ---------------------------------------------------------------------------
+; Compressed graphics - special stage
+; ---------------------------------------------------------------------------
+Nem_SSWalls:	incbin "artnem/Special Walls.bin" ; special stage walls
+		even
+Eni_SSBg1:	incbin "tilemaps/SS Background 1.bin" ; special stage background (mappings)
+		even
+Nem_SSBgFish:	incbin "artnem/Special Birds & Fish.bin" ; special stage birds and fish background
+		even
+Eni_SSBg2:	incbin "tilemaps/SS Background 2.bin" ; special stage background (mappings)
+		even
+Nem_SSBgCloud:	incbin "artnem/Special Clouds.bin" ; special stage clouds background
+		even
+Nem_ResultEm:	incbin "artnem/Special Result Emeralds.bin" ; chaos emeralds on special stage results screen
+		even
+
 Eni_TitleMap:	incbin "tilemaps\Title Screen.bin"
                 even
 Eni_TitleBg1:	incbin "tilemaps\Title Screen Bg1.bin"
