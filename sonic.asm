@@ -27,6 +27,9 @@
 ; * Partially restored Special Stages (missing many graphics, but runs and shouldn't crash)
 ; * Re-arranged ring graphics' RAM placement
 
+; * Made TM symbol disappear on title when console is set to Japanese
+; * Compressed all chunks and blocks in Kosinski
+
 ;  =========================================================================
 ; |   Sonic the Hedgehog 2 Early Prototype Disassembly for Sega Mega Drive  |
 ;  =========================================================================
@@ -2760,19 +2763,10 @@ loc_32C4:				; CODE XREF: ROM:000032C6j
 		bsr.w   DeformBGLayer
 		lea     (Map16_GHZ).l,a0
 		lea	(v_16x16).w,a1
-		move.w	#$BFF,d2
-
-@loadblocks:		; CODE XREF: MainLevelLoadBlock+4Ej
-		move.w	(a0)+,(a1)+
-		dbf	d2,@loadblocks
-		
+		bsr.w	KosDec
 		lea     (Map128_GHZ).l,a0
 		lea	(v_128x128).l,a1
-		move.w	#$3FFF,d0
-
-@loadchunks:				; CODE XREF: MainLevelLoadBlock+D4j
-		move.w	(a0)+,(a1)+
-		dbf	d0,@loadchunks
+		bsr.w	KosDec
 		bsr.w	LevelLayoutLoad
 		bsr.w	Pal_FadeFrom
 		move	#$2700,sr
@@ -2809,9 +2803,12 @@ loc_339A:				; CODE XREF: ROM:0000339Cj
 		dbf	d1,loc_339A
 		move.b	#$0E,(v_objspace+$40).w ; load big Sonic object
 		move.b	#$0F,(v_objspace+$80).w ; load "PRESS START BUTTON" object
-		clr.b	(v_objspace+$80+obRoutine).w ; The 'Mega Games 10' version of Sonic 1 added this line, to fix the 'PRESS START BUTTON' object not appearing
+		tst.b   ($FFFFFFF8).w	; is console Japanese?
+		bpl.s   @isjap		; if yes, branch
 		move.b	#$0F,(v_objspace+$C0).w ; load "TM" object
 		move.b	#3,(v_objspace+$C0+obFrame).w
+
+@isjap:
 		move.b	#$0F,(v_objspace+$100).w ; load object which hides part of Sonic
 		move.b	#2,(v_objspace+$100+obFrame).w
 		jsr	(ObjectsLoad).l
@@ -2906,9 +2903,9 @@ Title_Cheat_NoC:			; CODE XREF: ROM:00003486j
 
 Title_CheckLvlSel:			; CODE XREF: ROM:0000365Cj
 	if	forceDebug	=	1
+		move.b	#1,($FFFFFFE0).w
+		move.b	#1,($FFFFFFE1).w
 		move.b	#1,($FFFFFFE2).w
-		move.b	#$B5,d0
-		bsr.w	PlaySound_Special
 	else
 		tst.b	($FFFFFFE0).w
 		beq.w	PlayLevel
@@ -6460,32 +6457,25 @@ MainLevelLoadBlock:			; CODE XREF: ROM:00003D3Ep
 		addq.l	#4,a2
 		movea.l	(a2)+,a0
 		lea	(v_16x16).w,a1
-		move.w	#$BFF,d2
-
-MainLevelLoadBlock_ConvertLoop:		; CODE XREF: MainLevelLoadBlock+4Ej
-		move.w	(a0)+,d0
+		bsr.w	KosDec
 		tst.w	(f_2player).w
 		beq.s	MainLevelLoadBlock_Not2p
+		lea	(v_16x16).w,a1
+
+		move.w	#$BFF,d2
+@loop:		move.w	(a1),d0		; read an entry
 		move.w	d0,d1
 		andi.w	#$F800,d0
 		andi.w	#$7FF,d1
 		lsr.w	#1,d1
 		or.w	d1,d0
+		move.w	d0,(a1)+	; change the entry with the adjusted value
+		dbf	d2,@loop
 
 MainLevelLoadBlock_Not2p:		; CODE XREF: MainLevelLoadBlock+3Cj
-		move.w	d0,(a1)+
-		dbf	d2,MainLevelLoadBlock_ConvertLoop
-
-loc_72C2:				; CODE XREF: MainLevelLoadBlock+2Cj
 		movea.l	(a2)+,a0
 		lea	(v_128x128).l,a1
-		move.w	#$3FFF,d0
-
-loc_7342:				; CODE XREF: MainLevelLoadBlock+D4j
-		move.w	(a0)+,(a1)+
-		dbf	d0,loc_7342
-
-loc_7348:				; CODE XREF: MainLevelLoadBlock+C6j
+		bsr.w	KosDec
 		bsr.w	LevelLayoutLoad
 		move.w	(a2)+,d0
 		move.w	(a2),d0
@@ -36780,11 +36770,6 @@ Nem_Shield:	incbin "artnem\Shield.bin"
                 even
 Nem_Stars:	incbin "artnem\Invincibility Stars.bin"
                 even
-;
-; some unused uncompressed art
-;
-Unused_Art_9E1FB:incbin "leftovers\0x9E1FB.bin"
-                even
 
                 include "_maps\Tails.asm"
 
@@ -37106,43 +37091,43 @@ Nem_Flicky:	incbin "artnem\Animal Flicky.bin"
                 even
 Nem_Squirrel:	incbin "artnem\Animal Squirrel.bin"
                 even
-Map16_SLZ:	incbin "map16\SLZ.bin"
+Map16_SLZ:	incbin "map16\SLZ_comp.bin"
                 even
 Nem_SLZ:	incbin "artnem\8x8 - SLZ.bin"
                 even
-Map16_SBZ:	incbin "map16\SBZ.bin"
+Map16_SBZ:	incbin "map16\SBZ_comp.bin"
                 even
-Map128_SBZ:	incbin "map128\SBZ.bin"
+Map128_SBZ:	incbin "map128\SBZ_comp.bin"
                 even
 Nem_SBZ:	incbin "artnem\8x8 - SBZ.bin"
                 even
-Map128_SLZ:	incbin "map128\SLZ.bin"
+Map128_SLZ:	incbin "map128\SLZ_comp.bin"
                 even
-Map16_SYZ:	incbin "map16\SYZ.bin"
+Map16_SYZ:	incbin "map16\SYZ_comp.bin"
                 even
 Nem_SYZ:	incbin "artnem\8x8 - SYZ.bin"
                 even
-Map128_SYZ:	incbin "map128\SYZ.bin"
+Map128_SYZ:	incbin "map128\SYZ_comp.bin"
                 even
-Map16_MZ:	incbin "map16\MZ.bin"
+Map16_MZ:	incbin "map16\MZ_comp.bin"
                 even
 Nem_MZ:	incbin "artnem\8x8 - MZ.bin"
                 even
-Map128_MZ:	incbin "map128\MZ.bin"
+Map128_MZ:	incbin "map128\MZ_comp.bin"
                 even
-Map16_LZ:	incbin "map16\LZ.bin"
+Map16_LZ:	incbin "map16\LZ_comp.bin"
                 even
 Nem_LZ:	incbin "artnem\8x8 - LZ.bin"
                 even
-Map128_LZ:	incbin "map128\LZ.bin"
+Map128_LZ:	incbin "map128\LZ_comp.bin"
                 even
-Map16_GHZ:	incbin "map16\GHZ.bin"
+Map16_GHZ:	incbin "map16\GHZ_comp.bin"
                 even
 Nem_GHZ:	incbin "artnem\8x8 - GHZ.bin"
                 even
 Nem_Title_8x8:  incbin "artnem\8x8 - Title.bin"
                 even
-Map128_GHZ:     incbin "map128\GHZ.bin"
+Map128_GHZ:     incbin "map128\GHZ_comp.bin"
                 even
 ;
 ; yet another leftover chunk
