@@ -82,20 +82,42 @@ PLC_LZ:	dc.w ((PLC_LZ2-PLC_LZ-2)/6)-1
 		dc.w $3E00
 		dc.l Nem_Splash
 		dc.w $4B20
-		dc.l Nem_SYZ_WaterSurface
-		dc.w $8000
+		dc.l Nem_Water
+		dc.w $6000
+		dc.l Nem_LzSpikeBall
+		dc.w $6200
+		dc.l Nem_FlapDoor
+		dc.w $6500
 		dc.l Nem_Bubbles
 		dc.w $6900
 		dc.l Nem_LzBlock3
 		dc.w $7780
+		dc.l Nem_LzDoor1
+		dc.w $7880
+		dc.l Nem_Harpoon
+		dc.w $7980
 		dc.l S1Nem_LZBurrobot
 		dc.w $94C0
 
 PLC_LZ2:	dc.w ((PLC_MZ-PLC_LZ2-2)/6)-1
+		dc.l Nem_LzPole
+		dc.w $7BC0
+		dc.l Nem_LzDoor2
+		dc.w $7CC0
+		dc.l Nem_LzWheel
+		dc.w $7EC0
+		dc.l Nem_Gargoyle
+		dc.w $5D20
+		dc.l Nem_LzPlatfm
+		dc.w $89E0
 		dc.l S1Nem_Orbinaut
 		dc.w $8CE0
 		dc.l Nem_S1LZJaws
 		dc.w $90C0
+		dc.l Nem_LzSwitch
+		dc.w $A1E0
+		dc.l Nem_Cork
+		dc.w $A000
 		dc.l Nem_VSpikes
 		dc.w $A360
 		dc.l Nem_HSpring

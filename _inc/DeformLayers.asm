@@ -24,6 +24,7 @@ loc_5AA4:				; CODE XREF: DeformBGLayer+4j
 		lea	(v_screenposy).w,a1
 		lea	(v_fg_verti_rd_flags).w,a2
 		lea	($FFFFEEB2).w,a4
+		move.w	($FFFFEED8).w,d3
 		bsr.w	ScrollVertical
 		tst.w	($FFFFFFE8).w
 		beq.s	loc_5B2A
