@@ -11,7 +11,7 @@ ArtLoadCues:	dc.w PLC_Main-ArtLoadCues,PLC_Main2-ArtLoadCues; 0
 		dc.w PLC_Invalid-ArtLoadCues,PLC_GHZAnimals-ArtLoadCues; 20
 		dc.w PLC_LZAnimals-ArtLoadCues,PLC_MZAnimals-ArtLoadCues; 22
 		dc.w PLC_SLZAnimals-ArtLoadCues,PLC_SYZAnimals-ArtLoadCues; 24
-		dc.w PLC_SBZAnimals-ArtLoadCues
+		dc.w PLC_SBZAnimals-ArtLoadCues,PLC_SSResults-ArtLoadCues
 PLC_Main:	dc.w 4			
 		dc.l Nem_Lamppost
 		dc.w $F400
@@ -20,7 +20,7 @@ PLC_Main:	dc.w 4
 		dc.l Nem_Lives
 		dc.w $FA80
 		dc.l Nem_Ring
-		dc.w $D780
+		dc.w $F640
 		dc.l Nem_Points
 		dc.w $F2E0
 PLC_Main2:	dc.w 2			
@@ -76,24 +76,66 @@ PLC_GHZ2:	dc.w ((PLC_LZ-PLC_GHZ2-2)/6)-1
 PLC_LZ:	dc.w ((PLC_LZ2-PLC_LZ-2)/6)-1			
 		dc.l Nem_LZ
 		dc.w 0
+		dc.l Nem_LzBlock1
+		dc.w $3C00
+		dc.l Nem_LzBlock2
+		dc.w $3E00
+		dc.l Nem_Splash
+		dc.w $4B20
+		dc.l Nem_Water
+		dc.w $6000
+		dc.l Nem_LzSpikeBall
+		dc.w $6200
+		dc.l Nem_FlapDoor
+		dc.w $6500
+		dc.l Nem_Bubbles
+		dc.w $6900
+		dc.l Nem_LzBlock3
+		dc.w $7780
+		dc.l Nem_LzDoor1
+		dc.w $7880
+		dc.l Nem_Harpoon
+		dc.w $7980
+		dc.l S1Nem_LZBurrobot
+		dc.w $94C0
+
+PLC_LZ2:	dc.w ((PLC_MZ-PLC_LZ2-2)/6)-1
+		dc.l Nem_LzPole
+		dc.w $7BC0
+		dc.l Nem_LzDoor2
+		dc.w $7CC0
+		dc.l Nem_LzWheel
+		dc.w $7EC0
+		dc.l Nem_Gargoyle
+		dc.w $5D20
+		dc.l Nem_LzPlatfm
+		dc.w $89E0
+		dc.l S1Nem_Orbinaut
+		dc.w $8CE0
+		dc.l Nem_S1LZJaws
+		dc.w $90C0
+		dc.l Nem_LzSwitch
+		dc.w $A1E0
+		dc.l Nem_Cork
+		dc.w $A000
 		dc.l Nem_VSpikes
 		dc.w $A360
 		dc.l Nem_HSpring
 		dc.w $A460
 		dc.l Nem_VSpring
 		dc.w $A660
-PLC_LZ2:	dc.w ((PLC_MZ-PLC_LZ2-2)/6)-1	
-		
+
 PLC_MZ:	dc.w ((PLC_MZ2-PLC_MZ-2)/6)-1			
 		dc.l Nem_MZ
 		dc.w 0
+
+PLC_MZ2:	dc.w ((PLC_SLZ-PLC_MZ2-2)/6)-1		
 		dc.l Nem_VSpikes
 		dc.w $A360
 		dc.l Nem_HSpring
 		dc.w $A460
 		dc.l Nem_VSpring
 		dc.w $A660
-PLC_MZ2:	dc.w ((PLC_SLZ-PLC_MZ2-2)/6)-1		
 	
 PLC_SLZ:	dc.w ((PLC_SLZ2-PLC_SLZ-2)/6)-1			
 		dc.l Nem_SLZ
@@ -131,7 +173,16 @@ PLC_SBZ2:	dc.w ((PLC_SYZ-PLC_S1TitleCard-2)/6)-1
 PLC_S1TitleCard:dc.w 0			
 		dc.l Nem_S1TitleCard
 		dc.w $B000
-PLC_Boss:	
+PLC_Boss:	dc.w ((PLC_Signpost-PLC_Boss-2)/6)-1
+		dc.l Nem_BossShip
+		dc.w $8000
+		dc.l Nem_Weapons
+		dc.w $8D80
+		dc.l Nem_Prison
+		dc.w $93A0
+		dc.l Nem_BossShipBoost
+		dc.w $A540
+
 PLC_Signpost:	dc.w 2			
 		dc.l Nem_Signpost
 		dc.w $D000
@@ -139,7 +190,13 @@ PLC_Signpost:	dc.w 2
 		dc.w $96C0
 		dc.l Nem_BigFlash
 		dc.w $8C40
-PLC_Invalid:	dc.w $10		
+PLC_Invalid:	dc.w 2
+		dc.l Nem_SSBgCloud
+		dc.w 0
+		dc.l Nem_SSBgFish
+		dc.w $A20
+		dc.l Nem_SSWalls
+		dc.w $2840		
 PLC_GHZAnimals:	dc.w 1			
 		dc.l Nem_Bunny
 		dc.w $B000
@@ -170,3 +227,8 @@ PLC_SBZAnimals:	dc.w 1
 		dc.w $B000
 		dc.l Nem_Chicken
 		dc.w $B240
+PLC_SSResults:	dc.w 1
+		dc.l Nem_ResultEm
+		dc.w $A820
+		dc.l S1Nem_MiniSonic
+		dc.w $AA20

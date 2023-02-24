@@ -72,6 +72,7 @@ s1endingstartloc:
 		dc.w $0000, $0DC0, $0110, $0110
 		dc.w $0000, $2FFF, $0000, $0320
 		dc.w $0000, $2FFF, $0000, $0320
+
 ; ---------------------------------------------------------------------------
 
 LevelSize_CheckLamp:			; CODE XREF: LevelSizeLoad+76j
@@ -171,10 +172,10 @@ loc_59B6:				; CODE XREF: BgScrollSpeed+4j
 BgScroll_Index:	dc.w BgScroll_GHZ-BgScroll_Index; 0 ; DATA XREF: ROM:BgScroll_Indexo
 					; ROM:BgScroll_Index+2o ...
 		dc.w BgScroll_LZ-BgScroll_Index; 1
-		dc.w BgScroll_CPZ-BgScroll_Index; 2
-		dc.w BgScroll_EHZ-BgScroll_Index; 3
-		dc.w BgScroll_HPZ-BgScroll_Index; 4
-		dc.w BgScroll_EHZ-BgScroll_Index; 5
+		dc.w BgScroll_MZ-BgScroll_Index; 2
+		dc.w BgScroll_SLZ-BgScroll_Index; 3
+		dc.w BgScroll_SYZ-BgScroll_Index; 4
+		dc.w BgScroll_SBZ-BgScroll_Index; 5
 		dc.w BgScroll_S1Ending-BgScroll_Index; 6
 ; ---------------------------------------------------------------------------
 
@@ -200,39 +201,19 @@ BgScroll_LZ:				; DATA XREF: ROM:BgScroll_Indexo
 		rts
 ; ---------------------------------------------------------------------------
 
-BgScroll_CPZ:				; DATA XREF: ROM:BgScroll_Indexo
-		lsr.w	#2,d0
-		move.w	d0,(v_bgscreenposy).w
-		move.w	d0,(v_bgscreenposy_2p).w
-		clr.l	(v_bgscreenposx).w
-		clr.l	(v_bg2screenposx).w
+BgScroll_MZ:				; DATA XREF: ROM:BgScroll_Indexo
 		rts
 ; ---------------------------------------------------------------------------
 
-BgScroll_EHZ:				; DATA XREF: ROM:BgScroll_Indexo
-		clr.l	(v_bgscreenposx).w
-		clr.l	(v_bgscreenposy).w
-		clr.l	(v_bg2screenposy).w
-		clr.l	(v_bg3screenposy).w
-		lea	(v_bgscroll_buffer).w,a2
-		clr.l	(a2)+
-		clr.l	(a2)+
-		clr.l	(a2)+
-		clr.l	(v_bgscreenposx_2p).w
-		clr.l	(v_bgscreenposy_2p).w
-		clr.l	(v_bg2screenposy_2p).w
-		clr.l	(v_bg3screenposy_2p).w
-		rts
-; ---------------------------------------------------------------------------
-
-BgScroll_HPZ:				; DATA XREF: ROM:BgScroll_Indexo
-		asr.w	#1,d0
+BgScroll_SLZ:				; DATA XREF: ROM:BgScroll_Indexo
+		asr.l	#1,d0
+		addi.w	#$C0,d0
 		move.w	d0,(v_bgscreenposy).w
 		clr.l	(v_bgscreenposx).w
-		rts
+		rts	
 ; ---------------------------------------------------------------------------
 
-BgScroll_S1SYZ:				; leftover from	Sonic 1
+BgScroll_SYZ:
 		asl.l	#4,d0
 		move.l	d0,d2
 		asl.l	#1,d0
@@ -242,6 +223,14 @@ BgScroll_S1SYZ:				; leftover from	Sonic 1
 		move.w	d0,(v_bgscreenposy).w
 		clr.l	(v_bgscreenposx).w
 		rts
+; ---------------------------------------------------------------------------
+
+BgScroll_SBZ:
+		andi.w	#$7F8,d0
+		asr.w	#3,d0
+		addq.w	#1,d0
+		move.w	d0,(v_bgscreenposy).w
+		rts	
 ; ---------------------------------------------------------------------------
 
 BgScroll_S1Ending:			; DATA XREF: ROM:BgScroll_Indexo
