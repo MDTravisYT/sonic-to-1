@@ -1,50 +1,16 @@
-; Changes from MDTravisYT's original:
-; * Fixed GHZ boss crashing the game (caused by the disassembly using the data location for its
-;   mappingts instead of the actual label)
-; * Restored backgrounds to other zones
-; * Partially restored SLZ scrolling (buggy), ring layouts. and palette cycle
-
-; * Restored LZ ring layouts, water levels, palette cycle, and some graphics
-; * Partially restored MZ scrolling (buggy), ring layouts, and lack of palette cycle
-; * Restored SBZ scrolling (background is broken, though)
-; * Restored S1 giant ring (WARNING: entering it kills the game)
-
-; * Restored GHZ boss and fixed its bugs
-; * Removed all unnecessary leftover data
-; * Restored LZ water levels, but actually
-; * Restored Burrobot
-; * Removed duplicate rings in GHZ1
-; * Restored GHZ demo
-; * Restored original lamp posts
-; * Fixed GHZ debug list with incorrect graphics
-; * Restored invincibility stars and fixed infinite invincibilty "bug"
-
-; * Fixed SBZ backgrounds
-; * Restored LZ blocks and waterfalls, as well as bubble, countdown and splash graphics
-; * Restored LZ Act 2 and SBZ Act 3 object layouts
-; * Restored correct palettes for SBZ2 and SBZ3
-
-; * Partially restored Special Stages (missing many graphics, but runs and shouldn't crash)
-; * Re-arranged ring graphics' RAM placement
-
-; * Made TM symbol disappear on title when console is set to Japanese
-; * Compressed all chunks and blocks in Kosinski
-
-; * Restored water slides and wind tunnels in LZ
-; * Restored blocks, platforms, doors, air bubbles, and buttons in LZ
+; 2/04/23_A
+; Restored checksum check and added an option to remove it
+; Fixed broken springs in other zones
+; Restored *some* graphics to SYZ
 
 ; ===========================================================================
 ; KNOWN ISSUES:
 ; Flat platforms in LZ cause chunk corruption, while Orbinuats crash the game; have been temporarily disabled
 ; Need to find chunks to change in LZ3
 
-;  =========================================================================
-; |   Sonic the Hedgehog 2 Early Prototype Disassembly for Sega Mega Drive  |
-;  =========================================================================
-;
-; Disassembly originally created by drx, improved by Beta Filter
-; thanks to Hivebrain and Rika_Chou
-
+; Sonic to 1
+; Created by:		MDTravisYT and BetaFilter
+; Additional work by:	Alex Field and soupnuts6061
 ; ===========================================================================
 
                 include "Variables.asm"
@@ -65,6 +31,9 @@ safeDMA128kb: equ 0
 ; Set this to 1 to force debug and level select to be active upon startup. ~ MDT
 forceDebug:	equ 1
 
+; Set this to 1 to disable the checksum (gets rid of the long boot time, although
+; this is useful for detecting cart burning errors) ~ AF
+disableChecksum:	equ 1
 ; ===========================================================================
 
 StartOfRom:
@@ -268,22 +237,20 @@ GameProgram:				; CODE XREF: ROM:PortC_OKj
 		beq.w	AlreadyInit
 
 ChecksumCheck:				; CODE XREF: ROM:0000030Ej
+	if disableChecksum=0
 		movea.l	#ErrorTrap,a0
-		movea.l	#ROMEnd,a1	; ROM end location (leftover from Sonic	1)
+		movea.l	#ROMEnd,a1	; ROM end location
 		move.l	(a1),d0
-
-loc_32A:
-		move.l	#$7FFFF,d0
 		moveq	#0,d1
 
 ChksumChkLoop:				; CODE XREF: ROM:00000336j
 		add.w	(a0)+,d1
 		cmp.l	a0,d0
 		bcc.s	ChksumChkLoop
-		movea.l	#Checksum,a1	; ROM Checksum (leftover from Sonic 1)
-		cmp.w	(a1),d1
-		nop
-		nop
+		movea.l	#Checksum,a1	; ROM Checksum
+		cmp.w	(a1),d1		; compare correct checksum to the one in ROM
+		bne.w	ChecksumError	; if they don"t match, branch
+	endif
 		lea	($FFFFFE00).w,a6
 		moveq	#0,d7
 		move.w	#$7F,d6
@@ -17029,9 +16996,6 @@ loc_E2D0:				; CODE XREF: ROM:0000E282j
 		btst	#1,d0
 		beq.s	loc_E2F8
 		bset	#5,2(a0)
-		tst.b	(v_zone).w
-		beq.s	loc_E2F8
-		move.l	#Map_Obj41a,4(a0)
 
 loc_E2F8:				; CODE XREF: ROM:0000E2E2j
 					; ROM:0000E2EEj

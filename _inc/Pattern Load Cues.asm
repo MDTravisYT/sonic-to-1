@@ -151,14 +151,19 @@ PLC_SLZ2:	dc.w ((PLC_SYZ-PLC_SLZ2-2)/6)-1
 PLC_SYZ:	dc.w ((PLC_SYZ2-PLC_SYZ-2)/6)-1			
 		dc.l Nem_SYZ
 		dc.w 0
+		dc.l Nem_Crabmeat
+		dc.w $8000
+		dc.l Nem_GHZBuzzbomber
+		dc.w $8880
+PLC_SYZ2:	dc.w ((PLC_SBZ-PLC_SYZ2-2)/6)-1	
+		dc.l Nem_LzSwitch
+		dc.w $A1E0	
 		dc.l Nem_VSpikes
 		dc.w $A360
 		dc.l Nem_HSpring
 		dc.w $A460
 		dc.l Nem_VSpring
 		dc.w $A660
-PLC_SYZ2:	dc.w ((PLC_SBZ-PLC_SYZ2-2)/6)-1		
-
 PLC_SBZ:	dc.w ((PLC_SBZ2-PLC_SBZ-2)/6)-1			
 		dc.l Nem_SBZ
 		dc.w 0
