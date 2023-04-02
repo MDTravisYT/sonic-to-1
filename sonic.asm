@@ -1,3 +1,7 @@
+; 2/04/23_C
+; Replaced Sonic's spindash animation with the correct variation (used Knuckles' S3K animation... for some reason)
+; Restored ALL Special Stage graphics
+
 ; 2/04/23_B
 ; Restored ending layout
 
@@ -36220,8 +36224,25 @@ Eni_SSBg2:	incbin "tilemaps/SS Background 2.bin" ; special stage background (map
 		even
 Nem_SSBgCloud:	incbin "artnem/Special Clouds.bin" ; special stage clouds background
 		even
+Nem_SSGOAL:	incbin	"artnem\Special GOAL.bin" ; special stage GOAL block
+		even
+Nem_SSRBlock:	incbin	"artnem\Special R.bin"	; special stage R block
+		even
+Nem_SSEmStars:	incbin	"artnem\Special Emerald Twinkle.bin" ; special stage stars from a collected emerald
+		even
+Nem_SSRedWhite:	incbin	"artnem\Special Red-White.bin" ; special stage red/white block
+		even
+Nem_SSUpDown:	incbin	"artnem\Special UP-DOWN.bin" ; special stage UP/DOWN block
+		even
+Nem_SSEmerald:	incbin	"artnem\Special Emeralds.bin" ; special stage chaos emeralds
+		even
+Nem_SSGhost:	incbin	"artnem\Special Ghost.bin" ; special stage ghost block
+		even
+Nem_SSGlass:	incbin	"artnem\Special Glass.bin" ; special stage destroyable glass block
+		even
 Nem_ResultEm:	incbin "artnem/Special Result Emeralds.bin" ; chaos emeralds on special stage results screen
 		even
+
 
 Eni_TitleMap:	incbin "tilemaps\Title Screen.bin"
                 even
@@ -36416,6 +36437,8 @@ Nem_MZ_FloatingPlatform:dc.b	0,$10,$80,$73,	0,$81,	4,  5,$15,$12,$26,$2E,$36,$3A
 		dc.b $43,$4F,  8,$73,$FB,$EF,$1D,$E3,$BC,$77,$F7,$E1, $E,$7A,$A1,$A6,$55,$B9,$35,$43,$4C,$AB,$72,$6A,$86,$9E,$10,$E7,$AA,$1A,$31,$5A,$6C,$CD,$77,$F2,$63,$BC,$7C,$C6,$BC,$7B,$F8, $F,$DC,$FE,$A3,$F6,$1E,$78,$FF,  7,$E2,$40,  0, $F,$A9,$D9,$66,$E9,$1C,$A6,$EA,$A9; 192
 		dc.b $CA,$6E,$AB,$90,$97, $E,$54,$FD,$7E,$1C,$A7,$76,$1D,$53,$FD,$7E,$1D,$52,$6B,$B9,$5F,$D2,$AF,$2A,$85,$42,$49,$21,$3A,$8E,$24,$54,$FC,$B5,$3F,$2C,$8A,$7F,$C6,$32,$52,$FA,$25,$E5,$5E,$D2,$2B,$4F,$E9,$99,$A3,$C4,$77,$8E,$D1,$DA,$BF,$C8,$D9,$DB,$FB,$BF,$BB,$3B; 256
 		dc.b $88,$D6,$3C,$7B,$B7,$9F,$D4,$6F,$1F,$D0,$7F,$24,  0,  0; 320
+Nem_Bumper:	incbin	"artnem\SYZ Bumper.bin"
+		even
 Nem_LzSwitch:	incbin "artnem/Switch.bin"
 		even
 Nem_VSpring2:	dc.b   0,$14,$80,  4,  7,$25,$1A,$46,$3A,$66,$3C,$73,  0,$81,  4,  5,$14,  6,$66,$3D,$76,$30,$86,  5,$19,$15,$16,$36,$38,$87,  5,$13,$15,$14,$88,  5,$12,$16,$31,$25,$17,$89,  3,  1,$14,  8,$78,$FB,$8C,  5,$15,$17,$7C,$28,$FA,$36,$39,$56,$3B,$8D,  4,  4,$16,$36; 0
