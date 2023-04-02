@@ -1,3 +1,6 @@
+; 2/04/23_B
+; Restored ending layout
+
 ; 2/04/23_A
 ; Restored checksum check and added an option to remove it
 ; Fixed broken springs in other zones
@@ -35798,7 +35801,7 @@ Art_GhzFlower2:	incbin	"artunc\GHZ Flower Small.bin"
 
 LevelLayout_Index:
                 ; GHZ
-        dc.w Level_GHZ1-LevelLayout_Index,Level_GHZBg-LevelLayout_Index,Level_Null-LevelLayout_Index; 0
+        	dc.w Level_GHZ1-LevelLayout_Index,Level_GHZBg-LevelLayout_Index,Level_Null-LevelLayout_Index; 0
 		dc.w Level_GHZ2-LevelLayout_Index,Level_GHZBg-LevelLayout_Index,Level_Null-LevelLayout_Index; 3
 		dc.w Level_GHZ3-LevelLayout_Index,Level_GHZBg-LevelLayout_Index,Level_Null-LevelLayout_Index; 6
 		dc.w Level_Null-LevelLayout_Index,Level_Null-LevelLayout_Index, Level_Null-LevelLayout_Index; 9
@@ -35828,8 +35831,8 @@ LevelLayout_Index:
 		dc.w Level_SBZ2-LevelLayout_Index,Level_SBZ2Bg-LevelLayout_Index,Level_Null-LevelLayout_Index; 66
 		dc.w Level_Null-LevelLayout_Index,Level_Null-LevelLayout_Index, Level_Null-LevelLayout_Index; 9
                 ; Ending
-		dc.w Level_Null-LevelLayout_Index,Level_Null-LevelLayout_Index, Level_Null-LevelLayout_Index; 9
-		dc.w Level_Null-LevelLayout_Index,Level_Null-LevelLayout_Index, Level_Null-LevelLayout_Index; 9
+		dc.w Level_Ending-LevelLayout_Index,Level_GHZBg-LevelLayout_Index, Level_Null-LevelLayout_Index; 9
+		dc.w Level_Ending-LevelLayout_Index,Level_GHZBg-LevelLayout_Index, Level_Null-LevelLayout_Index; 9
 		dc.w Level_Null-LevelLayout_Index,Level_Null-LevelLayout_Index, Level_Null-LevelLayout_Index; 9
 		dc.w Level_Null-LevelLayout_Index,Level_Null-LevelLayout_Index, Level_Null-LevelLayout_Index; 9
 Level_GHZ1:	incbin "levels\ghz1.bin"
@@ -35882,7 +35885,8 @@ Level_SBZ1Bg:	incbin "levels\SBZ1bg.bin"
                 even
 Level_SBZ2Bg:	incbin "levels\SBZ2bg.bin"
                 even
-
+Level_Ending:	incbin "levels\ending.bin"
+		even
 Level_Null:	dc.l 0
 Art_BigRing:	incbin "artunc\Giant Ring.bin"
                 even
