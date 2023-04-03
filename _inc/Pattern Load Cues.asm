@@ -151,14 +151,19 @@ PLC_SLZ2:	dc.w ((PLC_SYZ-PLC_SLZ2-2)/6)-1
 PLC_SYZ:	dc.w ((PLC_SYZ2-PLC_SYZ-2)/6)-1			
 		dc.l Nem_SYZ
 		dc.w 0
+		dc.l Nem_Crabmeat
+		dc.w $8000
+		dc.l Nem_GHZBuzzbomber
+		dc.w $8880
+PLC_SYZ2:	dc.w ((PLC_SBZ-PLC_SYZ2-2)/6)-1	
+		dc.l Nem_LzSwitch
+		dc.w $A1E0	
 		dc.l Nem_VSpikes
 		dc.w $A360
 		dc.l Nem_HSpring
 		dc.w $A460
 		dc.l Nem_VSpring
 		dc.w $A660
-PLC_SYZ2:	dc.w ((PLC_SBZ-PLC_SYZ2-2)/6)-1		
-
 PLC_SBZ:	dc.w ((PLC_SBZ2-PLC_SBZ-2)/6)-1			
 		dc.l Nem_SBZ
 		dc.w 0
@@ -190,13 +195,32 @@ PLC_Signpost:	dc.w 2
 		dc.w $96C0
 		dc.l Nem_BigFlash
 		dc.w $8C40
-PLC_Invalid:	dc.w 2
+PLC_Invalid:	dc.w $B
 		dc.l Nem_SSBgCloud
 		dc.w 0
 		dc.l Nem_SSBgFish
 		dc.w $A20
 		dc.l Nem_SSWalls
-		dc.w $2840		
+		dc.w $2840
+		dc.l Nem_Bumper
+		dc.w $4760
+		dc.l Nem_SSGOAL
+		dc.w $4A20	; GOAL block
+		dc.l Nem_SSUpDown
+		dc.w $4C60	; UP and DOWN blocks
+		dc.l Nem_SSRBlock
+		dc.w $5E00	; R block
+		dc.l Nem_SSEmStars
+		dc.w $7E00	; emerald collection stars
+		dc.l Nem_SSRedWhite
+		dc.w $8E00	; red and white	block
+		dc.l Nem_SSGhost
+		dc.w $9E00	; ghost	block
+		dc.l Nem_SSGlass
+		dc.w $BE00	; glass	block
+		dc.l Nem_SSEmerald
+		dc.w $EE00	; emeralds
+		
 PLC_GHZAnimals:	dc.w 1			
 		dc.l Nem_Bunny
 		dc.w $B000
